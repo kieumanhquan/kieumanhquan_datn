@@ -1,0 +1,202 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="rfContact" class="row justify-content-md-center">
+  <div class="col-md-8">
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">Name:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text" formControlName="name">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('name')?.errors?.required && rfContact.get('name')?.touched">
+      Name is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">JobPositionId:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="number" formControlName="jobPositionId">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('jobPositionId')?.errors?.required && rfContact.get('jobPositionId')?.touched">
+      JobPosition is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">NumberExperience:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text" id="example-text-input" formControlName="numberExperience">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('numberExperience')?.errors?.required && rfContact.get('numberExperience')?.touched">
+      NumberExperience is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">WorkingFormId:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text"  formControlName="workingFormId">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('workingFormId')?.errors?.required && rfContact.get('workingFormId')?.touched">
+          workingFormId is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">AddressWork:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text" formControlName="addressWork">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('addressWork')?.errors?.required && rfContact.get('addressWork')?.touched">
+      AddressWork is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">academicLevelId:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text"  formControlName="academicLevelId">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('academicLevelId')?.errors?.required && rfContact.get('academicLevelId')?.touched">
+      AcademicLevelId is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">qtyPerson:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text"  formControlName="qtyPerson">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('qtyPerson')?.errors?.required && rfContact.get('qtyPerson')?.touched">
+      QtyPerson is required!
+    </div>
+
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">RankId:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text"  formControlName="rankId">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('rankId')?.errors?.required && rfContact.get('rankId')?.touched">
+      RankId is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">StartRecruitmentDate:</label>
+      <div class="col-md-10">
+        <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="time" formControlName="startRecruitmentDate"></p-calendar>
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('startRecruitmentDate')?.errors?.required && rfContact.get('startRecruitmentDate')?.touched">
+      StartRecruitmentDate is required!
+    </div>
+
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">DueDate:</label>
+      <div class="col-md-10">
+        <p-calendar [(ngModel)]="date8" [showTime]="true" inputId="time" formControlName="dueDate"></p-calendar>
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('dueDate')?.errors?.required && rfContact.get('dueDate')?.touched">
+      DueDate is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">Description:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text" formControlName="description">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('description')?.errors?.required && rfContact.get('description')?.touched">
+      Description is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">Benefits:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text" formControlName="benefits">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('benefits')?.errors?.required && rfContact.get('benefits')?.touched">
+      Benefits is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">JobRequirement:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text" formControlName="jobRequirement">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('jobRequirement')?.errors?.required && rfContact.get('jobRequirement')?.touched">
+      JobRequirement is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">salaryMin:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text"  formControlName="salaryMin">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('salaryMin')?.errors?.required && rfContact.get('salaryMin')?.touched">
+      salaryMin is required!
+    </div>
+
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">salaryMax:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text"  formControlName="salaryMax">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('salaryMax')?.errors?.required && rfContact.get('salaryMax')?.touched">
+      salaryMax is required!
+    </div>
+
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">contactId:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="text"  formControlName="contactId">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('contactId')?.errors?.required && rfContact.get('contactId')?.touched">
+      contactId is required!
+    </div>
+
+    <div formArrayName="skills" *ngIf="skills.controls.length">
+      <div class="form-group row" *ngFor="let c of skills.controls; index as i">
+        <label class="col-md-2 col-form-label">Skills:</label>
+        <div class="col-md-10">
+          <input class="form-control" type="tel"  [formControlName]="i">
+          <div class="text-right">
+            <button class="btn btn-info" (click)="addSkill()">+</button>
+            <button class="btn btn-danger" (click)="removeSkill(i)" *ngIf="skills.controls.length > 1">-</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-md-10 offset-md-2">
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+<pre>{{ rfContact.value | json }}</pre>

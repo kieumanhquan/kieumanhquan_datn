@@ -1,0 +1,30 @@
+import {JobPosition} from './JobPosition';
+import {AcademicLevel} from './AcademicLevel';
+import {Rank} from './Rank';
+import {User} from './User';
+import {StatusJob} from './StatusJob';
+
+
+export interface Job{
+  id: number;
+  name: string;
+  jobPosition: JobPosition;
+  numberExperience: number;
+  addressWork: string;
+  academicLevel: AcademicLevel;
+  rank: Rank;
+  qtyPerson: number;
+  createDate?: Date;
+  dueDate: Date;
+  skills: string;
+  startRecruitmentDate?: Date;
+  description: string;
+  benefits: string;
+  salaryMax: number;
+  salaryMin: number;
+  contact: User;
+  statusJob: StatusJob;
+  views: number;
+  creator: User;
+  delete?: boolean;
+}

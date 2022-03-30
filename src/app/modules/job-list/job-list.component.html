@@ -1,0 +1,27 @@
+<div class="container mt-3 mb-5">
+  <p-autoComplete class="mr-5" [(ngModel)]="selectedName" placeholder="Tên công viêc..." field="name" [minLength]="1"></p-autoComplete>
+  <p-autoComplete class="mr-5" [(ngModel)]="selectedStatusJobAdvanced" placeholder="Trạng thái công việc..." [suggestions]="filteredStatusJobs"
+                  (completeMethod)="filterStatusJob($event)" field="code" [dropdown]="true">
+    <ng-template let-statusJob pTemplate="item">
+      <div class="statusJob-item">
+        <div>{{statusJob.code}}</div>
+      </div>
+    </ng-template>
+  </p-autoComplete>
+
+  <p-autoComplete class="mr-5" [(ngModel)]="selectedSalaryMin" placeholder="Lương tối thiểu..."
+                  field="salaryMin" type="number" [minLength]="1">
+  </p-autoComplete>
+
+  <p-autoComplete class="mr-5" [(ngModel)]="selectedSalaryMax" placeholder="Lương tối đa..."
+                  field="salaryMax" type="number" [minLength]="1">
+  </p-autoComplete>
+
+  <p-button class="mr-2" label="Search" icon="pi pi-search" iconPos="right" [loading]="" (onClick)="onSearch()"></p-button>
+  <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+</div>
+
+<ngx-job-details *ngFor="let job of jobs" [job]="job"></ngx-job-details>
+
+<p-paginator [rows]="10" [totalRecords]="10" [rowsPerPageOptions]="[5,10,25]" (onPageChange)="paginate($event)"></p-paginator>
+
