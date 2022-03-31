@@ -21,7 +21,7 @@
   <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
 </div>
 
-<ngx-job-details *ngFor="let job of jobs" [job]="job"></ngx-job-details>
+<ngx-job-title *ngFor="let job of jobs" [job]="job"></ngx-job-title>
 
-<p-paginator [rows]="10" [totalRecords]="10" [rowsPerPageOptions]="[5,10,25]" (onPageChange)="paginate($event)"></p-paginator>
+<p-paginator [rows]="2" [totalRecords]="totalRecords" [rowsPerPageOptions]="[2,5,10]" (onPageChange)="paginate($event)"></p-paginator>
 

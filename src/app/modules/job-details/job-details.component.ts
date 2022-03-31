@@ -1,5 +1,10 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Job} from '../../models/model/Job';
+import {ActivatedRoute} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
+import {JobService} from '../../service/job.service';
+import {UserService} from '../../service/user.service';
+import {User} from '../../models/model/User';
 
 @Component({
   selector: 'ngx-job-details',
@@ -7,12 +12,45 @@ import {Job} from '../../models/model/Job';
   styleUrls: ['./job-details.component.scss'],
 })
 export class JobDetailsComponent implements OnInit{
-  @Input() job: Job;
+  job: Job;
+  user: User;
 
-  currentDate = new Date().getTime();
-  constructor() { }
-
-  ngOnInit(): void {
+  // eslint-disable-next-line max-len
+  constructor(private readonly route: ActivatedRoute, private jobService: JobService , private userService: UserService) {
+    this.getUser();
   }
 
+  ngOnInit(): void {
+    console.log(this.route.snapshot.params);
+    this.getJobById();
+  }
+
+
+  public getJobById(): void {
+    this.jobService.getJobById(this.route.snapshot.params.id).subscribe(
+      (data: Job) => {
+        this.job = data;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public getUserByUserName(username: string): void {
+    this.userService.getUserByUserName(username).subscribe(
+      (data: User) => {
+        this.user = data;
+        console.log('roles',data.roles);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public getUser(): void {
+    const token = this.userService.getDecodedAccessToken();
+    this.getUserByUserName(token.sub);
+  }
 }

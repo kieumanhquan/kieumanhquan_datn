@@ -1,24 +1,91 @@
-<div class="d-flex justify-content-lg-start container bg-info p-3 rounded mb-4">
-  <div>
-    <p-avatar
-      image="https://cdn.topcv.vn/80/company_logos/cong-ty-cp-giao-duc-educa-corporation-6d67556358b65494d801a26a77be21fb-5ea7b55a0ca31.jpg"
-      pBadge value="4" severity="danger" size="xlarge"></p-avatar>
-  </div>
-  <div class="ml-5">
-    <div class="d-flex justify-content-lg-between">
-      <a href="#" class="display-5 font-weight-bold" >{{job.name}}</a>
-      <p class="badge badge-secondary mr-2">{{this.job.dueDate | date}}</p>
-    </div>
-    <div class="d-flex justify-content-between">
-      <p class="badge badge-secondary mr-2">{{job.salaryMin}}-{{job.salaryMax}} triệu</p>
-      <p class="badge badge-secondary mr-2">{{job.addressWork}}</p>
-      <p class="badge badge-secondary mr-2">{{this.job.createDate | date}}</p>
-      <p class="badge badge-secondary mr-2">{{job.statusJob.code}}</p>
-    </div>
+<ng-template [ngIf]="job">
+  <div class="container">
     <div>
-      <p-button label="Export JD"  styleClass="p-button-sm" class="mr-2"></p-button>
-      <p-button label="Xem trước"  styleClass="p-button-sm" class="mr-2"></p-button>
-      <p-button label="Đăng tuyển"  styleClass="p-button-sm"></p-button>
+      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
+        <p-button label="Cập nhật" styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
+        <p-button label="Xem trước" styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' && job.statusJob.code === 'chờ xét duyệt'">
+        <p-button label="Xét duyệt"  styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' && job.statusJob.code === 'chờ xét duyệt'">
+        <p-button label="Từ chối duyệt"  styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template [ngIf]="job.statusJob.code === 'chưa đăng tuyển'">
+        <p-button label="Đăng tuyển"  styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template [ngIf]="job.statusJob.code === 'đang tuyển'">
+        <p-button label="Dừng tuyển"  styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template [ngIf]="job.statusJob.code === 'đang tuyển' || job.statusJob.code === 'chưa đăng tuyển'">
+        <p-button label="Đóng"  styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' && job.statusJob.code === 'Đã từ chối' ||job.statusJob.code === 'Đã đóng' ">
+        <p-button label="Xóa"  styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+    </div>
+    <div class="d-flex">
+      <div>
+        <p-avatar
+          image="https://cdn.topcv.vn/80/company_logos/cong-ty-cp-giao-duc-educa-corporation-6d67556358b65494d801a26a77be21fb-5ea7b55a0ca31.jpg"
+          pBadge value="4" severity="danger" size="xlarge"></p-avatar>
+      </div>
+      <div class="ml-5">
+        <h2 href="#" class="display-5 font-weight-bold">{{job.name}}</h2>
+        <p class="mt-3">Hạn nộp hồ sơ: {{this.job.dueDate | date}}</p>
+      </div>
+    </div>
+    <h2>Thông tin chung</h2>
+    <div class="d-flex justify-content-around badge badge-info mr-2 p-5">
+      <div>
+        <div>
+          <h2>Mức lương</h2>
+          <p>{{job.salaryMin}}-{{job.salaryMax}} triệu</p>
+        </div>
+        <div>
+          <h2>Hình thức làm việc</h2>
+          <p>{{job.workingForm.code}}</p>
+        </div>
+        <div>
+          <h2>Trình độ học vấn</h2>
+          <p>{{job.academicLevel.code}}</p>
+        </div>
+      </div>
+      <div class="ml-5">
+        <div>
+          <h2>Số lượng tuyển</h2>
+          <p>{{job.qtyPerson}} người</p>
+        </div>
+        <div>
+          <h2>Vị trí ứng tuyển</h2>
+          <p>{{job.jobPosition.code}}</p>
+        </div>
+        <div>
+          <h2>Kinh nghiệm </h2>
+          <p>{{job.numberExperience}}</p>
+        </div>
+      </div>
+    </div>
+    <h2>Địa điểm làm việc</h2>
+    <div class="badge badge-info mr-2 p-5 container">
+      <div>
+        <p>- {{job.addressWork}}</p>
+      </div>
+    </div>
+    <h2>Mô tả công việc</h2>
+    <div class="badge badge-info mr-2 p-5 container">
+      <div>
+        <p>{{job.description}}</p>
+      </div>
+    </div>
+    <h2>Quyền lợi</h2>
+    <div class="badge badge-info mr-2 p-5 container">
+      <div>
+        <p>{{job.benefits}}</p>
+      </div>
     </div>
   </div>
-</div>
+</ng-template>
+

@@ -43,21 +43,26 @@ export class JobAddComponent implements OnInit {
     });
   }
   public addJob(){
+    console.log('contact'+this.rfContact.value);
     this.jobDto = this.rfContact.value;
+    console.log('jobDto',this.jobDto);
     this.jobDto.creatorId = 1;
     this.jobDto.createDate = new Date();
     this.jobDto.updateUserId = 1;
     this.jobDto.updateDate = new Date();
-    this.jobDto.skills = 'abhc';
     this.jobDto.statusJobId =1;
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
+    this.jobDto.skills ='';
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
+    for (let i=0 ;i<this.rfContact.value.skills.length;i++){
+      this.jobDto.skills += this.rfContact.value.skills[i]+',';
+    }
+    // eslint-disable-next-line @typescript-eslint/prefer-for-of
     this.jobDto.views =0;
-
-    console.log(this.jobDto);
     // eslint-disable-next-line max-len
     this.jobService.addJob(this.jobDto).subscribe(
       (data: any) => {
-        alert('Add than công');
+        alert('Add thành công');
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

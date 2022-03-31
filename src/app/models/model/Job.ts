@@ -3,6 +3,7 @@ import {AcademicLevel} from './AcademicLevel';
 import {Rank} from './Rank';
 import {User} from './User';
 import {StatusJob} from './StatusJob';
+import {WorkingForm} from "./WorkingForm";
 
 
 export interface Job{
@@ -18,6 +19,7 @@ export interface Job{
   dueDate: Date;
   skills: string;
   startRecruitmentDate?: Date;
+  workingForm: WorkingForm;
   description: string;
   benefits: string;
   salaryMax: number;

@@ -4,7 +4,7 @@ import { Job } from '../models/model/Job';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
-import {JobDto} from "../models/model/JobDto";
+import {JobDto} from '../models/model/JobDto';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +29,12 @@ export class JobService {
 
   public getStatusJob(): Observable<any[]> {
     return this.http.get<any>(`${this.apiServerUrl}`+'statusJobs').pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public getJobById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}`+'jobs/id='+id).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }

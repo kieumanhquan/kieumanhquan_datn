@@ -13,6 +13,7 @@ import { JobDetailsComponent } from '../job-details/job-details.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {PaginatorModule} from 'primeng/paginator';
 import {JobAddComponent} from '../job-add/job-add.component';
+import {JobTitleComponent} from '../job-title/job-title.component';
 
 
 const routes: Routes = [{
@@ -35,6 +36,10 @@ const routes: Routes = [{
       path: 'add-job',
       component: JobAddComponent,
     },
+    {
+      path: 'job-detail/:id',
+      component: JobDetailsComponent,
+    },
   ],
 }];
 
@@ -45,6 +50,7 @@ const routes: Routes = [{
         JobListComponent,
         JobDetailsComponent,
         JobAddComponent,
+      JobTitleComponent,
     ],
     imports: [
         CommonModule,

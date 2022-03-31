@@ -1,4 +1,4 @@
-import {Role} from "./Role";
+import {Role} from './Role';
 
 export interface User{
   id: number;
@@ -11,7 +11,7 @@ export interface User{
   avatarName: string;
   gender: string;
   birthday: Date;
-  role: Role[];
+  roles: Role[];
   active: boolean;
   delete: boolean;
 }

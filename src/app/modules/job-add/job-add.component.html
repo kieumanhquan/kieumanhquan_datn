@@ -185,8 +185,8 @@
         <div class="col-md-10">
           <input class="form-control" type="tel"  [formControlName]="i">
           <div class="text-right">
-            <button class="btn btn-info" (click)="addSkill()">+</button>
-            <button class="btn btn-danger" (click)="removeSkill(i)" *ngIf="skills.controls.length > 1">-</button>
+            <button type="button" class="btn btn-info" (click)="addSkill()">+</button>
+            <button type="button" class="btn btn-danger" (click)="removeSkill(i)" *ngIf="skills.controls.length > 1">-</button>
           </div>
         </div>
       </div>

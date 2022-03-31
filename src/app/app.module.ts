@@ -24,6 +24,9 @@ import {
 
 import { AuthInterceptor } from './@core/interceptor/auth.interceptor';
 import {ReactiveFormsModule} from '@angular/forms';
+import { JobTitleComponent } from './modules/job-title/job-title.component';
+import {AvatarModule} from "primeng/avatar";
+import {ButtonModule} from "primeng/button";
 
 const configToast: any = {
   timeOut: 3000,
@@ -36,25 +39,27 @@ const configToast: any = {
 
 @NgModule({
   declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        AppRoutingModule,
-        NbSidebarModule.forRoot(),
-        NbMenuModule.forRoot(),
-        NbDatepickerModule.forRoot(),
-        NbDialogModule.forRoot(),
-        NbWindowModule.forRoot(),
-        NbToastrModule.forRoot(),
-        NbChatModule.forRoot({
-            messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
-        }),
-        CoreModule.forRoot(),
-        ThemeModule.forRoot(),
-        ToastrModule.forRoot(configToast),
-        ReactiveFormsModule,
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    AppRoutingModule,
+    NbSidebarModule.forRoot(),
+    NbMenuModule.forRoot(),
+    NbDatepickerModule.forRoot(),
+    NbDialogModule.forRoot(),
+    NbWindowModule.forRoot(),
+    NbToastrModule.forRoot(),
+    NbChatModule.forRoot({
+      messageGoogleMapKey: 'AIzaSyA_wNuCzia92MAmdLRzmqitRGvCF7wCZPY',
+    }),
+    CoreModule.forRoot(),
+    ThemeModule.forRoot(),
+    ToastrModule.forRoot(configToast),
+    ReactiveFormsModule,
+    AvatarModule,
+    ButtonModule,
+  ],
   bootstrap: [AppComponent],
   providers: [
     {
@@ -63,6 +68,9 @@ const configToast: any = {
       multi: true,
     },
   ],
+  exports: [
+
+  ]
 })
 export class AppModule {
 }

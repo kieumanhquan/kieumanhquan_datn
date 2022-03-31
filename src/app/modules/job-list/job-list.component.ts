@@ -33,7 +33,7 @@ export class JobListComponent implements OnInit {
   sortKey: any;
   page: number;
   size: number;
-  totalPages: number;
+  totalRecords: number;
 
   constructor(public jobService: JobService) {
   }
@@ -55,7 +55,7 @@ export class JobListComponent implements OnInit {
     this.selectedSalaryMax = 1000000000;
     this.page = 0;
     this.size = 2;
-    this.totalPages = 5;
+    this.totalRecords = 5;
   }
 
   public getStatusJob(): void {
@@ -103,7 +103,7 @@ export class JobListComponent implements OnInit {
     this.jobService.findJob(this.selectedName, this.selectedStatusJobAdvanced.id, this.selectedSalaryMin, this.selectedSalaryMax, this.page, this.size).subscribe(
       (data: any) => {
         this.jobs = data.list;
-        this.totalPages = data.totalPages * this.size;
+        this.totalRecords = data.totalPage * this.size;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
