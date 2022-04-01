@@ -14,14 +14,11 @@ import {DropdownModule} from 'primeng/dropdown';
 import {PaginatorModule} from 'primeng/paginator';
 import {JobAddComponent} from '../job-add/job-add.component';
 import {JobTitleComponent} from '../job-title/job-title.component';
-<<<<<<< HEAD
 import {RegistrationComponent} from '../registration/registration.component';
 import {ChangePasswordInitComponent} from '../change-password-init/change-password-init.component';
 import {ChangePasswordFinishComponent} from '../change-password-finish/change-password-finish.component';
-
-=======
 import {JobUpdateComponent} from "../job-update/job-update.component";
->>>>>>> 8898142327b4508bbff4a1956bdf35cbea85fadf
+
 
 
 const routes: Routes = [{
@@ -49,7 +46,6 @@ const routes: Routes = [{
       component: JobDetailsComponent,
     },
     {
-<<<<<<< HEAD
       path: 'signup',
       component: RegistrationComponent,
     },
@@ -60,16 +56,15 @@ const routes: Routes = [{
     {
       path: 'change-password/finish',
       component: ChangePasswordFinishComponent,
-=======
+    },
+    {
       path: 'job-update/:id',
       component: JobUpdateComponent,
->>>>>>> 8898142327b4508bbff4a1956bdf35cbea85fadf
     },
   ],
 }];
 
 @NgModule({
-<<<<<<< HEAD
     declarations: [
         HomeComponent,
         ProfileComponent,
@@ -95,30 +90,6 @@ const routes: Routes = [{
     ],
     exports: [
     ],
-=======
-  declarations: [
-    HomeComponent,
-    ProfileComponent,
-    JobListComponent,
-    JobDetailsComponent,
-    JobAddComponent,
-    JobTitleComponent,
-    JobUpdateComponent,
-  ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ThemeModule,
-    NbMenuModule,
-    ReactiveFormsModule,
-    PrimengModule,
-    SharedModule,
-    FormsModule,
-    DropdownModule,
-    PaginatorModule,
-  ],
-  exports: [],
->>>>>>> 8898142327b4508bbff4a1956bdf35cbea85fadf
 })
 export class HomeModule {
 }
