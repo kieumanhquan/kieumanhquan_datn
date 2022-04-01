@@ -17,7 +17,7 @@ import {JobTitleComponent} from '../job-title/job-title.component';
 import {RegistrationComponent} from '../registration/registration.component';
 import {ChangePasswordInitComponent} from '../change-password-init/change-password-init.component';
 import {ChangePasswordFinishComponent} from '../change-password-finish/change-password-finish.component';
-import {JobUpdateComponent} from "../job-update/job-update.component";
+import {JobUpdateComponent} from '../job-update/job-update.component';
 
 
 
@@ -75,6 +75,7 @@ const routes: Routes = [{
       RegistrationComponent,
       ChangePasswordInitComponent,
       ChangePasswordFinishComponent,
+      JobUpdateComponent,
     ],
     imports: [
         CommonModule,
