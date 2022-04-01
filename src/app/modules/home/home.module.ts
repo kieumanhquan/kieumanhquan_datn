@@ -14,6 +14,10 @@ import {DropdownModule} from 'primeng/dropdown';
 import {PaginatorModule} from 'primeng/paginator';
 import {JobAddComponent} from '../job-add/job-add.component';
 import {JobTitleComponent} from '../job-title/job-title.component';
+import {RegistrationComponent} from '../registration/registration.component';
+import {ChangePasswordInitComponent} from '../change-password-init/change-password-init.component';
+import {ChangePasswordFinishComponent} from '../change-password-finish/change-password-finish.component';
+
 
 
 const routes: Routes = [{
@@ -40,6 +44,18 @@ const routes: Routes = [{
       path: 'job-detail/:id',
       component: JobDetailsComponent,
     },
+    {
+      path: 'signup',
+      component: RegistrationComponent,
+    },
+    {
+      path: 'change-password/init',
+      component: ChangePasswordInitComponent,
+    },
+    {
+      path: 'change-password/finish',
+      component: ChangePasswordFinishComponent,
+    },
   ],
 }];
 
@@ -51,6 +67,9 @@ const routes: Routes = [{
         JobDetailsComponent,
         JobAddComponent,
       JobTitleComponent,
+      RegistrationComponent,
+      ChangePasswordInitComponent,
+      ChangePasswordFinishComponent,
     ],
     imports: [
         CommonModule,

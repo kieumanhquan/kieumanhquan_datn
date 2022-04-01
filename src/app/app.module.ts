@@ -25,8 +25,10 @@ import {
 import { AuthInterceptor } from './@core/interceptor/auth.interceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import { JobTitleComponent } from './modules/job-title/job-title.component';
-import {AvatarModule} from "primeng/avatar";
-import {ButtonModule} from "primeng/button";
+import {AvatarModule} from 'primeng/avatar';
+import {ButtonModule} from 'primeng/button';
+import { ChangePasswordFinishComponent } from './modules/change-password-finish/change-password-finish.component';
+
 
 const configToast: any = {
   timeOut: 3000,
@@ -70,7 +72,7 @@ const configToast: any = {
   ],
   exports: [
 
-  ]
+  ],
 })
 export class AppModule {
 }
