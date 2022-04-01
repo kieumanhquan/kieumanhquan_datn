@@ -11,24 +11,13 @@ import {JobDto} from '../models/model/JobDto';
 })
 export class JobService {
 
-  private apiServerUrl = environment.apiUrl;
+  private apiServerUrl = environment.apiPublicUrl;
+  private apiPublicUrl = environment.apiPublicUrl;
 
   constructor(private http: HttpClient) { }
 
-  public getJob(): Observable<Job[]> {
-    return this.http.get<any>(`${this.apiServerUrl}`+'jobs').pipe(
-      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
-    );
-  }
-
   public addJob(job: JobDto): Observable<any> {
     return this.http.post(`${this.apiServerUrl}`+'jobs',job).pipe(
-      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
-    );
-  }
-
-  public getStatusJob(): Observable<any[]> {
-    return this.http.get<any>(`${this.apiServerUrl}`+'statusJobs').pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }
@@ -41,8 +30,47 @@ export class JobService {
 
   public findJob(name, statusJob, salaryMin, salaryMax,page,size): Observable<any> {
     // eslint-disable-next-line max-len
-    return this.http.get<any>(`${this.apiServerUrl}`+'jobs/searchesT?'+'name='+name+'&statusJob='+statusJob+'&salaryMin='+salaryMin+'&salaryMax='+salaryMax+'&page='+page+'&size='+size).pipe(
+    return this.http.get<any>(`${this.apiServerUrl}`+'jobs/searches?'+'name='+name+'&statusJob='+statusJob+'&salaryMin='+salaryMin+'&salaryMax='+salaryMax+'&page='+page+'&size='+size).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }
+
+  public sortByName(name, statusJob, salaryMin, salaryMax,page,size): Observable<any> {
+    // eslint-disable-next-line max-len
+    return this.http.get<any>(`${this.apiServerUrl}`+'jobs/searches/sortByName?'+'name='+name+'&statusJob='+statusJob+'&salaryMin='+salaryMin+'&salaryMax='+salaryMax+'&page='+page+'&size='+size).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public getStatusJob(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiPublicUrl}`+'statusJobs').pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+  public getJobPosition(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiPublicUrl}`+'jobPositions').pipe(
+      tap(jobPositions => console.log(`jobPositions=${JSON.stringify(jobPositions)}`)),
+    );
+  }
+
+  public getWorkingForm(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiPublicUrl}`+'workingForms').pipe(
+      tap(jobPositions => console.log(`workingForms=${JSON.stringify(jobPositions)}`)),
+    );
+  }
+
+  public getAcademicLevels(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiPublicUrl}`+'academicLevels').pipe(
+      tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
+    );
+  }
+
+  public getRanks(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiPublicUrl}`+'ranks').pipe(
+      tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
+    );
+  }
+
+
+
 }

@@ -6,6 +6,7 @@ import {JobService} from '../../service/job.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {StatusJob} from '../../models/model/StatusJob';
 import {SelectItem} from 'primeng/api';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ngx-job-list',
@@ -34,8 +35,10 @@ export class JobListComponent implements OnInit {
   page: number;
   size: number;
   totalRecords: number;
+  sortNumber: number;
+  rangeValues: number[] = [0,200];
 
-  constructor(public jobService: JobService) {
+  constructor(public jobService: JobService,private readonly router: Router) {
   }
 
   ngOnInit(): void {
@@ -52,10 +55,11 @@ export class JobListComponent implements OnInit {
     this.selectedName = '';
     this.selectedStatusJobAdvanced = {id: 1, code: 'Chờ duyệt'};
     this.selectedSalaryMin = 0;
-    this.selectedSalaryMax = 1000000000;
+    this.selectedSalaryMax = 200;
     this.page = 0;
     this.size = 2;
     this.totalRecords = 5;
+    this.sortNumber = 1;
   }
 
   public getStatusJob(): void {
@@ -71,13 +75,14 @@ export class JobListComponent implements OnInit {
 
   onSortChange(event) {
     const value = event.value;
+    console.log(value,value);
 
     if (value.indexOf('name') === 0) {
-      this.sortOrder = -1;
-      this.sortField = value.substring(1, value.length);
+      this.sortNumber = 2;
+      this.onSortByName();
     } else {
-      this.sortOrder = 1;
-      this.sortField = value;
+      this.sortNumber = 1;
+      this.onSearch();
     }
   }
 
@@ -111,11 +116,12 @@ export class JobListComponent implements OnInit {
     );
   }
 
-  public onPaginator() {
+  public onSortByName() {
     // eslint-disable-next-line max-len
-    this.jobService.findJob(this.selectedName, this.selectedStatusJobAdvanced.id, this.selectedSalaryMin, this.selectedSalaryMax, this.page, this.size).subscribe(
+    this.jobService.sortByName(this.selectedName, this.selectedStatusJobAdvanced.id, this.selectedSalaryMin, this.selectedSalaryMax, this.page, this.size).subscribe(
       (data: any) => {
         this.jobs = data.list;
+        this.totalRecords = data.totalPage * this.size;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -126,6 +132,19 @@ export class JobListComponent implements OnInit {
   paginate(event: any) {
     this.page = event.page;
     this.size = event.rows;
-    this.onPaginator();
+    if(this.sortNumber === 1){
+      this.onSearch();
+    } else {
+      this.onSortByName();
+    }
+  }
+
+  handleChangeSalary() {
+    this.selectedSalaryMin = this.rangeValues[0];
+    this.selectedSalaryMax = this.rangeValues[1];
+  }
+
+  onAdd() {
+    this.router.navigate(['/home/add-job']).then(r => console.log(r));
   }
 }

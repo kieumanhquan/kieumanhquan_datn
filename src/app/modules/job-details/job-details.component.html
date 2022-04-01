@@ -1,6 +1,6 @@
 <ng-template [ngIf]="job">
   <div class="container">
-    <div>
+    <div class="mb-5">
       <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
         <p-button label="Cập nhật" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
