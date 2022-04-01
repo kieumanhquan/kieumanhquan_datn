@@ -14,7 +14,7 @@ import {DropdownModule} from 'primeng/dropdown';
 import {PaginatorModule} from 'primeng/paginator';
 import {JobAddComponent} from '../job-add/job-add.component';
 import {JobTitleComponent} from '../job-title/job-title.component';
-import {JobUpdateComponent} from "../job-update/job-update.component";
+import {JobUpdateComponent} from '../job-update/job-update.component';
 
 
 const routes: Routes = [{
