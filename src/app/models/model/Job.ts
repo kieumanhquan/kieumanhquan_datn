@@ -20,6 +20,7 @@ export interface Job{
   skills: string;
   startRecruitmentDate?: Date;
   workingForm: WorkingForm;
+  jobRequirement: string;
   description: string;
   benefits: string;
   salaryMax: number;

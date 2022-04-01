@@ -1,7 +1,7 @@
-<form novalidate (ngSubmit)="onSubmit()" [formGroup]="rfContact" class="row justify-content-md-center">
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="rfContact" class="row justify-content-md-center container">
   <div class="col-md-8">
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Name:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Tên công việc:</label>
       <div class="col-md-10">
         <input class="form-control" type="text" formControlName="name">
       </div>
@@ -12,9 +12,17 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">JobPositionId:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Ví trí công việc:</label>
       <div class="col-md-10">
-        <input class="form-control" type="number" formControlName="jobPositionId">
+        <select
+          class="custom-select mb-3"
+          formControlName="jobPositionId"
+        >
+          <option value="">Choose vị trí công việc</option>
+          <option *ngFor="let jobPosition of jobPositions" [ngValue]="jobPosition.id">
+            {{ jobPosition.code }}
+          </option>
+        </select>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -23,29 +31,36 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">NumberExperience:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Kinh nghiệm:</label>
       <div class="col-md-10">
-        <input class="form-control" type="text" id="example-text-input" formControlName="numberExperience">
+        <input class="form-control" type="number" min="0" id="example-text-input" formControlName="numberExperience">
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
          *ngIf="rfContact.get('numberExperience')?.errors?.required && rfContact.get('numberExperience')?.touched">
       NumberExperience is required!
     </div>
-
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">WorkingFormId:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Hình thức làm việc:</label>
       <div class="col-md-10">
-        <input class="form-control" type="text"  formControlName="workingFormId">
+        <select
+          class="custom-select mb-3"
+          formControlName="workingFormId"
+        >
+          <option value="">Choose hình thức làm việc</option>
+          <option *ngFor="let workingForm of workingForms" [ngValue]="workingForm.id">
+            {{ workingForm.code }}
+          </option>
+        </select>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
          *ngIf="rfContact.get('workingFormId')?.errors?.required && rfContact.get('workingFormId')?.touched">
-          workingFormId is required!
+      workingFormId is required!
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">AddressWork:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Địa chỉ công việc:</label>
       <div class="col-md-10">
         <input class="form-control" type="text" formControlName="addressWork">
       </div>
@@ -54,11 +69,18 @@
          *ngIf="rfContact.get('addressWork')?.errors?.required && rfContact.get('addressWork')?.touched">
       AddressWork is required!
     </div>
-
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">academicLevelId:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Trình độ học vấn:</label>
       <div class="col-md-10">
-        <input class="form-control" type="text"  formControlName="academicLevelId">
+        <select
+          class="custom-select mb-3"
+          formControlName="academicLevelId"
+        >
+          <option value="">Choose trình độ học vấn</option>
+          <option *ngFor="let academicLevel of academicLevels" [ngValue]="academicLevel.id">
+            {{ academicLevel.code }}
+          </option>
+        </select>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -67,21 +89,17 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">qtyPerson:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Level:</label>
       <div class="col-md-10">
-        <input class="form-control" type="text"  formControlName="qtyPerson">
-      </div>
-    </div>
-    <div class="col alert alert-danger" role="alert"
-         *ngIf="rfContact.get('qtyPerson')?.errors?.required && rfContact.get('qtyPerson')?.touched">
-      QtyPerson is required!
-    </div>
-
-
-    <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">RankId:</label>
-      <div class="col-md-10">
-        <input class="form-control" type="text"  formControlName="rankId">
+        <select
+          class="custom-select mb-3"
+          formControlName="rankId"
+        >
+          <option value="">Choose trình độ học vấn</option>
+          <option *ngFor="let rank of ranks" [ngValue]="rank.id">
+            {{ rank.code }}
+          </option>
+        </select>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -90,7 +108,17 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">StartRecruitmentDate:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Số lượng cần tuyển:</label>
+      <div class="col-md-10">
+        <input class="form-control" type="number" min="0" formControlName="qtyPerson">
+      </div>
+    </div>
+    <div class="col alert alert-danger" role="alert"
+         *ngIf="rfContact.get('qtyPerson')?.errors?.required && rfContact.get('qtyPerson')?.touched">
+      QtyPerson is required!
+    </div>
+    <div class="form-group row">
+      <label for="example-text-input" class="col-md-2 col-form-label">Ngày bắt đâu tuyển:</label>
       <div class="col-md-10">
         <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="time" formControlName="startRecruitmentDate"></p-calendar>
       </div>
@@ -100,9 +128,8 @@
       StartRecruitmentDate is required!
     </div>
 
-
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">DueDate:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Hạn nộp hồ sơ:</label>
       <div class="col-md-10">
         <p-calendar [(ngModel)]="date8" [showTime]="true" inputId="time" formControlName="dueDate"></p-calendar>
       </div>
@@ -113,7 +140,7 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Description:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Mô tả công việc:</label>
       <div class="col-md-10">
         <input class="form-control" type="text" formControlName="description">
       </div>
@@ -124,7 +151,7 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Benefits:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Quyền lợi được hưởng:</label>
       <div class="col-md-10">
         <input class="form-control" type="text" formControlName="benefits">
       </div>
@@ -135,7 +162,7 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">JobRequirement:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Yêu cầu công việc:</label>
       <div class="col-md-10">
         <input class="form-control" type="text" formControlName="jobRequirement">
       </div>
@@ -168,10 +195,19 @@
       salaryMax is required!
     </div>
 
+
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">contactId:</label>
+      <label for="example-text-input" class="col-md-2 col-form-label">Người liên hệ</label>
       <div class="col-md-10">
-        <input class="form-control" type="text"  formControlName="contactId">
+        <select
+          class="custom-select mb-3"
+          formControlName="contactId"
+        >
+          <option value="">Choose người liên hê</option>
+          <option *ngFor="let je of jes" [ngValue]="je.id">
+            {{ je.name }}
+          </option>
+        </select>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -191,10 +227,9 @@
         </div>
       </div>
     </div>
-
     <div class="form-group row">
       <div class="col-md-10 offset-md-2">
-        <button class="btn btn-primary" type="submit">Submit</button>
+        <button  class="btn btn-primary" type="submit" [disabled]=!this.rfContact.valid>Submit</button>
       </div>
     </div>
   </div>

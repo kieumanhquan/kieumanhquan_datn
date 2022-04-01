@@ -12,7 +12,7 @@ import {User} from '../models/model/User';
 
 export class UserService{
 
-  private apiServerUrl = environment.apiUrl;
+  private apiServerUrl = environment.apiPublicUrl;
 
   constructor(private http: HttpClient) {
   }
@@ -28,8 +28,15 @@ export class UserService{
   }
 
   public getUserByUserName(userName: string): Observable<User> {
-    return this.http.get<any>(`${this.apiServerUrl}`+'public/user/username='+userName).pipe(
+    return this.http.get<any>(`${this.apiServerUrl}`+'user/username='+userName).pipe(
       tap(user => console.log(`user=${JSON.stringify(user)}`)),
+    );
+  }
+
+
+  public getJe(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiServerUrl}`+'user/role=ROLE_JE').pipe(
+      tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
     );
   }
 }
