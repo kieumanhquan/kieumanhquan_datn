@@ -28,8 +28,8 @@ export class AuthService {
       tap(users => console.log(`users=${JSON.stringify(users)}`)),
     );
   }
-  public changePassword(user: User): Observable<any> {
-    return this.http.post(`${this.apiServerUrl}`+'auth/reset-password/finish',user).pipe(
+  public changePassword(user: User,email: string): Observable<any> {
+    return this.http.post(`${this.apiServerUrl}`+'auth/reset-password/finish?email='+email,user).pipe(
       tap(users => console.log(`users=${JSON.stringify(users)}`)),
     );
   }

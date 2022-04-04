@@ -29,7 +29,8 @@ export class SearchInputComponent {
     this.isInputShown = false;
   }
 
-  onInput(val: string) {
+  onInput(val: Event) {
+    // @ts-ignore
     this.search.emit(val);
   }
 }

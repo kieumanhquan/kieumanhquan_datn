@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, EventEmitter, Output} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../service/auth.service';
+import {AuthService} from '../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
 
@@ -10,8 +10,12 @@ import {Router} from '@angular/router';
   styleUrls: ['./change-password-init.component.scss'],
 })
 export class ChangePasswordInitComponent implements OnInit {
-
   cpi: FormGroup;
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @Output() dataEvent = new EventEmitter<string>();
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private readonly router: Router) { }
@@ -22,18 +26,20 @@ export class ChangePasswordInitComponent implements OnInit {
     });
   }
   public sendOtp(){
-
     this.authService.sendOtp(this.cpi.value).subscribe(
       (data: any) => {
-        alert('Đã gửi mail');
+        alert(data.message);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       },
     );
   }
+
   onSubmit() {
     this.sendOtp();
-    this.router.navigate(['/home/change-password/finish']);
+    window.sessionStorage.setItem('email',this.cpi.value.email);
+    this.router.navigate(['/auth/change-password/finish']).then(r => console.log(r));
   }
+
 }

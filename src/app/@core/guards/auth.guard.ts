@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
 
@@ -18,8 +18,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
     // not logged in so redirect to login page with the return url
-    this.router.navigate(['/auth/'], { queryParams: { returnUrl: state.url } });
-    return true;
+    this.router.navigate(['/auth/'], {queryParams: {returnUrl: state.url}}).then(r =>console.log(r));
+     return true;
   }
 
 }

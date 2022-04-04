@@ -10,6 +10,7 @@ import {UserService} from '../../../service/user.service';
 import {User} from '../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 
+
 @Component({
   selector: 'ngx-header',
   styleUrls: ['./header.component.scss'],
@@ -18,16 +19,17 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
+
   // eslint-disable-next-line @typescript-eslint/member-ordering
   userPictureOnly = false;
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  user: User;
+  user: any;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   picture='iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAG1BMVEVEeef///+4zPaKq/ChvPPn7' +
   'vxymu3Q3flbieqI1HvuAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAQUlEQVQ4jWNgGAWjgP6ASdncAEaiAhaGiACmFhCJLsMaIiDAEQEi0WXYEiMC' +
   'OCJAJIY9KuYGTC0gknpuHwXDGwAA5fsIZw0iYWYAAAAASUVORK5CYII=';
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  name=this.sessionService.getItem('auth-user');
+  name=this.userService.getDecodedAccessToken().sub;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   themes = [
     {
@@ -59,9 +61,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private breakpointService: NbMediaBreakpointsService,
               private sessionService: SessionService,
               private userService: UserService,
-              private router: Router) {
-
-  }
+              private router: Router) {}
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;

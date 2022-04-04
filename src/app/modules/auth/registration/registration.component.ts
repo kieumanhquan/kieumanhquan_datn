@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../service/auth.service';
+import {AuthService} from '../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
@@ -22,15 +22,19 @@ export class RegistrationComponent implements OnInit {
       name: ['', [Validators.required, Validators.minLength(1),Validators.maxLength(50)]],
       email: ['', [Validators.required, Validators.minLength(1), Validators.email]],
       // eslint-disable-next-line max-len
-      phoneNumber: ['', [Validators.required, Validators.minLength(8)]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(8),Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]],
     });
   }
   public addUser(){
 
     this.authService.addUser(this.regi.value).subscribe(
       (data: any) => {
-        alert('Add thành công');
-        alert(data.message);
+        // eslint-disable-next-line eqeqeq
+        if (data == false) {
+          alert('Đăng ký thất bại');
+        } else {
+          alert('Đăng ký thành công');
+        }
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

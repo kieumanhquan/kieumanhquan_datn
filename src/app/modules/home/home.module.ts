@@ -15,9 +15,6 @@ import {PaginatorModule} from 'primeng/paginator';
 import {JobAddComponent} from './job/job-add/job-add.component';
 import {JobTitleComponent} from './job/job-title/job-title.component';
 import {JobUpdateComponent} from './job/job-update/job-update.component';
-import {RegistrationComponent} from '../registration/registration.component';
-import {ChangePasswordInitComponent} from '../change-password-init/change-password-init.component';
-import {ChangePasswordFinishComponent} from '../change-password-finish/change-password-finish.component';
 import {JobRegisterListComponent} from './job-register/job-register-list/job-register-list.component';
 import {JobRegisterTitleComponent} from './job-register/job-register-title/job-register-title.component';
 import { JobRegisterDetailComponent } from './job-register/job-register-detail/job-register-detail.component';
@@ -49,18 +46,6 @@ const routes: Routes = [{
       component: JobDetailsComponent,
     },
     {
-      path: 'signup',
-      component: RegistrationComponent,
-    },
-    {
-      path: 'change-password/init',
-      component: ChangePasswordInitComponent,
-    },
-    {
-      path: 'change-password/finish',
-      component: ChangePasswordFinishComponent,
-    },
-    {
       path: 'job-update/:id',
       component: JobUpdateComponent,
     },
@@ -87,9 +72,6 @@ const routes: Routes = [{
     JobDetailsComponent,
     JobAddComponent,
     JobTitleComponent,
-    RegistrationComponent,
-    ChangePasswordInitComponent,
-    ChangePasswordFinishComponent,
     JobUpdateComponent,
     JobRegisterListComponent,
     JobRegisterTitleComponent,
@@ -109,7 +91,6 @@ const routes: Routes = [{
     PaginatorModule,
   ],
   exports: [
-    JobTitleComponent
   ],
 })
 export class HomeModule {

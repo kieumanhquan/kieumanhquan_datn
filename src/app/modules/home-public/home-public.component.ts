@@ -72,6 +72,10 @@ export class HomePublicComponent implements OnInit {
   }
 
   onSignIn() {
-    this.router.navigate(['/auth']).then(r => console.log(r));
+    this.router.navigate(['/auth/login']).then(r => console.log(r));
+  }
+
+  onSignUp() {
+    this.router.navigate(['/auth/signup']).then(r => console.log(r));
   }
 }

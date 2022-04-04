@@ -5,16 +5,36 @@ import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
+import {RegistrationComponent} from './registration/registration.component';
+import {ChangePasswordInitComponent} from './change-password-init/change-password-init.component';
+import {ChangePasswordFinishComponent} from './change-password-finish/change-password-finish.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [{
   path: '',
   component: AuthComponent,
-  children: [],
-}];
+  children:[{   path: 'signup',
+    component: RegistrationComponent},
+    {   path: 'change-password/init',
+      component: ChangePasswordInitComponent},
+    {
+      path: 'change-password/finish',
+      component: ChangePasswordFinishComponent,
+    },
+    {
+      path: 'login',
+      component: LoginComponent,
+    }],
+},
+  ];
 
 @NgModule({
   declarations: [
     AuthComponent,
+    RegistrationComponent,
+    ChangePasswordInitComponent,
+    ChangePasswordFinishComponent,
+    LoginComponent,
   ],
   imports: [
     CommonModule,

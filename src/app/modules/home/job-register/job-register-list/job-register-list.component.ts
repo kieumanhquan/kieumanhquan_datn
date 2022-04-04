@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import {SelectItem} from 'primeng/api';
-import {StatusJob} from '../../../../models/model/StatusJob';
+import {Component, OnInit} from '@angular/core';
 import {HttpErrorResponse} from '@angular/common/http';
+import {SelectItem} from 'primeng/api';
 import {JobRegister} from '../../../../models/model/JobRegister';
 import {JobRegisterService} from '../../../../service/jobRegister.service';
 import {SearchJobRegister} from '../../../../models/job/SearchJobRegister';
+import {StatusJob} from '../../../../models/model/StatusJob';
 
 @Component({
   selector: 'ngx-job-register-list',

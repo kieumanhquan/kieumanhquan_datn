@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../service/auth.service';
+import {AuthService} from '../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ngx-change-password-finish',
@@ -9,10 +10,12 @@ import {HttpErrorResponse} from '@angular/common/http';
   styleUrls: ['./change-password-finish.component.scss'],
 })
 export class ChangePasswordFinishComponent implements OnInit {
-
   cpf: FormGroup;
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   constructor(private fb: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private router: Router,
+                ) { }
 
   ngOnInit() {
     this.cpf = this.fb.group({
@@ -21,14 +24,15 @@ export class ChangePasswordFinishComponent implements OnInit {
       // eslint-disable-next-line max-len
       newPassword: ['', [Validators.required, Validators.minLength(8),Validators.maxLength(16),Validators.pattern('^(?=[^A-Z\\n]*[A-Z])(?=[^a-z\\n]*[a-z])(?=[^0-9\\n]*[0-9])(?=[^#?!@$%^&*\\n-]*[#?!@$%^&*-]).{8,}$')]],
       otp: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(5),Validators.pattern('^[0-9]*$')]],
+
     });
   }
   public sendOtp(){
-
-    this.authService.sendOtp(this.cpf.value).subscribe(
+    console.log(window.sessionStorage.getItem('email'));
+    this.authService.changePassword(this.cpf.value,window.sessionStorage.getItem('email')).subscribe(
       (data: any) => {
-        alert('Đã đổi mật khẩu mới');
-      },
+        alert(data.message);
+},
       (error: HttpErrorResponse) => {
         alert(error.message);
       },
@@ -36,5 +40,7 @@ export class ChangePasswordFinishComponent implements OnInit {
   }
   onSubmit() {
     this.sendOtp();
+    sessionStorage.removeItem('email');
+    this.router.navigate(['/auth/login']).then(r => console.log(r));
   }
 }
