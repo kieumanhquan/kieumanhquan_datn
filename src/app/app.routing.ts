@@ -9,6 +9,9 @@ import {
   NbResetPasswordComponent,
 } from '@nebular/auth';
 import { AuthGuard } from './@core/guards/auth.guard';
+import {RegistrationComponent} from './modules/registration/registration.component';
+import {ChangePasswordFinishComponent} from './modules/change-password-finish/change-password-finish.component';
+import {ChangePasswordInitComponent} from './modules/change-password-init/change-password-init.component';
 
 export const routes: Routes = [
   {
@@ -19,6 +22,18 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
+  },
+  {
+    path: 'signup',
+    component: RegistrationComponent,
+  },
+  {
+    path: 'changePassword/init',
+    component: ChangePasswordInitComponent,
+  },
+  {
+    path: 'changePassword/finish',
+    component: ChangePasswordFinishComponent,
   },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', redirectTo: 'home' },

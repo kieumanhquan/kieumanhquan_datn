@@ -6,6 +6,7 @@ import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { SessionService } from '../../../@core/services/session.service';
 import { Router } from '@angular/router';
+import {UserService} from '../../../service/user.service';
 
 @Component({
   selector: 'ngx-header',
@@ -15,14 +16,17 @@ import { Router } from '@angular/router';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   private destroy$: Subject<void> = new Subject<void>();
-  userPictureOnly: boolean = false;
+  userPictureOnly = false;
   user: any;
   picture='iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAG1BMVEVEeef///+4zPaKq/ChvPPn7' +
   'vxymu3Q3flbieqI1HvuAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAQUlEQVQ4jWNgGAWjgP6ASdncAEaiAhaGiACmFhCJLsMaIiDAEQEi0WXYEiMC' +
   'OCJAJIY9KuYGTC0gknpuHwXDGwAA5fsIZw0iYWYAAAAASUVORK5CYII=';
 
-  name=this.sessionService.getItem('auth-user')
-  
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  name=this.userService.getDecodedAccessToken().sub;
+
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   themes = [
     {
       value: 'default',
@@ -52,8 +56,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private layoutService: LayoutService,
               private breakpointService: NbMediaBreakpointsService,
               private sessionService: SessionService,
-              private router: Router,) {
-                
+              private router: Router,
+              private  userService: UserService) {
+
   }
 
   ngOnInit() {
@@ -63,15 +68,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.menuService.onItemClick().subscribe((event)=>{
       if(event.item.title==='Log out'){
-        this.sessionService.removeItem('auth-token')
-        this.sessionService.removeItem('auth-user')
-        this.router.navigate(['/auth/'])
+        this.sessionService.removeItem('auth-token');
+        this.sessionService.removeItem('auth-user');
+        this.router.navigate(['/auth/']);
       }
       if(event.item.title==='Profile'){
-        this.router.navigate(['/home/profile'])
+        this.router.navigate(['/home/profile']);
       }
-    })
-    
+    });
+
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()
       .pipe(
@@ -108,6 +113,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuService.navigateHome();
     return false;
   }
-  
+
 
 }

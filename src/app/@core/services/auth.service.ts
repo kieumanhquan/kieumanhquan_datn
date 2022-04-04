@@ -7,14 +7,15 @@ import { environment } from '../../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*'
-    
-  })
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    'Access-Control-Allow-Origin': '*',
+  }),
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private readonly baseUrl = `${environment.apiUrl}auth/`;

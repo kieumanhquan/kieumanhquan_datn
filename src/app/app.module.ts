@@ -26,6 +26,7 @@ import { AuthInterceptor } from './@core/interceptor/auth.interceptor';
 import {ReactiveFormsModule} from '@angular/forms';
 import {AvatarModule} from 'primeng/avatar';
 import {ButtonModule} from 'primeng/button';
+import { LoginComponent } from './modules/login/login.component';
 
 
 const configToast: any = {

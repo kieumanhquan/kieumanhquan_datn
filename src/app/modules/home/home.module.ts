@@ -45,22 +45,6 @@ const routes: Routes = [{
       path: 'job-detail/:id',
       component: JobDetailsComponent,
     },
-    {
-      path: 'signup',
-      component: RegistrationComponent,
-    },
-    {
-      path: 'change-password/init',
-      component: ChangePasswordInitComponent,
-    },
-    {
-      path: 'change-password/finish',
-      component: ChangePasswordFinishComponent,
-    },
-    {
-      path: 'job-update/:id',
-      component: JobUpdateComponent,
-    },
   ],
 }];
 
@@ -72,9 +56,6 @@ const routes: Routes = [{
         JobDetailsComponent,
         JobAddComponent,
       JobTitleComponent,
-      RegistrationComponent,
-      ChangePasswordInitComponent,
-      ChangePasswordFinishComponent,
       JobUpdateComponent,
     ],
     imports: [

@@ -1,4 +1,4 @@
-// @ts-ignore
+ // @ts-ignore
 
 import {Component, OnInit} from '@angular/core';
 import {Job} from '../../models/model/Job';
