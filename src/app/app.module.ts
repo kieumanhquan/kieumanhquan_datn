@@ -23,9 +23,10 @@ import {
 } from '@nebular/theme';
 
 import { AuthInterceptor } from './@core/interceptor/auth.interceptor';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AvatarModule} from 'primeng/avatar';
 import {ButtonModule} from 'primeng/button';
+
 
 const configToast: any = {
   timeOut: 3000,
@@ -58,6 +59,7 @@ const configToast: any = {
     ReactiveFormsModule,
     AvatarModule,
     ButtonModule,
+    FormsModule,
   ],
   bootstrap: [AppComponent],
   providers: [

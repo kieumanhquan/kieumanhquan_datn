@@ -1,0 +1,21 @@
+<div class="d-flex container mt-3 mb-5">
+
+  <p-autoComplete class="mr-5" [(ngModel)]="selectedName" placeholder="Tên công viêc..." field="name" ></p-autoComplete>
+  <p-autoComplete class="mr-5" [(ngModel)]="selectedStatusJobAdvanced" placeholder="Trạng thái ứng tuyển..." [suggestions]="filteredStatusJobs"
+                  (completeMethod)="filterStatusJob($event)" field="code" [dropdown]="true">
+    <ng-template let-statusJob pTemplate="item">
+      <div class="statusJob-item">
+        <div>{{statusJob.code}}</div>
+      </div>
+    </ng-template>
+  </p-autoComplete>
+
+  <p-button class="mr-2" label="Search" icon="pi pi-search" iconPos="right" [loading]="" (onClick)="onSearch()"></p-button>
+  <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+</div>
+
+<ngx-job-register-title *ngFor="let jobRegister of jobRegisters" [jobRegister]="jobRegister"></ngx-job-register-title>
+
+<p-paginator [rows]="2" [totalRecords]="totalRecords" [rowsPerPageOptions]="[2,5,10]" (onPageChange)="paginate($event)"></p-paginator>
+
+

@@ -12,6 +12,10 @@ import { AuthGuard } from './@core/guards/auth.guard';
 
 export const routes: Routes = [
   {
+    path: 'home-public',
+    loadChildren: () => import('./modules/home-public/home-public.module').then(m => m.HomePublicModule),
+  },
+  {
     path: 'home',
     canActivate: [AuthGuard],
     loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule),

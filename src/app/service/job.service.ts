@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { Job } from '../models/model/Job';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
@@ -22,22 +21,28 @@ export class JobService {
     );
   }
 
+  public updateJob(job: JobDto): Observable<any> {
+    return this.http.put(`${this.apiServerUrl}`+'jobs',job).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
   public getJobById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiServerUrl}`+'jobs/id='+id).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }
 
-  public findJob(name, statusJob, salaryMin, salaryMax,page,size): Observable<any> {
+  public findJob(searchJob,page,size): Observable<any> {
     // eslint-disable-next-line max-len
-    return this.http.get<any>(`${this.apiServerUrl}`+'jobs/searches?'+'name='+name+'&statusJob='+statusJob+'&salaryMin='+salaryMin+'&salaryMax='+salaryMax+'&page='+page+'&size='+size).pipe(
+    return this.http.post<any>(`${this.apiServerUrl}`+'jobs/searches?'+'&page='+page+'&size='+size,searchJob).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }
 
-  public sortByName(name, statusJob, salaryMin, salaryMax,page,size): Observable<any> {
+  public sortByName(searchJob,page,size): Observable<any> {
     // eslint-disable-next-line max-len
-    return this.http.get<any>(`${this.apiServerUrl}`+'jobs/searches/sortByName?'+'name='+name+'&statusJob='+statusJob+'&salaryMin='+salaryMin+'&salaryMax='+salaryMax+'&page='+page+'&size='+size).pipe(
+    return this.http.post<any>(`${this.apiServerUrl}`+'jobs/searches/sortByName?'+'&page='+page+'&size='+size,searchJob).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }
@@ -71,6 +76,25 @@ export class JobService {
     );
   }
 
+  public getJobNews(numberDay,page,size): Observable<any> {
+    return this.http.get<any>(`${this.apiPublicUrl}`+'jobs/news?'+'numberDay='+numberDay
+      +'&page='+page+'&size='+size).pipe(
+      tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
+    );
+  }
 
+  public getJobHighSalary(salary,page,size): Observable<any> {
+    return this.http.get<any>(`${this.apiPublicUrl}`+'jobs/salary-highs?'+'salary='+salary
+      +'&page='+page+'&size='+size).pipe(
+      tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
+    );
+  }
+
+  public getJobDue(numberDay,page,size): Observable<any> {
+    return this.http.get<any>(`${this.apiPublicUrl}`+'jobs/due-dates?'+'numberDay='+numberDay
+      +'&page='+page+'&size='+size).pipe(
+      tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
+    );
+  }
 
 }

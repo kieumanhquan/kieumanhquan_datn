@@ -8,13 +8,20 @@ import {ProfileComponent} from './profile/profile.component';
 import {SharedModule} from 'primeng/api';
 import {PrimengModule} from '../../shared/primeng.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {JobListComponent} from '../job-list/job-list.component';
-import {JobDetailsComponent} from '../job-details/job-details.component';
+import {JobListComponent} from './job/job-list/job-list.component';
+import {JobDetailsComponent} from './job/job-details/job-details.component';
 import {DropdownModule} from 'primeng/dropdown';
 import {PaginatorModule} from 'primeng/paginator';
-import {JobAddComponent} from '../job-add/job-add.component';
-import {JobTitleComponent} from '../job-title/job-title.component';
-import {JobUpdateComponent} from '../job-update/job-update.component';
+import {JobAddComponent} from './job/job-add/job-add.component';
+import {JobTitleComponent} from './job/job-title/job-title.component';
+import {JobUpdateComponent} from './job/job-update/job-update.component';
+import {RegistrationComponent} from '../registration/registration.component';
+import {ChangePasswordInitComponent} from '../change-password-init/change-password-init.component';
+import {ChangePasswordFinishComponent} from '../change-password-finish/change-password-finish.component';
+import {JobRegisterListComponent} from './job-register/job-register-list/job-register-list.component';
+import {JobRegisterTitleComponent} from './job-register/job-register-title/job-register-title.component';
+import { JobRegisterDetailComponent } from './job-register/job-register-detail/job-register-detail.component';
+import { ListJobRegisterComponent } from './job-register/list-job-register/list-job-register.component';
 
 
 const routes: Routes = [{
@@ -42,8 +49,32 @@ const routes: Routes = [{
       component: JobDetailsComponent,
     },
     {
+      path: 'signup',
+      component: RegistrationComponent,
+    },
+    {
+      path: 'change-password/init',
+      component: ChangePasswordInitComponent,
+    },
+    {
+      path: 'change-password/finish',
+      component: ChangePasswordFinishComponent,
+    },
+    {
       path: 'job-update/:id',
       component: JobUpdateComponent,
+    },
+    {
+      path: 'list-job-register',
+      component: JobRegisterListComponent,
+    },
+    {
+      path: 'job-register-detail/:id',
+      component: JobRegisterDetailComponent,
+    },
+    {
+      path: 'list-job-register/:id',
+      component: ListJobRegisterComponent,
     },
   ],
 }];
@@ -56,7 +87,14 @@ const routes: Routes = [{
     JobDetailsComponent,
     JobAddComponent,
     JobTitleComponent,
+    RegistrationComponent,
+    ChangePasswordInitComponent,
+    ChangePasswordFinishComponent,
     JobUpdateComponent,
+    JobRegisterListComponent,
+    JobRegisterTitleComponent,
+    JobRegisterDetailComponent,
+    ListJobRegisterComponent,
   ],
   imports: [
     CommonModule,
@@ -70,7 +108,9 @@ const routes: Routes = [{
     DropdownModule,
     PaginatorModule,
   ],
-  exports: [],
+  exports: [
+    JobTitleComponent
+  ],
 })
 export class HomeModule {
 }

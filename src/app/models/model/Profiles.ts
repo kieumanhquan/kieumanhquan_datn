@@ -7,6 +7,7 @@ export interface Profiles{
   academicLevel: AcademicLevel;
   skill: string;
   desiredSalary: string;
+  desiredWorkingForm: string;
   desiredWorkingAddress: string;
   numberYearsExperience: number;
   delete: number;

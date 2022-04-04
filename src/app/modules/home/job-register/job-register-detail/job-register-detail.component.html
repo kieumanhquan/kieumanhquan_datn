@@ -1,0 +1,98 @@
+<ng-template [ngIf]="jobRegister">
+  <div class="container">
+    <div class="mb-5">
+      <p-button label="Tải xuống CV" styleClass="p-button-sm" class="mr-2"></p-button>
+      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
+        <p-button (onClick)="onUpdate()" label="Xét duyệt" styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template
+        [ngIf]="jobRegister.statusJobRegister.code !== 'Ứng viên bị từ chối' && user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
+        <p-button label="Từ chối ứng viên" styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template
+        [ngIf]="jobRegister.statusJobRegister.code === 'Ứng viên bị từ chối' || jobRegister.statusJobRegister.code === 'Ứng viên đã hủy ứng tuyển'">
+        <p-button label="Xem lý do" styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template
+        [ngIf]="jobRegister.statusJobRegister.code === 'Chờ phỏng vấn' && user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
+        <p-button label="Đặt lịch phỏng vấn" styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+      <ng-template
+        [ngIf]="jobRegister.statusJobRegister.code === 'Đang phỏng vấn' && user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
+        <p-button label="Tuyển thành công" styleClass="p-button-sm" class="mr-2"></p-button>
+      </ng-template>
+    </div>
+    <div class="d-flex">
+      <div>
+        <p-avatar
+          [image]="jobRegister.user.avatarName"
+          pBadge value="4" severity="danger" size="xlarge"></p-avatar>
+      </div>
+      <div class="ml-5">
+        <h2 href="#" class="display-5 font-weight-bold">{{jobRegister.user.name}}</h2>
+        <p class="mt-3">Đăng kí hồ sơ: {{this.jobRegister.dateRegister | date}}</p>
+      </div>
+    </div>
+    <h2>Thông tin về công việc</h2>
+    <div class="d-flex justify-content-around badge badge-info mr-2 p-5">
+      <div>
+        <div>
+          <h2>Mức lương</h2>
+          <p>{{jobRegister.job.salaryMin}}-{{jobRegister.job.salaryMax}} triệu</p>
+        </div>
+        <div>
+          <h2>Hình thức làm việc</h2>
+          <p>{{jobRegister.job.workingForm.code}}</p>
+        </div>
+        <div>
+          <h2>Trình độ học vấn</h2>
+          <p>{{jobRegister.job.academicLevel.code}}</p>
+        </div>
+      </div>
+      <div class="ml-5">
+        <div>
+          <h2>Số lượng tuyển</h2>
+          <p>{{jobRegister.job.qtyPerson}} người</p>
+        </div>
+        <div>
+          <h2>Vị trí ứng tuyển</h2>
+          <p>{{jobRegister.job.jobPosition.code}}</p>
+        </div>
+        <div>
+          <h2>Kinh nghiệm </h2>
+          <p>{{jobRegister.job.numberExperience}} năm</p>
+        </div>
+      </div>
+    </div>
+    <ng-template [ngIf]="profiles">
+      <h2>Thông tin về ứng viên</h2>
+      <div class="d-flex justify-content-around badge badge-info mr-2 p-5">
+        <div>
+          <div>
+            <h2>Mức lương</h2>
+            <p>{{profiles.desiredSalary}} triệu</p>
+          </div>
+          <div>
+            <h2>Hình thức làm việc</h2>
+            <p>{{profiles.desiredWorkingForm}}</p>
+          </div>
+          <div>
+            <h2>Trình độ học vấn</h2>
+            <p>{{profiles.academicLevel.code}}</p>
+          </div>
+        </div>
+        <div class="ml-5">
+          <div>
+            <h2>Skills</h2>
+            <p>{{profiles.skill}}</p>
+          </div>
+          <div>
+            <h2>Kinh nghiệm </h2>
+            <p>{{profiles.numberYearsExperience}} năm</p>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>
+
