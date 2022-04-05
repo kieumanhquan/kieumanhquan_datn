@@ -1,29 +1,29 @@
-<ng-template [ngIf]="job">
+<ng-template [ngIf]="job" >
   <div class="container">
     <div class="mb-5">
-      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
+      <ng-template [ngIf]="user.roles[0].id === 1 || user.roles[0].id === 2">
         <p-button (onClick)="onUpdate()" label="Cập nhật" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
-        <p-button label="Xem trước" styleClass="p-button-sm" class="mr-2"></p-button>
+      <ng-template [ngIf]="user.roles[0].id === 1 || user.roles[0].id === 2">
+        <p-button label="Xem trước" (click)="onPreview(job.id)" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-        <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' && job.statusJob.code === 'chờ xét duyệt'">
-        <p-button label="xét duyệt"  styleClass="p-button-sm" class="mr-2"></p-button>
+        <ng-template [ngIf]="user.roles[0].id === 1 && job.statusJob.id === 1">
+        <p-button label="xét duyệt"  (click)="onBrowse()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' && job.statusJob.code === 'chờ xét duyệt'">
+      <ng-template [ngIf]="user.roles[0].id === 1 && job.statusJob.id === 1">
         <p-button label="từ chối duyệt"  styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-      <ng-template [ngIf]="job.statusJob.code === 'chưa đăng tuyển'">
-        <p-button label="Đăng tuyển"  styleClass="p-button-sm" class="mr-2"></p-button>
+      <ng-template [ngIf]="job.statusJob.id === 3">
+        <p-button label="Đăng tuyển" (click)="onUp()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-      <ng-template [ngIf]="job.statusJob.code === 'đang tuyển'">
-        <p-button label="dừng tuyển"  styleClass="p-button-sm" class="mr-2"></p-button>
+      <ng-template [ngIf]="job.statusJob.id === 2">
+        <p-button label="dừng tuyển" (click)="onStop()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-      <ng-template [ngIf]="job.statusJob.code === 'đang tuyển' || job.statusJob.code === 'chưa đăng tuyển'">
-        <p-button label="Đóng"  styleClass="p-button-sm" class="mr-2"></p-button>
+      <ng-template [ngIf]="job.statusJob.id === 2 || job.statusJob.id === 3">
+        <p-button label="Đóng" (click)="onClose()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' && job.statusJob.code === 'dã từ chối' ||job.statusJob.code === 'đã đóng' ">
-        <p-button label="Xóa"  styleClass="p-button-sm" class="mr-2"></p-button>
+      <ng-template [ngIf]="user.roles[0].id === 1 && job.statusJob.id === 5 ||job.statusJob.id === 4 ">
+        <p-button label="Xóa" (click)="onDelete()"  styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
     </div>
     <div class="d-flex">

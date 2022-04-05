@@ -28,6 +28,7 @@ export class JobAddComponent implements OnInit {
   jes: User[];
 
   rfContact: FormGroup;
+  user: User;
   constructor(private fb: FormBuilder,
               private jobService: JobService,
               private userService: UserService,
@@ -36,21 +37,21 @@ export class JobAddComponent implements OnInit {
   ngOnInit() {
     this.rfContact = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      jobPositionId: ['', [Validators.required, Validators.minLength(3)]],
-      numberExperience: ['', [Validators.required, Validators.minLength(3)]],
-      workingFormId: ['', [Validators.required, Validators.minLength(3)]],
+      jobPositionId: ['', [Validators.required]],
+      numberExperience: ['', [Validators.required]],
+      workingFormId: ['', [Validators.required]],
       addressWork: ['', [Validators.required, Validators.minLength(3)]],
-      academicLevelId: ['', [Validators.required, Validators.minLength(3)]],
-      rankId: ['', [Validators.required, Validators.minLength(3)]],
-      qtyPerson: ['', [Validators.required, Validators.minLength(3)]],
-      startRecruitmentDate: ['', [Validators.required, Validators.minLength(3)]],
-      dueDate: ['', [Validators.required, Validators.minLength(3)]],
+      academicLevelId: ['', [Validators.required]],
+      rankId: ['', [Validators.required]],
+      qtyPerson: ['', [Validators.required]],
+      startRecruitmentDate: ['', [Validators.required]],
+      dueDate: ['', [Validators.required]],
       description: ['', [Validators.required, Validators.minLength(3)]],
       benefits: ['', [Validators.required, Validators.minLength(3)]],
       jobRequirement: ['', [Validators.required, Validators.minLength(3)]],
-      salaryMin: ['', [Validators.required, Validators.minLength(3)]],
-      salaryMax: ['', [Validators.required, Validators.minLength(3)]],
-      contactId: ['', [Validators.required, Validators.minLength(3)]],
+      salaryMin: ['', [Validators.required]],
+      salaryMax: ['', [Validators.required]],
+      contactId: ['', [Validators.required]],
       skills: this.fb.array([
         this.fb.control(''),
       ]),
@@ -60,6 +61,7 @@ export class JobAddComponent implements OnInit {
     this.getWorkingForm();
     this.getRank();
     this.getJe();
+    this.getUser();
   }
   public addJob(){
     console.log('skills',this.rfContact.value.skills);
@@ -73,9 +75,9 @@ export class JobAddComponent implements OnInit {
       }
     }
     this.jobDto = this.rfContact.value;
-    this.jobDto.creatorId = 1;
+    this.jobDto.creatorId = this.user.id;
     this.jobDto.createDate = new Date();
-    this.jobDto.updateUserId = 1;
+    this.jobDto.updateUserId = this.user.id;
     this.jobDto.updateDate = new Date();
     this.jobDto.statusJobId =1;
     this.jobDto.skills =skills;
@@ -155,6 +157,23 @@ export class JobAddComponent implements OnInit {
 
   removeSkill(index: number) {
     this.skills.removeAt(index);
+  }
+
+  public getUserByUserName(username: string): void {
+    this.userService.getUserByUserName(username).subscribe(
+      (data: User) => {
+        this.user = data;
+        console.log('roles',data.roles);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public getUser(): void {
+    const token = this.userService.getDecodedAccessToken();
+    this.getUserByUserName(token.sub);
   }
 
   onSubmit() {

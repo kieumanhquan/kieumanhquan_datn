@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Job} from '../../models/model/Job';
-import {JobService} from '../../service/job.service';
-import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {User} from '../../models/model/User';
+import {HttpErrorResponse} from '@angular/common/http';
+import {UserService} from '../../service/user.service';
 
 @Component({
   selector: 'ngx-home-public',
@@ -10,37 +10,19 @@ import {Router} from '@angular/router';
   styleUrls: ['./home-public.component.scss'],
 })
 export class HomePublicComponent implements OnInit {
-  jobNews: Job[];
-  jobDues: Job[];
-  jobHighSalaries: Job[];
-  page: number;
-  size: number;
-  totalPageJobNews: number;
-  totalPageJobDues: number;
-  totalPageJobHighSalary: number;
+  user: any;
 
-  constructor(private jobService: JobService,private readonly router: Router) { }
+  constructor(private readonly router: Router,private userService: UserService) { }
 
   ngOnInit(): void {
-    this.getInitData();
-    this.getJobNew();
-    this.getJobHighSalary();
-    this.getJobDue();
+    this.getUser();
   }
 
-  getInitData(){
-    this.page = 0;
-    this.size = 20;
-    this.totalPageJobNews = 1;
-    this.totalPageJobDues = 1;
-    this.totalPageJobHighSalary= 1;
-  }
-
-  public getJobNew() {
-    this.jobService.getJobNews(7, this.page, this.size).subscribe(
-      (data: any) => {
-        this.jobNews = data.list;
-        this.totalPageJobNews = data.totalPage;
+  public getUserByUserName(username: string): void {
+    this.userService.getUserByUserName(username).subscribe(
+      (data: User) => {
+        this.user = data;
+        console.log('roles',data.roles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -48,34 +30,23 @@ export class HomePublicComponent implements OnInit {
     );
   }
 
-  public getJobHighSalary() {
-    this.jobService.getJobHighSalary(18, this.page, this.size).subscribe(
-      (data: any) => {
-        this.jobHighSalaries = data.list;
-        this.totalPageJobHighSalary = data.totalPage;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      },
-    );
-  }
-  public getJobDue() {
-    this.jobService.getJobDue(3, this.page, this.size).subscribe(
-      (data: any) => {
-        this.jobDues = data.list;
-        this.totalPageJobDues = data.totalPage;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      },
-    );
+  public getUser(): void {
+    const token = this.userService.getDecodedAccessToken();
+    if(token){
+      this.getUserByUserName(token.sub);
+    }
   }
 
   onSignIn() {
-    this.router.navigate(['/auth/login']).then(r => console.log(r));
+    this.router.navigate(['/auth']).then(r => console.log(r));
   }
 
   onSignUp() {
     this.router.navigate(['/auth/signup']).then(r => console.log(r));
+  }
+
+  onLogOut() {
+    window.sessionStorage.removeItem('auth-token');
+    this.user = undefined;
   }
 }

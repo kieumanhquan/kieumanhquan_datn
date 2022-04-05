@@ -1,9 +1,3 @@
-import {JobPosition} from './JobPosition';
-import {AcademicLevel} from './AcademicLevel';
-import {Rank} from './Rank';
-import {User} from './User';
-import {StatusJob} from './StatusJob';
-
 export interface JobDto{
   updateDate: Date;
   updateUserId: number;
@@ -12,7 +6,8 @@ export interface JobDto{
   jobPositionId: number;
   numberExperience: number;
   addressWork: string;
-  academicLevelId: AcademicLevel;
+  academicLevelId: number;
+  workingFormId: number;
   rankId: number;
   qtyPerson: number;
   createDate?: Date;
@@ -25,6 +20,7 @@ export interface JobDto{
   salaryMin: number;
   contactId: number;
   statusJobId: number;
+  jobRequirement: string;
   views: number;
   creatorId: number;
   delete?: boolean;

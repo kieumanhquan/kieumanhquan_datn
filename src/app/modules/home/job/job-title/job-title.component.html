@@ -22,11 +22,11 @@
 
     <div>
       <p-button label="Export JD"  styleClass="p-button-sm" class="mr-2"></p-button>
-      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE' && job.statusJob.code === 'chưa đăng tuyển' || job.statusJob.code === 'đang tuyển'">
-        <p-button label="Xem trước"  styleClass="p-button-sm" class="mr-2"></p-button>
+      <ng-template [ngIf]="(user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE') && (job.statusJob.code === 'chưa đăng tuyển' || job.statusJob.code === 'đang tuyển')">
+        <p-button label="Xem trước" (click)="onPreview(job.id)"  styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
-      <ng-template [ngIf]=" user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE' && job.statusJob.code === 'chưa đăng tuyển'">
-        <p-button label="Đăng tuyển"  styleClass="p-button-sm"></p-button>
+      <ng-template [ngIf]="job.statusJob.code === 'chưa đăng tuyển' && user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'  ">
+        <p-button label="Đăng tuyển" (click)="onUp()"  styleClass="p-button-sm"></p-button>
       </ng-template>
 
     </div>

@@ -44,6 +44,7 @@ export class JobUpdateComponent implements OnInit {
   contact: any;
 
   rfContact: FormGroup;
+  user: User;
 
   constructor(private fb: FormBuilder,
               private jobService: JobService,
@@ -74,6 +75,7 @@ export class JobUpdateComponent implements OnInit {
         this.fb.control(''),
       ]),
     });
+    this.getUser();
     this.getJobPosition();
     this.getAcademicLevel();
     this.getWorkingForm();
@@ -182,6 +184,23 @@ export class JobUpdateComponent implements OnInit {
     this.skills.removeAt(index);
   }
 
+  public getUserByUserName(username: string): void {
+    this.userService.getUserByUserName(username).subscribe(
+      (data: User) => {
+        this.user = data;
+        console.log('roles',data.roles);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public getUser(): void {
+    const token = this.userService.getDecodedAccessToken();
+    this.getUserByUserName(token.sub);
+  }
+
   public updateJob(){
     let skills ='';
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
@@ -193,12 +212,11 @@ export class JobUpdateComponent implements OnInit {
       }
     }
     this.jobDto = this.rfContact.value;
-    this.jobDto.id = null;
-    this.jobDto.creatorId = 1;
+    this.jobDto.creatorId = this.job.creator.id;
     this.jobDto.createDate = new Date();
-    this.jobDto.updateUserId = 1;
+    this.jobDto.updateUserId = this.user.id;
     this.jobDto.updateDate = new Date();
-    this.jobDto.statusJobId =1;
+    this.jobDto.statusJobId = this.job.statusJob.id;
     this.jobDto.skills =skills;
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
     this.jobDto.views =0;
@@ -207,6 +225,7 @@ export class JobUpdateComponent implements OnInit {
     // eslint-disable-next-line max-len
     this.jobService.updateJob(this.jobDto).subscribe(
       (data: any) => {
+        console.log(data);
         alert('Update thành công');
       },
       (error: HttpErrorResponse) => {

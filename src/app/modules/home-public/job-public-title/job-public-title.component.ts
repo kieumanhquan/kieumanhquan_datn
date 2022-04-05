@@ -16,10 +16,7 @@ export class JobPublicTitleComponent implements OnInit {
   }
 
   onReadDetail(id: number) {
-    this.router.navigate(['/home/job-detail', id]).then(r => console.log(r));
+    this.router.navigate(['/home-public/job-detail', id]).then(r => console.log(r));
   }
 
-  onReadList(id: number) {
-    this.router.navigate(['/home/list-job-register', id]).then(r => console.log(r));
-  }
 }

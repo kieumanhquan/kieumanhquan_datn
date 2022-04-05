@@ -17,6 +17,8 @@ export interface Job{
   qtyPerson: number;
   createDate?: Date;
   dueDate: Date;
+  updateDate: Date;
+  updateUser: User;
   skills: string;
   startRecruitmentDate?: Date;
   workingForm: WorkingForm;

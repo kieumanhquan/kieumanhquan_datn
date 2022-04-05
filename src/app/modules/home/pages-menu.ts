@@ -21,6 +21,24 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'globe-2-outline',
     link: '/home/product',
   },
+  {
+    title: 'Job',
+    group: true,
+  },
+  {
+    title: 'Job',
+    icon: 'person-outline',
+    link: '/home/list-job',
+  },
+  {
+    title: 'JobRegister',
+    group: true,
+  },
+  {
+    title: 'Register-Job',
+    icon: 'person-outline',
+    link: '/home/list-job-register',
+  },
   // {
   //   title: 'Auth',
   //   icon: 'lock-outline',

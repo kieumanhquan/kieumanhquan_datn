@@ -97,4 +97,10 @@ export class JobService {
     );
   }
 
+  public updateStatusJob(statusId: number, jobId: number): Observable<any> {
+    return this.http.post(`${this.apiServerUrl}`+'jobs/status_job','').pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
 }

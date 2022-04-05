@@ -22,7 +22,7 @@ const routes: Routes = [{
       component: ChangePasswordFinishComponent,
     },
     {
-      path: 'login',
+      path: '',
       component: LoginComponent,
     }],
 },

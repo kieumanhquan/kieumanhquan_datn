@@ -8,13 +8,18 @@ import {ButtonModule} from 'primeng/button';
 import {RippleModule} from 'primeng/ripple';
 import {JobPublicTitleComponent} from './job-public-title/job-public-title.component';
 import { JobPublicDetailComponent } from './job-public-detail/job-public-detail.component';
+import { JobPublicInfoComponent } from './job-public-info/job-public-info.component';
 
 const routes: Routes = [{
   path: '',
   component: HomePublicComponent,
   children: [
     {
-      path: 'home-public/detail/:id',
+      path: '',
+      component: JobPublicInfoComponent,
+    },
+    {
+      path: 'job-detail/:id',
       component: JobPublicDetailComponent,
     },
   ],
@@ -25,7 +30,7 @@ const routes: Routes = [{
     HomePublicComponent,
     JobPublicTitleComponent,
     JobPublicDetailComponent,
-
+    JobPublicInfoComponent,
   ],
   imports: [
     CommonModule,
