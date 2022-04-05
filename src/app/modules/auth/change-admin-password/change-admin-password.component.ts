@@ -1,45 +1,35 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
-import {HttpErrorResponse} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
-  selector: 'ngx-change-password-finish',
-  templateUrl: './change-password-finish.component.html',
-  styleUrls: ['./change-password-finish.component.scss'],
+  selector: 'ngx-change-admin-password',
+  templateUrl: './change-admin-password.component.html',
+  styleUrls: ['./change-admin-password.component.scss'],
 })
-export class ChangePasswordFinishComponent implements OnInit {
-  cpf: FormGroup;
+export class ChangeAdminPasswordComponent implements OnInit {
+  cdp: FormGroup;
   // eslint-disable-next-line @typescript-eslint/member-ordering
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router,
-                ) { }
+  ) { }
 
   ngOnInit() {
-    this.cpf = this.fb.group({
+    this.cdp = this.fb.group({
       // eslint-disable-next-line max-len
       password: ['', [Validators.required, Validators.minLength(8),Validators.maxLength(16),Validators.pattern('^(?=[^A-Z\\n]*[A-Z])(?=[^a-z\\n]*[a-z])(?=[^0-9\\n]*[0-9])(?=[^#?!@$%^&*\\n-]*[#?!@$%^&*-]).{8,}$')]],
       // eslint-disable-next-line max-len
       newPassword: ['', [Validators.required, Validators.minLength(8),Validators.maxLength(16),Validators.pattern('^(?=[^A-Z\\n]*[A-Z])(?=[^a-z\\n]*[a-z])(?=[^0-9\\n]*[0-9])(?=[^#?!@$%^&*\\n-]*[#?!@$%^&*-]).{8,}$')]],
-      otp: ['', [Validators.required, Validators.minLength(5),Validators.maxLength(5),Validators.pattern('^[0-9]*$')]],
-
     });
   }
   public sendOtp(){
-    console.log(window.sessionStorage.getItem('email'));
-    this.authService.changePassword(this.cpf.value,window.sessionStorage.getItem('email')).subscribe(
+    this.authService.changePassword(this.cdp.value,window.sessionStorage.getItem('email')).subscribe(
       (data: any) => {
-        if(data.obj===false){
-          this.router.navigate(['/auth/change-password-finish']).then(r => console.log(r));
-          sessionStorage.removeItem('email');
-        }else{
-          this.router.navigate(['/auth/login']).then(r => console.log(r));
-          sessionStorage.removeItem('email');
-        }
         alert(data.message);
-},
+      },
       (error: HttpErrorResponse) => {
         alert(error.message);
       },
@@ -47,5 +37,7 @@ export class ChangePasswordFinishComponent implements OnInit {
   }
   onSubmit() {
     this.sendOtp();
+    this.router.navigate(['/auth']).then(r => console.log(r));
   }
+
 }

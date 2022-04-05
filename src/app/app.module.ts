@@ -27,6 +27,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AvatarModule} from 'primeng/avatar';
 import {ButtonModule} from 'primeng/button';
 import { LoginComponent } from './modules/auth/login/login.component';
+import { ChangeAdminPasswordComponent } from './modules/auth/change-admin-password/change-admin-password.component';
 
 
 const configToast: any = {
@@ -39,7 +40,7 @@ const configToast: any = {
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ChangeAdminPasswordComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

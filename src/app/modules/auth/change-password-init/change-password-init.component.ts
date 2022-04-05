@@ -28,7 +28,12 @@ export class ChangePasswordInitComponent implements OnInit {
   public sendOtp(){
     this.authService.sendOtp(this.cpi.value).subscribe(
       (data: any) => {
-        alert(data.message);
+        if(data.obj===false){
+          alert(data.message);
+        }else {
+          this.router.navigate(['/auth/change-password/finish']).then(r => console.log(r));
+          alert(data.message);
+        }
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -39,7 +44,6 @@ export class ChangePasswordInitComponent implements OnInit {
   onSubmit() {
     this.sendOtp();
     window.sessionStorage.setItem('email',this.cpi.value.email);
-    this.router.navigate(['/auth/change-password/finish']).then(r => console.log(r));
   }
 
 }
