@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import {UserService} from '../../../service/user.service';
 import {User} from '../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
+import { TokenService } from '../../../@core/services/token.service';
 
 
 @Component({

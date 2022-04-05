@@ -42,14 +42,21 @@ export class LoginComponent implements OnInit {
         data => {
           this.isLoggedIn = true;
           this.tokenService.saveToken(data.token);
-          // this.tokenService.saveUser(data.username);
-          // this.roles = this.tokenService.getUser().roles;
-          this.router.navigate(['/home/']);
+        /*   this.tokenService.saveUser(data.username);
+          this.roles = this.tokenService.getUser().roles;*/
+          if(this.formLogin.value.password==='admin'){
+             this.router.navigate(['/auth/changeAdminPassword']);
+          }else {
+  this.router.navigate(['/home/']);
+}
         },
       );
     }
   }
   forgotPassword() {
     this.router.navigate(['/auth/change-password/init']);
+  }
+  register(){
+    this.router.navigate(['/auth/signup']);
   }
 }
