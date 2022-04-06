@@ -102,6 +102,7 @@ export class JobRegisterListComponent implements OnInit {
   }
 
   public onSearch() {
+    this.searchJobRegister = {name: this.selectedName,statusRegisterId:this.selectedStatusJobAdvanced.id};
     // eslint-disable-next-line max-len
     this.jobRegisterService.findJobRegister(this.searchJobRegister, this.page, this.size).subscribe(
       (data: any) => {
@@ -115,6 +116,7 @@ export class JobRegisterListComponent implements OnInit {
   }
 
   public onSortByName() {
+    this.searchJobRegister = {name: this.selectedName,statusRegisterId:this.selectedStatusJobAdvanced.id};
     // eslint-disable-next-line max-len
     this.jobRegisterService.sortByName(this.searchJobRegister, this.page, this.size).subscribe(
       (data: any) => {

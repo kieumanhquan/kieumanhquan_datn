@@ -9,6 +9,10 @@ import {RippleModule} from 'primeng/ripple';
 import {JobPublicTitleComponent} from './job-public-title/job-public-title.component';
 import { JobPublicDetailComponent } from './job-public-detail/job-public-detail.component';
 import { JobPublicInfoComponent } from './job-public-info/job-public-info.component';
+import {DialogModule} from "primeng/dialog";
+import {ReactiveFormsModule} from "@angular/forms";
+import {CalendarModule} from "primeng/calendar";
+import {FileUploadModule} from "primeng/fileupload";
 
 const routes: Routes = [{
   path: '',
@@ -39,6 +43,10 @@ const routes: Routes = [{
     BadgeModule,
     ButtonModule,
     RippleModule,
+    DialogModule,
+    ReactiveFormsModule,
+    CalendarModule,
+    FileUploadModule,
   ],
 })
 export class HomePublicModule { }

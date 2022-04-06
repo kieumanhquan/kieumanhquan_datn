@@ -6,6 +6,9 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {JobRegister} from '../../../../models/model/JobRegister';
 import {JobRegisterService} from '../../../../service/jobRegister.service';
 import {Profiles} from '../../../../models/model/Profiles';
+import {StatusRegisterDto} from '../../../../models/Dto/StatusRegisterDto';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ScheduleDto} from '../../../../models/Dto/ScheduleDto';
 
 @Component({
   selector: 'ngx-job-register-detail',
@@ -18,17 +21,35 @@ export class JobRegisterDetailComponent implements OnInit {
   user: User;
   profiles: Profiles;
   userId: number;
+  statusRegisterDto: StatusRegisterDto;
+  scheduleDto: ScheduleDto;
+  appointment: FormGroup;
+  dateBook: Date;
+  methods: any[];
+  addressInterviews: any[];
+  displayPosition: boolean;
+  position: string;
+  displayPositionReason: boolean;
 
-  // eslint-disable-next-line max-len
   constructor(private readonly route: ActivatedRoute, private jobRegisterService: JobRegisterService,
-              private userService: UserService) {
+              private userService: UserService,private fb: FormBuilder) {
     this.getUser();
   }
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.params);
+    this.getInitData();
+    this.appointment = this.fb.group({
+      dateBook: ['', [Validators.required]],
+      method: [this.methods[0], [Validators.required]],
+      addressInterview: [this.addressInterviews[0], [Validators.required]],
+    });
     this.getJobById();
   }
+  getInitData(){
+    this.methods = ['online','offline'];
+    this.addressInterviews = ['Skype','Zoom','Zalo'];
+  }
+
 
 
   public getJobById(): void {
@@ -71,10 +92,74 @@ export class JobRegisterDetailComponent implements OnInit {
     this.getUserByUserName(token.sub);
   }
 
-
-
-  onUpdate() {
-
+  public updateStatusJob(){
+    this.jobRegisterService.updateStatusJob(this.statusRegisterDto).subscribe(
+      (data: any) => {
+        this.jobRegister.statusJobRegister =data.statusJobRegister;
+        alert('Update thành công');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
   }
 
+  public schedule(){
+    this.jobRegisterService.schedule(this.scheduleDto).subscribe(
+      (data: any) => {
+        this.jobRegister.statusJobRegister =data.statusJobRegister;
+        alert('Đặt lịch thành công');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  getInitStatusRegisterDto(){
+    this.statusRegisterDto = {jobRegisterId:1,statusRegisterId:1};
+  }
+
+  onBrowse() {
+    this.getInitStatusRegisterDto();
+    this.statusRegisterDto.jobRegisterId = this.jobRegister.id;
+    this.statusRegisterDto.statusRegisterId = 2;
+    this.updateStatusJob();
+  }
+
+  onRefuse() {
+    this.getInitStatusRegisterDto();
+    this.statusRegisterDto.jobRegisterId = this.jobRegister.id;
+    this.statusRegisterDto.statusRegisterId = 5;
+    this.updateStatusJob();
+  }
+
+  onBook() {
+    this.scheduleDto={
+      addressInterview: '',
+      dateInterview: undefined,
+      jobRegisterId: 0,
+      methodInterview: '',
+      statusRegisterId: 0,
+    };
+    this.scheduleDto.jobRegisterId = this.jobRegister.id;
+    this.scheduleDto.statusRegisterId = 3;
+    this.scheduleDto.methodInterview = this.appointment.value.method;
+    this.scheduleDto.dateInterview = this.appointment.value.dateBook;
+    this.scheduleDto.addressInterview = this.appointment.value.addressInterview;
+    this.schedule();
+    this.displayPosition=false;
+  }
+
+  onConfirm() {
+    this.getInitStatusRegisterDto();
+    this.statusRegisterDto.jobRegisterId = this.jobRegister.id;
+    this.statusRegisterDto.statusRegisterId = 4;
+    this.updateStatusJob();
+  }
+
+  showPositionDialog(position: string) {
+    this.position = position;
+    this.displayPosition = true;
+  }
 }

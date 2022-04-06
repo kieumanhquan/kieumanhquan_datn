@@ -14,16 +14,19 @@
       <p class="badge badge-secondary mr-2">{{this.jobRegister.statusJobRegister.code}}</p>
     </div>
     <div>
-      <p-button label="Tải xuống CV" styleClass="p-button-sm" class="mr-2"></p-button>
+      <p-button label="Tải xuống CV" (click)="onDownloadCV(jobRegister.id)" styleClass="p-button-sm" class="mr-2"></p-button>
       <ng-template
-        [ngIf]="jobRegister.statusJobRegister.code === 'Ứng viên bị từ chối' || jobRegister.statusJobRegister.code === 'Ứng viên đã hủy ứng tuyển'">
-        <p-button label="Xem lý do" styleClass="p-button-sm" class="mr-2"></p-button>
+        [ngIf]="jobRegister.statusJobRegister.id === 5 || jobRegister.statusJobRegister.id === 6">
+        <p-button (click)="showPositionDialogReason()" label="Xem lý do" styleClass="p-button-sm"
+                  class="mr-2"></p-button>
       </ng-template>
-      <ng-template [ngIf]="jobRegister.statusJobRegister.code === 'Đang phỏng vấn'">
+      <ng-template [ngIf]="jobRegister.statusJobRegister.id === 2">
         <p-button label="Đặt lịch phỏng vấn" styleClass="p-button-sm"></p-button>
       </ng-template>
 
     </div>
   </div>
 </div>
+
+<ngx-popup-reason [displayPosition]="displayPositionReason" (checkedChange)="close($event)" [content]="this.jobRegister.reason"></ngx-popup-reason>
 

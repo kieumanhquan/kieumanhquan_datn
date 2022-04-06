@@ -5,7 +5,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {JobService} from '../../../../service/job.service';
 import {UserService} from '../../../../service/user.service';
 import {User} from '../../../../models/model/User';
-import {JobDto} from '../../../../models/model/JobDto';
+import {StatusDto} from '../../../../models/Dto/StatusDto';
+import {ReasonDto} from '../../../../models/Dto/ReasonDto';
 
 @Component({
   selector: 'ngx-job-details',
@@ -15,7 +16,13 @@ import {JobDto} from '../../../../models/model/JobDto';
 export class JobDetailsComponent implements OnInit{
   job: Job;
   user: User;
-  jobDto: JobDto ;
+  statusDto: StatusDto ;
+  reasonDto: ReasonDto;
+  displayPosition: boolean;
+  position: string;
+  displayPositionReason: boolean;
+  positionReason: string;
+  reason: string;
 
   // eslint-disable-next-line max-len
   constructor(private readonly route: ActivatedRoute, private jobService: JobService , private userService: UserService, private readonly router: Router) {
@@ -25,6 +32,7 @@ export class JobDetailsComponent implements OnInit{
   ngOnInit(): void {
     console.log(this.route.snapshot.params);
     this.getJobById();
+    this.reasonDto = {jobId: 1, reason: '', statusId: 1};
   }
 
 
@@ -56,8 +64,20 @@ export class JobDetailsComponent implements OnInit{
     this.getUserByUserName(token.sub);
   }
 
-  public updateJob(jobDto: JobDto){
-    this.jobService.updateJob(jobDto).subscribe(
+  public updateStatusJob(){
+    this.jobService.updateStatusJob(this.statusDto).subscribe(
+      (data: any) => {
+        this.job.statusJob =data.statusJob;
+        alert('Update thành công');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public updateReason(){
+    this.jobService.updateReason(this.reasonDto).subscribe(
       (data: any) => {
         this.job.statusJob =data.statusJob;
         alert('Update thành công');
@@ -76,87 +96,55 @@ export class JobDetailsComponent implements OnInit{
     this.router.navigate(['/home-public/job-detail', id]).then(r => console.log(r));
   }
 
-  convertData(){
-    console.log('jobDetail',this.job);
-    this.jobDto = {
-      jobRequirement: '',
-      workingFormId: 0,
-      academicLevelId: 0,
-      addressWork: '',
-      benefits: '',
-      contactId: 0,
-      creatorId: 0,
-      description: '',
-      dueDate: undefined,
-      id: 0,
-      jobPositionId: 0,
-      name: '',
-      numberExperience: 0,
-      qtyPerson: 0,
-      rankId: 0,
-      salaryMax: 0,
-      salaryMin: 0,
-      skills: '',
-      statusJobId: 0,
-      updateDate: undefined,
-      updateUserId: 0,
-      views: 0,
-    };
-    console.log('jobDto',this.jobDto);
-    this.jobDto.id = this.job.id;
-    this.jobDto.updateDate = this.job.updateDate;
-    this.jobDto.updateUserId = this.job.updateUser.id;
-    this.jobDto.name = this.job.name;
-    this.jobDto.jobPositionId = this.job.jobPosition.id;
-    this.jobDto.numberExperience = this.job.numberExperience;
-    this.jobDto.addressWork = this.job.addressWork;
-    this.jobDto.academicLevelId = this.job.academicLevel.id;
-    this.jobDto.workingFormId=this.job.workingForm.id;
-    this.jobDto.rankId = this.job.rank.id;
-    this.jobDto.qtyPerson = this.job.qtyPerson;
-    this.jobDto.createDate = this.job.createDate;
-    this.jobDto.dueDate = this.job.dueDate;
-    this.jobDto.skills = this.job.skills;
-    this.jobDto.startRecruitmentDate = this.job.startRecruitmentDate;
-    this.jobDto.description = this.job.description;
-    this.jobDto.benefits = this.job.benefits;
-    this.jobDto.salaryMin = this.job.salaryMin;
-    this.jobDto.salaryMax = this.job.salaryMax;
-    this.jobDto.contactId = this.job.contact.id;
-    this.jobDto.statusJobId = this.job.statusJob.id;
-    this.jobDto.views = this.job.views;
-    this.jobDto.creatorId = this.job.creator.id;
-    this.jobDto.delete = this.job.delete;
-    this.jobDto.jobRequirement = this.job.jobRequirement;
+  getInitStatusDto(){
+    this.statusDto ={jobId:1,statusId:1};
   }
 
   onBrowse() {
-    this.convertData();
-    this.jobDto.statusJobId = 3;
-    this.updateJob(this.jobDto);
+    this.getInitStatusDto();
+    this.statusDto.jobId = this.job.id;
+    this.statusDto.statusId = 3;
+    this.updateStatusJob();
   }
 
   onUp() {
-    this.convertData();
-    this.jobDto.statusJobId = 2;
-    this.updateJob(this.jobDto);
+    this.getInitStatusDto();
+    this.statusDto.jobId = this.job.id;
+    this.statusDto.statusId = 2;
+    this.updateStatusJob();
   }
 
   onStop() {
-    this.convertData();
-    this.jobDto.statusJobId = 3;
-    this.updateJob(this.jobDto);
+    this.getInitStatusDto();
+    this.statusDto.jobId = this.job.id;
+    this.statusDto.statusId = 3;
+    this.updateStatusJob();
   }
 
   onClose() {
-    this.convertData();
-    this.jobDto.statusJobId = 4;
-    this.updateJob(this.jobDto);
+    this.getInitStatusDto();
+    this.statusDto.jobId = this.job.id;
+    this.statusDto.statusId = 4;
+    this.updateStatusJob();
   }
 
   onDelete() {
-    this.convertData();
-    this.jobDto.statusJobId = 5;
-    this.updateJob(this.jobDto);
+    this.getInitStatusDto();
+    this.statusDto.jobId = this.job.id;
+    this.statusDto.statusId = 5;
+    this.updateStatusJob();
   }
+
+  onRefuse() {
+    console.log('reasonDto',this.reasonDto);
+    this.reasonDto.jobId = this.job.id;
+    this.reasonDto.statusId = 5;
+    this.updateReason();
+  }
+
+  showPositionDialog(position: string) {
+    this.position = position;
+    this.displayPosition = true;
+  }
+
 }

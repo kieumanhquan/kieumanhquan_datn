@@ -19,6 +19,9 @@ import {JobRegisterListComponent} from './job-register/job-register-list/job-reg
 import {JobRegisterTitleComponent} from './job-register/job-register-title/job-register-title.component';
 import { JobRegisterDetailComponent } from './job-register/job-register-detail/job-register-detail.component';
 import { ListJobRegisterComponent } from './job-register/list-job-register/list-job-register.component';
+import {DialogModule} from 'primeng/dialog';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import { PopupReasonComponent } from './popup-reason/popup-reason.component';
 
 
 const routes: Routes = [{
@@ -63,7 +66,6 @@ const routes: Routes = [{
     },
   ],
 }];
-
 @NgModule({
   declarations: [
     HomeComponent,
@@ -77,19 +79,22 @@ const routes: Routes = [{
     JobRegisterTitleComponent,
     JobRegisterDetailComponent,
     ListJobRegisterComponent,
+    PopupReasonComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    ThemeModule,
-    NbMenuModule,
-    ReactiveFormsModule,
-    PrimengModule,
-    SharedModule,
-    FormsModule,
-    DropdownModule,
-    PaginatorModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        ThemeModule,
+        NbMenuModule,
+        ReactiveFormsModule,
+        PrimengModule,
+        SharedModule,
+        FormsModule,
+        DropdownModule,
+        PaginatorModule,
+        DialogModule,
+        InputTextareaModule,
+    ],
   exports: [
   ],
 })

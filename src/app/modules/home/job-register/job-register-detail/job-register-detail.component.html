@@ -2,26 +2,96 @@
   <div class="container">
     <div class="mb-5">
       <p-button label="Tải xuống CV" styleClass="p-button-sm" class="mr-2"></p-button>
-      <ng-template [ngIf]="user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
-        <p-button (onClick)="onUpdate()" label="Xét duyệt" styleClass="p-button-sm" class="mr-2"></p-button>
+      <ng-template
+        [ngIf]="jobRegister.statusJobRegister.id === 1 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
+        <p-button (click)="onBrowse()" label="Xét duyệt" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
       <ng-template
-        [ngIf]="jobRegister.statusJobRegister.code !== 'Ứng viên bị từ chối' && user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
-        <p-button label="Từ chối ứng viên" styleClass="p-button-sm" class="mr-2"></p-button>
+        [ngIf]="jobRegister.statusJobRegister.id !== 5 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
+        <p-button label="Từ chối ứng viên" (click)="onRefuse()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
       <ng-template
-        [ngIf]="jobRegister.statusJobRegister.code === 'Ứng viên bị từ chối' || jobRegister.statusJobRegister.code === 'Ứng viên đã hủy ứng tuyển'">
-        <p-button label="Xem lý do" styleClass="p-button-sm" class="mr-2"></p-button>
+        [ngIf]="jobRegister.statusJobRegister.id === 5 || jobRegister.statusJobRegister.id === 6">
+        <p-button label="Xem lý do" (click)="displayPositionReason = true" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
       <ng-template
-        [ngIf]="jobRegister.statusJobRegister.code === 'Chờ phỏng vấn' && user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
-        <p-button label="Đặt lịch phỏng vấn" styleClass="p-button-sm" class="mr-2"></p-button>
+        [ngIf]="jobRegister.statusJobRegister.id === 2 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
+        <p-button (click)="showPositionDialog('top')" label="Đặt lịch phỏng vấn" styleClass="p-button-sm"
+                  class="mr-2"></p-button>
       </ng-template>
       <ng-template
-        [ngIf]="jobRegister.statusJobRegister.code === 'Đang phỏng vấn' && user.roles[0].code === 'ROLE_ADMIN' || user.roles[0].code === 'ROLE_JE'">
-        <p-button label="Tuyển thành công" styleClass="p-button-sm" class="mr-2"></p-button>
+        [ngIf]="jobRegister.statusJobRegister.id === 3 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
+        <p-button label="Tuyển thành công" (click)="onConfirm()" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
     </div>
+
+    <p-dialog header="Đặt lịch phỏng vấn" [(visible)]="displayPosition" [position]="position" [modal]="true"
+              [style]="{width: '50vw'}" [baseZIndex]="10000"
+              [draggable]="false" [resizable]="false">
+      <form novalidate (ngSubmit)="onBook()" [formGroup]="appointment"
+            class="row justify-content-md-center container popup">
+        <div class="col-md-8">
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Ngày hẹn phỏng vấn:</label>
+            <div class="col-md-10">
+              <p-calendar [(ngModel)]="dateBook" [showTime]="true" inputId="time"
+                          formControlName="dateBook"></p-calendar>
+            </div>
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="appointment.get('dateBook')?.errors?.required && appointment.get('dateBook')?.touched">
+            DateBook is required!
+          </div>
+          <div class="form-group row">
+            <label class="col-md-4 col-form-label">Hình thức phỏng vấn:</label>
+            <div class="col-md-10">
+              <select
+                class="custom-select mb-3"
+                formControlName="method"
+              >
+                <option *ngFor="let method of methods" [ngValue]="method">
+                  {{ method }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="appointment.get('method')?.errors?.required && appointment.get('method')?.touched">
+            Method is required!
+          </div>
+          <ng-template [ngIf]="this.appointment.value.method === 'online'">
+            <div class="form-group row">
+              <label class="col-md-4 col-form-label">Công cụ phỏng vấn:</label>
+              <div class="col-md-10">
+                <select
+                  class="custom-select mb-3"
+                  formControlName="addressInterview"
+                >
+                  <option *ngFor="let addressInterview of addressInterviews" [ngValue]="addressInterview">
+                    {{ addressInterview }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col alert alert-danger" role="alert"
+                 *ngIf="appointment.get('addressInterview')?.errors?.required && appointment.get('addressInterview')?.touched">
+              AddressInterview is required!
+            </div>
+          </ng-template>
+
+          <div style="margin-left: 60%;">
+            <p-button icon="pi pi-check" type="submit" [disabled]=!this.appointment.valid
+                      (click)="onBook()" label="Yes" class="p-button-text"></p-button>
+            <p-button icon="pi pi-times" (click)="displayPosition=false" label="No" class="ml-2"></p-button>
+          </div>
+        </div>
+      </form>
+      <ng-template pTemplate="footer">
+
+      </ng-template>
+    </p-dialog>
+
+
     <div class="d-flex">
       <div>
         <p-avatar
@@ -95,4 +165,6 @@
     </ng-template>
   </div>
 </ng-template>
+<ngx-popup-reason [displayPosition]="displayPositionReason" (checkedChange)="displayPositionReason = $event"
+                  [content]="this.jobRegister.reason"></ngx-popup-reason>
 
