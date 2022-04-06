@@ -32,11 +32,29 @@ export class UserService{
       tap(user => console.log(`user=${JSON.stringify(user)}`)),
     );
   }
-
+  public getUserById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}`+'user/id='+id).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
 
   public getJe(): Observable<any[]> {
     return this.http.get<any>(`${this.apiServerUrl}`+'user/role=ROLE_JE').pipe(
       tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
+    );
+
+  }
+  public updateUser(user: User): Observable<any> {
+    return this.http.post(`${this.apiServerUrl}`+'user',user).pipe(
+      tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
+    );
+  }
+
+  public searchUser(searchUserRegister,page,size): Observable<any> {
+    // eslint-disable-next-line max-len
+    return this.http.post<any>(`${this.apiServerUrl}`+'user/searches?'+'page='+page+'&size='+size
+      ,searchUserRegister).pipe(
+      tap(receivedUser => console.log(`receivedJob=${JSON.stringify(receivedUser)}`)),
     );
   }
 }

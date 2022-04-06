@@ -19,7 +19,9 @@ export class JobTitleComponent implements OnInit {
 
   currentDate = new Date().getTime();
 
-  constructor(private readonly router: Router,private jobService: JobService) { }
+  constructor(private readonly router: Router, private jobService: JobService) {
+  }
+
 
   ngOnInit(): void {
   }
@@ -52,11 +54,11 @@ export class JobTitleComponent implements OnInit {
     this.router.navigate(['/home/list-job-register', id]).then(r => console.log(r));
   }
 
-  onUp() {
+  onUp(){
     this.getInit();
     this.statusDto.jobId = this.job.id;
     this.statusDto.statusId = 2;
     this.updateJob(this.statusDto);
   }
-
 }
+

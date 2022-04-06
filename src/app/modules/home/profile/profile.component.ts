@@ -1,10 +1,12 @@
-import { HttpResponse } from '@angular/common/http';
+import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrimeNGConfig } from 'primeng/api';
 import { SessionService } from '../../../@core/services/session.service';
+import { UserService } from '../../../service/user.service';
 import { User } from './profile.model';
 import { ProfileService } from './profile.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'ngx-profile',
@@ -21,36 +23,47 @@ export class ProfileComponent implements OnInit {
     private sessionService: SessionService,
     private profileService: ProfileService,
     private fb: FormBuilder,
-    private primengConfig: PrimeNGConfig) { }
+    private primengConfig: PrimeNGConfig,
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.getByUserName();
     this.initForm();
+    this.getUser();
+    console.log('user form'+ this.user);
   }
   initForm(){
+   this.username = this.userService.getDecodedAccessToken().sub;
     this.formProfile = this.fb.group({
-      fullName: ['', Validators.required],
-      email: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
+      name: ['', Validators.required, Validators.minLength(1), Validators.maxLength(20)],
+      email: ['', Validators.required ,Validators.email],
+      // eslint-disable-next-line max-len
+      phoneNumber: ['', [Validators.required, Validators.minLength(8),Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]],
       birthDay: ['', Validators.required],
-      homeTown: ['', Validators.required],
-      gender: ['', Validators.required],
+      homeTown: [''],
+      gender: [''],
     });
   }
 
-  getByUserName(){
-    this.username=this.sessionService.getItem('auth-user');
-    this.profileService.getProfile(this.username).subscribe(
-      (res)=>{
-        this.updateForm(res);
+  public getUserByUserName(username: string): void {
+    this.userService.getUserByUserName(username).subscribe(
+      (data: User) => {
+        this.user = data;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
       },
     );
   }
 
+  public getUser(): void {
+    const token = this.userService.getDecodedAccessToken();
+    this.getUserByUserName(token.sub);
+  }
+
   updateForm(user: User): void {
     this.formProfile.patchValue({
-      fullName:user.fullName,
+      name:user.name,
       email:user.email,
       phoneNumber:user.phoneNumber,
       birthDay:user.birthDay,
@@ -58,5 +71,26 @@ export class ProfileComponent implements OnInit {
       gender: user.gender,
     });
   }
-
+  onSubmit() {
+ this.updateUser();
+  }
+  public updateUser(){
+    this.user=this.formProfile.value;
+    const token = this.userService.getDecodedAccessToken();
+    this.user.userName=token.sub;
+    this.userService.updateUser(this.formProfile.value).subscribe(
+      (data: any) => {
+        // eslint-disable-next-line eqeqeq
+        console.log(data);
+        if (data.obj === true) {
+          alert('Câp nhập thành công');
+        } else {
+          alert('Cập nhập thất bại');
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
 }

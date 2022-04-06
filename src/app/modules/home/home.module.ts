@@ -17,11 +17,15 @@ import {JobTitleComponent} from './job/job-title/job-title.component';
 import {JobUpdateComponent} from './job/job-update/job-update.component';
 import {JobRegisterListComponent} from './job-register/job-register-list/job-register-list.component';
 import {JobRegisterTitleComponent} from './job-register/job-register-title/job-register-title.component';
-import { JobRegisterDetailComponent } from './job-register/job-register-detail/job-register-detail.component';
-import { ListJobRegisterComponent } from './job-register/list-job-register/list-job-register.component';
+import {JobRegisterDetailComponent} from './job-register/job-register-detail/job-register-detail.component';
+import {ListJobRegisterComponent} from './job-register/list-job-register/list-job-register.component';
 import {DialogModule} from 'primeng/dialog';
 import {InputTextareaModule} from 'primeng/inputtextarea';
-import { PopupReasonComponent } from './popup-reason/popup-reason.component';
+import {PopupReasonComponent} from './popup-reason/popup-reason.component';
+import {UserListComponent} from './user/user-list/user-list.component';
+import {UserDetailsComponent} from './user/user-details/user-details.component';
+import {UserTitleComponent} from './user/user-title/user-title.component';
+import {UserAddComponent} from './user/user-add/user-add.component';
 
 
 const routes: Routes = [{
@@ -64,8 +68,23 @@ const routes: Routes = [{
       path: 'list-job-register/:id',
       component: ListJobRegisterComponent,
     },
+
+    {
+      path: 'user/list',
+      component: UserListComponent,
+    },
+    {
+      path: 'user/add',
+      component: UserAddComponent,
+    },
+    {
+      path: 'user-detail/:id',
+      component: UserDetailsComponent,
+    },
+
   ],
 }];
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -80,23 +99,26 @@ const routes: Routes = [{
     JobRegisterDetailComponent,
     ListJobRegisterComponent,
     PopupReasonComponent,
+    UserListComponent,
+    UserDetailsComponent,
+    UserTitleComponent,
+    UserAddComponent,
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        ThemeModule,
-        NbMenuModule,
-        ReactiveFormsModule,
-        PrimengModule,
-        SharedModule,
-        FormsModule,
-        DropdownModule,
-        PaginatorModule,
-        DialogModule,
-        InputTextareaModule,
-    ],
-  exports: [
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    ThemeModule,
+    NbMenuModule,
+    ReactiveFormsModule,
+    PrimengModule,
+    SharedModule,
+    FormsModule,
+    DropdownModule,
+    PaginatorModule,
+    DialogModule,
+    InputTextareaModule,
   ],
+  exports: [],
 })
 export class HomeModule {
 }

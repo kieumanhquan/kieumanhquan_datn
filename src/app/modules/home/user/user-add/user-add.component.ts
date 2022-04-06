@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from '../../../service/auth.service';
+import {AuthService} from '../../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
-  selector: 'ngx-registration',
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss'],
+  selector: 'ngx-user-add',
+  templateUrl: './user-add.component.html',
+  styleUrls: ['./user-add.component.scss'],
 })
-export class RegistrationComponent implements OnInit {
+export class UserAddComponent implements OnInit {
 
-  regi: FormGroup;
+  regiJe: FormGroup;
   constructor(private fb: FormBuilder,
               private authService: AuthService) { }
 
   ngOnInit() {
-    this.regi = this.fb.group({
+    this.regiJe = this.fb.group({
       userName: ['', [Validators.required, Validators.maxLength(50)]],
       // eslint-disable-next-line max-len
       password: ['', [Validators.required,Validators.maxLength(16),Validators.pattern('^(?=[^A-Z\\n]*[A-Z])(?=[^a-z\\n]*[a-z])(?=[^0-9\\n]*[0-9])(?=[^#?!@$%^&*\\n-]*[#?!@$%^&*-]).{8,}$')]],
@@ -27,7 +27,7 @@ export class RegistrationComponent implements OnInit {
   }
   public addUser(){
 
-    this.authService.addUser(this.regi.value).subscribe(
+    this.authService.addUser(this.regiJe.value).subscribe(
       (data: any) => {
         // eslint-disable-next-line eqeqeq
         if (data == false) {
@@ -46,4 +46,5 @@ export class RegistrationComponent implements OnInit {
   onSubmit() {
     this.addUser();
   }
+
 }
