@@ -49,4 +49,8 @@ export class HomePublicComponent implements OnInit {
     window.sessionStorage.removeItem('auth-token');
     this.user = undefined;
   }
+
+  onHome() {
+    this.router.navigate(['/home-public']).then(r => console.log(r));
+  }
 }

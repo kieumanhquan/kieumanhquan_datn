@@ -11,7 +11,7 @@
             class="row justify-content-md-center container popup">
         <div class="col-md-8 mb-5">
           <h2>Upload Cv</h2>
-          <p-fileUpload name="myfile[]" (uploadHandler)="myUploader($event)" (onSelect)="onSelected($event)" (onBeforeUpload)="onBeforeUpload()" ></p-fileUpload>
+          <p-fileUpload name="myfile[]" (onSelect)="onSelected($event)" (onBeforeUpload)="onBeforeUpload()" ></p-fileUpload>
         </div>
         <div class="col-md-8">
           <div class="form-group row">

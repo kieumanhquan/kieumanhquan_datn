@@ -141,7 +141,6 @@ export class JobPublicDetailComponent implements OnInit {
     this.uploadService.upload(this.file,this.user.userName,this.job.id).subscribe(
       (data: any) => {
         alert(data.message);
-        console.log('roles', data.roles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
