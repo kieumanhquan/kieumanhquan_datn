@@ -17,15 +17,17 @@ export class JobTitleComponent implements OnInit {
   @Input() user: User;
 
   currentDate = new Date().getTime();
-  constructor(private readonly router: Router,private jobService: JobService) { }
+
+  constructor(private readonly router: Router, private jobService: JobService) {
+  }
 
   ngOnInit(): void {
   }
 
-  public updateJob(jobDto: JobDto){
+  public updateJob(jobDto: JobDto) {
     this.jobService.updateJob(jobDto).subscribe(
       (data: any) => {
-        this.job.statusJob =data.statusJob;
+        this.job.statusJob = data.statusJob;
         alert('Update thành công');
       },
       (error: HttpErrorResponse) => {
@@ -46,10 +48,5 @@ export class JobTitleComponent implements OnInit {
     this.router.navigate(['/home/list-job-register', id]).then(r => console.log(r));
   }
 
-  onUp() {
-    this.convertData();
-    this.jobDto.statusJobId = 2;
-    this.updateJob(this.jobDto);
-  }
-
 }
+

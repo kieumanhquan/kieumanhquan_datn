@@ -1,71 +1,97 @@
 <h1>Thông tin cá nhân</h1>
-<p-card>
-    <form [formGroup]="formProfile">
-        <div class="row">
-            <img src="assets/images/alan.png" alt="Avatar"
-                style="width:200px; border-radius: 50%;  margin: 0 auto; margin-bottom: 20px;">
+<ng-template [ngIf]="user">
+  <p-card>
+    <form [formGroup]="formProfile" (ngSubmit)="onSubmit()" >
+      <div class="row">
+        <img src="assets/images/alan.png" alt="Avatar"
+             style="width:200px; border-radius: 50%;  margin: 0 auto; margin-bottom: 20px;">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label ">Họ và Tên</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="name" [(ngModel)]="user.name" >
+            </div>
+
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formProfile.get('name')?.errors?.required && formProfile.get('name')?.touched">
+            Bạn phải nhập họ tên!
+          </div>
         </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <div class="row">
-                    <label class="label col-3 col-form-label ">Họ và Tên</label>
-                    <div class="col-9">
-                        <input type="text" pInputText class="form-control" formControlName="fullName">
-                    </div>
-                </div>
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Email</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="email" [(ngModel)]="user.email">
             </div>
-            <div class="form-group col-md-6">
-                <div class="row">
-                    <label class="label col-3 col-form-label">Email</label>
-                    <div class="col-9">
-                        <input type="text" pInputText class="form-control" formControlName="email">
-                    </div>
-                </div>
-
-            </div>
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formProfile.get('email')?.errors?.required && formProfile.get('email')?.touched">
+            Bạn phải nhập gmail!
+          </div>
         </div>
-        <div class="form-row" style="margin-bottom: 20px;">
-            <div class="col-md-6">
-                <div class="row">
-                    <label class="label col-3 col-form-label">Số điện thoại</label>
-                    <div class="col-9">
-                        <input type="text" pInputText class="form-control" formControlName="phoneNumber">
-                    </div>
-                </div>
-
+      </div>
+      <div class="form-row" style="margin-bottom: 20px;">
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Số điện thoại</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="phoneNumber" [(ngModel)]="user.phoneNumber">
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <label class="label col-3 col-form-label">Ngày sinh</label>
-                    <div class="col-9">
-                        <input type="text" pInputText class="form-control" formControlName="birthDay">
-                    </div>
-                </div>
-
-            </div>
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formProfile.get('phoneNumber')?.errors?.required && formProfile.get('phoneNumber')?.touched">
+            Bạn phải nhập số điện thoại!
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formProfile.get('phoneNumber')?.errors?.pattern && formProfile.get('phoneNumber')?.touched">
+            Bạn phải nhập đúng định dạng số điện thoại!
+          </div>
         </div>
-        <div class="form-row">
-            <div class="col-md-6">
-                <div class="row">
-                    <label class="label col-3 col-form-label">Quê quán</label>
-                    <div class="col-9">
-                        <input type="text" pInputText class="form-control" formControlName="homeTown">
-                    </div>
-                </div>
-
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Ngày sinh</label>
+            <div class="col-9">
+              <p-calendar [(ngModel)]="user.birthDay" [showTime]="true" inputId="time" formControlName="birthDay"></p-calendar>
             </div>
-            <div class="col-md-6">
-                <div class="row">
-                    <label class="label col-sm-3 col-form-label">Giới tính</label>
-                    <div class="col-sm-9">
-                        <input type="text" pInputText class="form-control" formControlName="gender">
-                    </div>
-                </div>
+          </div>
 
-            </div>
         </div>
+
+      </div>
+      <div class="form-row">
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Quê quán</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="homeTown" [(ngModel)]="user.homeTown">
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-sm-3 col-form-label">Giới tính</label>
+            <div class="col-sm-9">
+              <select
+                class="custom-select mb-3"
+                formControlName="gender"
+                [(ngModel)]="user.gender"
+              >
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin-left: 7vw;" >Áp dụng</button>
+      </div>
+
+
     </form>
-    <ng-template pTemplate="footer">
-        Footer content here
-    </ng-template>
-</p-card>
+
+  </p-card>
+
+</ng-template>

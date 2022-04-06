@@ -14,7 +14,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'User',
     icon: 'person-outline',
-    link: '/home/user',
+    link: '/home/user/list',
   },
   {
     title: 'Product',

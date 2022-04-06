@@ -22,6 +22,11 @@ export class AuthService {
       tap(users => console.log(`users=${JSON.stringify(users)}`)),
     );
   }
+  public addJeUser(user: User): Observable<any> {
+    return this.http.post(`${this.apiServerUrl}`+'auth/registerJe',user).pipe(
+      tap(users => console.log(`users=${JSON.stringify(users)}`)),
+    );
+  }
 
   public sendOtp(user: User): Observable<any> {
     return this.http.post(`${this.apiServerUrl}`+'auth/reset-password/init',user).pipe(

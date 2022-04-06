@@ -1,7 +1,8 @@
-<form novalidate (ngSubmit)="onSubmit()" [formGroup]="regi">
+
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="regiJe">
 
   <div class="justify-content-center" >
-    <h1 class="lead fw-normal mb-4 me-3" style="padding-left:15vw;">Đăng ký</h1>
+    <h1 class="lead fw-normal mb-4 me-3" style="padding-left:15vw;">Thêm JE</h1>
   </div>
   <div class="form-group row">
     <label class="col-md-2 col-form-label">Tên tài khoản:</label>
@@ -10,7 +11,7 @@
     </div>
   </div>
   <div class="col alert alert-danger" role="alert"
-       *ngIf="regi.get('userName')?.errors?.required && regi.get('userName')?.touched">
+       *ngIf="regiJe.get('userName')?.errors?.required && regiJe.get('userName')?.touched">
     Bạn cần phải nhập tên tài khoản
   </div>
 
@@ -21,11 +22,11 @@
     </div>
   </div>
   <div class="col alert alert-danger" role="alert"
-       *ngIf="regi.get('password')?.errors?.required && regi.get('password')?.touched">
+       *ngIf="regiJe.get('password')?.errors?.required && regiJe.get('password')?.touched">
     Bạn phải nhập mật khẩu!
   </div>
   <div class="col alert alert-danger" role="alert"
-       *ngIf="regi.get('password')?.errors?.pattern && regi.get('password')?.touched">
+       *ngIf="regiJe.get('password')?.errors?.pattern && regiJe.get('password')?.touched">
     Mật khẩu phải có 8 ký tự trở lên, bao gồm cả chữ, cả số và cả kí tự đặc biệt.
 
   </div>
@@ -37,7 +38,7 @@
     </div>
   </div>
   <div class="col alert alert-danger" role="alert"
-       *ngIf="regi.get('name')?.errors?.required && regi.get('name')?.touched">
+       *ngIf="regiJe.get('name')?.errors?.required && regiJe.get('name')?.touched">
     Bạn phải nhập họ và tên !
   </div>
 
@@ -48,12 +49,12 @@
     </div>
   </div>
   <div class="col alert alert-danger" role="alert"
-       *ngIf="regi.get('email')?.errors?.required && regi.get('email')?.touched">
+       *ngIf="regiJe.get('email')?.errors?.required && regiJe.get('email')?.touched">
     Bạn phải nhập Email !
   </div>
 
   <div class="col alert alert-danger" role="alert"
-       *ngIf="regi.get('email')?.errors?.email && regi.get('email')?.touched">
+       *ngIf="regiJe.get('email')?.errors?.email && regiJe.get('email')?.touched">
     Bạn phải nhập đúng định dạng của email !
   </div>
 
@@ -64,16 +65,16 @@
     </div>
   </div>
   <div class="col alert alert-danger" role="alert"
-       *ngIf="regi.get('phoneNumber')?.errors?.required && regi.get('phoneNumber')?.touched">
+       *ngIf="regiJe.get('phoneNumber')?.errors?.required && regiJe.get('phoneNumber')?.touched">
     Bạn phải nhập số điện thoại !
   </div>
   <div class="col alert alert-danger" role="alert"
-       *ngIf="regi.get('phoneNumber')?.errors?.pattern && regi.get('phoneNumber')?.touched">
+       *ngIf="regiJe.get('phoneNumber')?.errors?.pattern && regiJe.get('phoneNumber')?.touched">
     Bạn phải nhập dung dd điện thoại !
   </div>
   <div class="form-group row">
     <div class="col-md-10 offset-md-2">
-      <button class="btn btn-primary" type="submit" style="margin-left: 7vw;" [disabled]=!this.regi.valid>Đăng ký</button>
+      <button class="btn btn-primary" type="submit" style="margin-left: 7vw;" [disabled]=!this.regiJe.valid>Đăng ký</button>
     </div>
   </div>
 </form>
