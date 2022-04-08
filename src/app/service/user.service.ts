@@ -5,6 +5,7 @@ import {tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../models/model/User';
+import {Profiles} from '../models/model/Profiles';
 
 @Injectable({
   providedIn: 'root',
@@ -50,11 +51,43 @@ export class UserService{
     );
   }
 
+  public update(user: User): Observable<any> {
+    return this.http.put(`${this.apiServerUrl}`+'user',user).pipe(
+      tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
+    );
+  }
+
   public searchUser(searchUserRegister,page,size): Observable<any> {
     // eslint-disable-next-line max-len
     return this.http.post<any>(`${this.apiServerUrl}`+'user/searches?'+'page='+page+'&size='+size
       ,searchUserRegister).pipe(
       tap(receivedUser => console.log(`receivedJob=${JSON.stringify(receivedUser)}`)),
     );
+  }
+
+  public checkProfile(profiles: Profiles){
+    console.log('Day la profile',profiles);
+    if(!profiles){
+      return false;
+    }
+    if(profiles.skill === 'null'){
+      return false;
+    }
+    if(profiles.academicLevel === null){
+      return false;
+    }
+    if (profiles.desiredSalary === 'null'){
+      return false;
+    }
+    if(profiles.desiredWorkingForm === 'null'){
+      return false;
+    }
+    if(profiles.desiredWorkingAddress === 'null'){
+      return false;
+    }
+    if(profiles.numberYearsExperience === null){
+      return false;
+    }
+    return true;
   }
 }

@@ -1,4 +1,4 @@
-import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
+import {HttpErrorResponse} from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrimeNGConfig } from 'primeng/api';
@@ -6,7 +6,6 @@ import { SessionService } from '../../../@core/services/session.service';
 import { UserService } from '../../../service/user.service';
 import { User } from './profile.model';
 import { ProfileService } from './profile.service';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'ngx-profile',

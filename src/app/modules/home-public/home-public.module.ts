@@ -13,6 +13,7 @@ import {DialogModule} from "primeng/dialog";
 import {ReactiveFormsModule} from "@angular/forms";
 import {CalendarModule} from "primeng/calendar";
 import {FileUploadModule} from "primeng/fileupload";
+import {InputTextareaModule} from "primeng/inputtextarea";
 
 const routes: Routes = [{
   path: '',
@@ -36,17 +37,18 @@ const routes: Routes = [{
     JobPublicDetailComponent,
     JobPublicInfoComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    AvatarModule,
-    BadgeModule,
-    ButtonModule,
-    RippleModule,
-    DialogModule,
-    ReactiveFormsModule,
-    CalendarModule,
-    FileUploadModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(routes),
+        AvatarModule,
+        BadgeModule,
+        ButtonModule,
+        RippleModule,
+        DialogModule,
+        ReactiveFormsModule,
+        CalendarModule,
+        FileUploadModule,
+        InputTextareaModule,
+    ],
 })
 export class HomePublicModule { }

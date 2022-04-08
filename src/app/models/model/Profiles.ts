@@ -10,5 +10,6 @@ export interface Profiles{
   desiredWorkingForm: string;
   desiredWorkingAddress: string;
   numberYearsExperience: number;
+  description: string;
   delete: number;
 }

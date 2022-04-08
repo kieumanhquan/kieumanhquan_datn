@@ -42,7 +42,7 @@ export class JobRegisterListComponent implements OnInit {
   ngOnInit(): void {
     this.getStatusRegisterJob();
     this.sortOptions = [
-      {label: 'Tên công việc', value: 'name'},
+      {label: 'Tên ứng viên', value: 'name'},
       {label: 'Thời gian nộp hồ sơ', value: 'dueDate'},
     ];
     this.getInnitData();
@@ -107,7 +107,7 @@ export class JobRegisterListComponent implements OnInit {
     this.jobRegisterService.findJobRegister(this.searchJobRegister, this.page, this.size).subscribe(
       (data: any) => {
         this.jobRegisters = data.list;
-        this.totalRecords = data.totalPage * this.size;
+        this.totalRecords = data.totalPage ;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -121,7 +121,7 @@ export class JobRegisterListComponent implements OnInit {
     this.jobRegisterService.sortByName(this.searchJobRegister, this.page, this.size).subscribe(
       (data: any) => {
         this.jobRegisters = data.list;
-        this.totalRecords = data.totalPage * this.size;
+        this.totalRecords = data.totalPage ;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

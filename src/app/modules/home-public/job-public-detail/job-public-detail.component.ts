@@ -9,6 +9,9 @@ import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AcademicLevel} from '../../../models/model/AcademicLevel';
 import {WorkingForm} from '../../../models/model/WorkingForm';
 import {UploadFileService} from '../../../service/upload.service';
+import {Profiles} from '../../../models/model/Profiles';
+import {JobRegisterService} from '../../../service/jobRegister.service';
+import {ProfilesService} from '../../../service/profiles.service';
 
 @Component({
   selector: 'ngx-job-public-detail',
@@ -23,16 +26,30 @@ export class JobPublicDetailComponent implements OnInit {
   genders: any[];
   academicLevels: AcademicLevel[];
   workingForms: WorkingForm[];
+  profile: Profiles = {
+    academicLevel: undefined,
+    delete: 0,
+    description: '',
+    desiredSalary: '',
+    desiredWorkingAddress: '',
+    desiredWorkingForm: '',
+    id: 0,
+    numberYearsExperience: 0,
+    skill: '',
+    user: undefined,
+  };
+  checkedProfile = false;
 
   displayPosition: boolean;
   position: string;
 
-  file: File;
+  fileCv: File;
+  fileAvatar: File;
 
   // eslint-disable-next-line max-len
   constructor(private readonly route: ActivatedRoute, private jobService: JobService, private userService: UserService
-    , private readonly router: Router, private fb: FormBuilder, private uploadService: UploadFileService) {
-    // this.getUser();
+    , private readonly router: Router, private fb: FormBuilder, private uploadService: UploadFileService,
+              private jobRegisterService: JobRegisterService,private profilesService: ProfilesService) {
   }
 
   ngOnInit(): void {
@@ -42,10 +59,10 @@ export class JobPublicDetailComponent implements OnInit {
     this.getAcademicLevel();
     this.getWorkingForm();
     this.info = this.fb.group({
+      description: [''],
       homeTown: ['', [Validators.required]],
       gender: ['', [Validators.required]],
       birthDay: ['', [Validators.required]],
-      avatarName: ['', [Validators.required]],
       skills: this.fb.array([
         this.fb.control(''),
       ]),
@@ -57,6 +74,22 @@ export class JobPublicDetailComponent implements OnInit {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  currentDate = new Date();
+  getInitData(){
+    this.profile = {
+      id:null,
+      academicLevel: null,
+      delete: 0,
+      description: '',
+      desiredSalary: '',
+      desiredWorkingAddress: '',
+      desiredWorkingForm: '',
+      numberYearsExperience: 0,
+      skill: '',
+      user: undefined,
+    };
+  }
   // eslint-disable-next-line @typescript-eslint/member-ordering
   get skills(): FormArray {
     return this.info.get('skills') as FormArray;
@@ -74,6 +107,22 @@ export class JobPublicDetailComponent implements OnInit {
     this.jobService.getJobById(this.route.snapshot.params.id).subscribe(
       (data: Job) => {
         this.job = data;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public getProfilesByUserId(): void {
+    this.jobRegisterService.getProfilesByUserId(this.user.id).subscribe(
+      (data: Profiles) => {
+        if(!data){
+          this.getInitData();
+        } else {
+          this.profile = data;
+        }
+        this.checkedProfile = this.userService.checkProfile(this.profile);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -107,7 +156,7 @@ export class JobPublicDetailComponent implements OnInit {
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
         this.user = data;
-        console.log('roles', data.roles);
+        this.getProfilesByUserId();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -122,28 +171,97 @@ export class JobPublicDetailComponent implements OnInit {
     }
   }
 
-  onApply(position: string) {
-    const token = this.userService.getDecodedAccessToken();
-    if (token) {
-      this.position = position;
-      this.displayPosition = true;
-    } else {
-      alert('Vui lòng đăng nhập trước');
+  public updateUser(): void {
+    this.userService.update(this.user).subscribe(
+      (data: User) => {
+        this.user = data;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public updateProfiles(): void {
+    this.profilesService.update(this.profile).subscribe(
+      (data: Profiles) => {
+        this.profile = data;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  onApply() {
+    if (!this.checkedProfile) {
+      let skills = '';
+      // eslint-disable-next-line @typescript-eslint/prefer-for-of
+      for (let i = 0; i < this.info.value.skills.length; i++) {
+        if (i === this.info.value.skills.length - 1) {
+          skills += this.info.value.skills[i];
+        } else {
+          skills += this.info.value.skills[i] + ',';
+        }
+      }
+      this.user.avatarName = this.fileAvatar.name;
+      this.user.homeTown = this.info.value.homeTown;
+      this.user.birthday = this.info.value.birthday;
+      this.profile.skill = skills;
+      this.profile.numberYearsExperience = this.info.value.numberYearsExperience;
+      this.profile.academicLevel = this.info.value.academicLevel;
+      this.profile.desiredSalary = this.info.value.desiredSalary;
+      this.profile.desiredWorkingAddress = this.info.value.desiredWorkingAddress;
+      this.profile.desiredWorkingForm = this.info.value.workingForm.code;
+      this.profile.user = this.user;
+      this.uploadAvatar();
+      this.updateUser();
     }
+    this.profile.description = this.info.value.description;
+    this.uploadCv();
+    this.updateProfiles();
+    this.router.navigate(['/home-public']).then(r => console.log(r));
   }
 
   onSelected(event) {
-    this.file = event.currentFiles[0];
-    console.log('day la file', this.file);
+    this.fileCv = event.currentFiles[0];
+    console.log('day la file', this.fileCv);
   }
 
-  onBeforeUpload() {
-    this.uploadService.upload(this.file,this.user.userName,this.job.id).subscribe(
+  onSelectedAvatar(event) {
+    this.fileAvatar = event.currentFiles[0];
+  }
+
+  uploadCv() {
+    this.uploadService.upload(this.fileCv, this.user.userName, this.job.id).subscribe(
       (data: any) => {
         alert(data.message);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
-      });
+      },
+    );
+  }
+
+  uploadAvatar() {
+    this.uploadService.uploadAvatar(this.fileAvatar, this.user.id).subscribe(
+      (data: any) => {
+        alert(data.message);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  onBeforeApply(top: string) {
+    const token = this.userService.getDecodedAccessToken();
+    if (token) {
+      this.position = top;
+      this.displayPosition = true;
+    } else {
+      alert('Vui lòng đăng nhập trước');
+      this.router.navigate(['/auth']).then(r => console.log(r));
+    }
   }
 }

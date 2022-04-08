@@ -120,7 +120,7 @@
     <div class="form-group row">
       <label for="example-text-input" class="col-md-4 col-form-label">Ngày bắt đâu tuyển:</label>
       <div class="col-md-8">
-        <p-calendar [(ngModel)]="date7" [showTime]="true" inputId="time" formControlName="startRecruitmentDate"></p-calendar>
+        <p-calendar [(ngModel)]="date7"  [showIcon]="true" [minDate]="minDate" [showTime]="true" inputId="time" formControlName="startRecruitmentDate" ></p-calendar>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -131,7 +131,7 @@
     <div class="form-group row">
       <label for="example-text-input" class="col-md-4 col-form-label">Hạn nộp hồ sơ:</label>
       <div class="col-md-8">
-        <p-calendar [(ngModel)]="date8" [showTime]="true" inputId="time" formControlName="dueDate"></p-calendar>
+        <p-calendar [(ngModel)]="date8" [showTime]="true" [showIcon]="true" [minDate]="this.rfContact.value.startRecruitmentDate" inputId="time" formControlName="dueDate"></p-calendar>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -142,7 +142,7 @@
     <div class="form-group row">
       <label for="example-text-input" class="col-md-4 col-form-label">Mô tả công việc:</label>
       <div class="col-md-8">
-        <input class="form-control" type="text" formControlName="description">
+        <textarea pInputTextarea formControlName="description" [rows]="3" [cols]="80" autoResize="autoResize" [maxLength]="50"></textarea>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -153,7 +153,7 @@
     <div class="form-group row">
       <label for="example-text-input" class="col-md-4 col-form-label">Quyền lợi được hưởng:</label>
       <div class="col-md-8">
-        <input class="form-control" type="text" formControlName="benefits">
+        <textarea pInputTextarea formControlName="benefits" [rows]="3" [cols]="80" autoResize="autoResize" [maxLength]="50"></textarea>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -164,7 +164,7 @@
     <div class="form-group row">
       <label for="example-text-input" class="col-md-4 col-form-label">Yêu cầu công việc:</label>
       <div class="col-md-8">
-        <input class="form-control" type="text" formControlName="jobRequirement">
+        <textarea pInputTextarea formControlName="jobRequirement" [rows]="3" [cols]="80" autoResize="autoResize" [maxLength]="50"></textarea>
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -173,9 +173,9 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-4 col-form-label">salaryMin:</label>
+      <label for="example-text-input" class="col-md-4 col-form-label">Lương tối thiểu:</label>
       <div class="col-md-8">
-        <input class="form-control" type="text"  formControlName="salaryMin">
+        <input class="form-control" type="number" [min]="0" formControlName="salaryMin">
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -185,9 +185,9 @@
 
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-4 col-form-label">salaryMax:</label>
+      <label for="example-text-input" class="col-md-4 col-form-label">Lương tối đa:</label>
       <div class="col-md-8">
-        <input class="form-control" type="text"  formControlName="salaryMax">
+        <input class="form-control" type="number" [min]="this.rfContact.value.salaryMin"   formControlName="salaryMax">
       </div>
     </div>
     <div class="col alert alert-danger" role="alert"
@@ -216,7 +216,7 @@
 
     <div formArrayName="skills" *ngIf="skills.controls.length">
       <div class="form-group row" *ngFor="let c of skills.controls; index as i">
-        <label class="col-md-4 col-form-label">Skills:</label>
+        <label class="col-md-4 col-form-label">Kĩ năng:</label>
         <div class="col-md-8">
           <input class="form-control" type="tel"  [formControlName]="i">
           <div class="text-right">
@@ -233,6 +233,5 @@
     </div>
   </div>
 </form>
-<pre>{{this.rfContact.value | json}}</pre>
 
 

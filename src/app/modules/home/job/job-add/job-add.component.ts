@@ -183,4 +183,7 @@ export class JobAddComponent implements OnInit {
     this.router.navigate(['/home/list-job']).then(r => console.log(r));
   }
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  minDate = new Date();
+
 }
