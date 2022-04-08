@@ -5,6 +5,7 @@ import {tap} from 'rxjs/operators';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {User} from '../models/model/User';
+import {Profiles} from '../models/model/Profiles';
 
 @Injectable({
   providedIn: 'root',
@@ -55,6 +56,24 @@ export class UserService{
     return this.http.post<any>(`${this.apiServerUrl}`+'user/searches?'+'page='+page+'&size='+size
       ,searchUserRegister).pipe(
       tap(receivedUser => console.log(`receivedJob=${JSON.stringify(receivedUser)}`)),
+    );
+
+  }  public updateUserProfile(profiles: Profiles): Observable<any> {
+    return this.http.post(`${this.apiServerUrl}`+'user/profiles',profiles).pipe(
+      tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
+    );
+  }
+
+
+  getUserProfilesByUserName(userName: string): Observable<Profiles>  {
+    return this.http.get<any>(`${this.apiServerUrl}`+'user/profiles/userName='+userName).pipe(
+      tap(user => console.log(`user=${JSON.stringify(user)}`)),
+    );
+  }
+
+  getAllAcademicLevel() {
+    return this.http.get<any>(`${this.apiServerUrl}`+'user/profiles/academicLevels').pipe(
+      tap(user => console.log(`academicLevels=${JSON.stringify(user)}`)),
     );
   }
 }

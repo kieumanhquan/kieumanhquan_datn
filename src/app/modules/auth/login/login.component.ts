@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../@core/services/auth.service';
 import {TokenService} from '../../../@core/services/token.service';
 import {Router} from '@angular/router';
+import { UserService } from '../../../service/user.service';
 
 @Component({
   selector: 'ngx-login',
@@ -14,10 +15,12 @@ export class LoginComponent implements OnInit {
   isSubmitted = false;
   roles: string[] = [];
   isLoggedIn = false;
+
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private tokenService: TokenService,
-              private router: Router) {
+              private router: Router,
+              private  userService: UserService) {
   }
 
   ngOnInit(): void {
@@ -42,21 +45,26 @@ export class LoginComponent implements OnInit {
         data => {
           this.isLoggedIn = true;
           this.tokenService.saveToken(data.token);
-        /*   this.tokenService.saveUser(data.username);
-          this.roles = this.tokenService.getUser().roles;*/
-          if(this.formLogin.value.password==='admin'){
-             this.router.navigate(['/auth/changeAdminPassword']);
-          }else {
-  this.router.navigate(['/home/']);
-}
+          /*       this.tokenService.saveUser(data.userName);
+                 this.roles = this.tokenService.getUser().roles;*/
         },
       );
+      // eslint-disable-next-line max-len
+      if (this.userService.getDecodedAccessToken().auth === 'ROLE_ADMIN' || this.userService.getDecodedAccessToken().auth === 'ROLE_JE') {
+        this.router.navigate(['/home/']);
+      }else if (this.userService.getDecodedAccessToken().auth==='ROLE_USER'){
+        this.router.navigate(['/home-public']);
+      }else {
+        this.router.navigate(['/auth/login']);
+      }
     }
   }
+
   forgotPassword() {
     this.router.navigate(['/auth/change-password/init']);
   }
-  register(){
+
+  register() {
     this.router.navigate(['/auth/signup']);
   }
 }

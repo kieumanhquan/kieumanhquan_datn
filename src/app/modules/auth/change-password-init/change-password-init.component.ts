@@ -28,11 +28,9 @@ export class ChangePasswordInitComponent implements OnInit {
   public sendOtp(){
     this.authService.sendOtp(this.cpi.value).subscribe(
       (data: any) => {
-        if(data.obj===false){
-          alert(data.message);
-        }else {
+        alert('init-2'+ data.message);
+        if(data.obj===true){
           this.router.navigate(['/auth/change-password/finish']).then(r => console.log(r));
-          alert(data.message);
         }
       },
       (error: HttpErrorResponse) => {
