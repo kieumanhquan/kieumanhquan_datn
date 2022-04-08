@@ -8,6 +8,7 @@ import {UserService} from '../../../service/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import { Profiles } from '../../../models/model/Profiles';
 import {AcademicLevel} from '../../../models/model/AcademicLevel';
+import {UploadFileService} from "../../../service/upload.service";
 
 @Component({
   selector: 'ngx-user-edit',
@@ -21,24 +22,32 @@ export class UserEditComponent implements OnInit {
   username: string;
   profiles: Profiles ;
   academicLevels: AcademicLevel[];
+  birthday: string;
+  fileCv: File;
+  fileAvatar: File;
 
   constructor(
     private sessionService: SessionService,
     private profileService: ProfileService,
     private fb: FormBuilder,
     private primengConfig: PrimeNGConfig,
-    private userService: UserService) { }
+    private userService: UserService,
+    private  uploadService: UploadFileService) { }
+
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
-    this.initForm();
+    this.getAllAcademicLevel();
     this.getUser();
-    console.log('user form'+ this.user);
+    console.log('user form: '+ this.user);
   }
   initForm(){
-    this.username = this.userService.getDecodedAccessToken().sub;
+    const birthday = new Date(this.user.birthday);
+    console.log(birthday);
+    // eslint-disable-next-line max-len
+    this.birthday = `${birthday.getDate()}/${birthday.getMonth()}/${birthday.getFullYear()} ${birthday.getHours()}:${birthday.getMinutes()}`;
     this.formUser = this.fb.group({
-      name: ['', Validators.required, Validators.minLength(1), Validators.maxLength(20)],
+      name: [''],
       email: ['', Validators.required ,Validators.email],
       // eslint-disable-next-line max-len
       phoneNumber: ['', [Validators.required, Validators.minLength(8),Validators.pattern('(84|0[3|5|7|8|9])+([0-9]{8})')]],
@@ -46,18 +55,35 @@ export class UserEditComponent implements OnInit {
       homeTown: [''],
       gender: [''],
       //profiles
-      skill:[''],
-      desiredSalary:[''],
-      desiredWorkingAddress:[''],
-      numberYearsExperience:[''],
-      desiredWorkingForm:[''],
+      skill:['',Validators.required],
+      desiredSalary:['',Validators.required],
+      desiredWorkingAddress:['',Validators.required],
+      numberYearsExperience:['',Validators.required],
+      desiredWorkingForm:['',Validators.required],
+      academicLevel:['',Validators.required],
     });
   }
 
   public getUserByUserName(username: string): void {
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
+        console.log('data: ',data);
         this.user = data;
+        this.getProfiles();
+        console.log('data pass: ',this.user);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public getProfilesByUserId(username: number): void {
+    this.userService.getUserProfilesByUserId(username).subscribe(
+      (data: Profiles) => {
+        this.profiles = data;
+        this.initForm();
+        console.log('data pass: ',this.profiles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -79,24 +105,12 @@ export class UserEditComponent implements OnInit {
     const token = this.userService.getDecodedAccessToken();
     this.getUserByUserName(token.sub);
   }
-
-  updateForm(user: User): void {
-    this.formUser.patchValue({
-      name: this.user.name,
-      email: this.user.email,
-      phoneNumber: this.user.phoneNumber,
-      birthDay: this.user.birthday,
-      homeTown: this.user.homeTown,
-      gender:this.user.gender,
-      skill:this.profiles.skill,
-      desiredSalary:this.profiles.desiredSalary,
-      desiredWorkingAddress:this.profiles.desiredWorkingAddress,
-      numberYearsExperience:this.profiles.numberYearsExperience,
-      desiredWorkingForm:this.profiles.desiredWorkingForm,
-    });
+  public getProfiles(): void {
+    this.getProfilesByUserId(this.user.id);
   }
   onSubmit() {
     this.updateUser();
+    window.location.reload();
   }
 
   getUserValue(): void {
@@ -106,6 +120,7 @@ export class UserEditComponent implements OnInit {
     this.user.homeTown=this.formUser.value.homeTown;
     this.user.gender=this.formUser.value.gender;
     this.user.userName=this.formUser.value.userName;
+
   }
 
   getProfilesValue(){
@@ -121,37 +136,38 @@ export class UserEditComponent implements OnInit {
      this.getProfilesValue();
     const token = this.userService.getDecodedAccessToken();
     this.user.userName=token.sub;
-    this.userService.updateUser(this.user).subscribe(
-      (data: any) => {
-        // eslint-disable-next-line eqeqeq
-        console.log(data);
-        if (data.obj === true) {
-          alert('Cập nhật thành công');
-        } else {
-          alert('Cập nhật thất bại');
-        }
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      },
-    );
+    console.log('pp',this.profiles);
     this.userService.updateUserProfile(this.profiles).subscribe(
       (data: any) => {
-        console.log(data);
-        if (data.obj === true) {
-          alert('Cập nhật thành công');
-        } else {
-          alert('Cập nhật thất bại');
-        }
+       if(!data){
+         alert('chua updata');
+       }else {
+         alert('up ok ');
+       }
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       },
     );
   }
+  onSelected(event) {
+    this.fileCv = event.currentFiles[0];
+    console.log('day la file', this.fileCv);
+  }
 
-  public updateProfiles(){
+  onSelectedAvatar(event) {
+    this.fileAvatar = event.currentFiles[0];
+  }
 
+  uploadAvatar() {
+    this.uploadService.uploadAvatar(this.fileAvatar, this.user.id).subscribe(
+      (data: any) => {
+        alert(data.message);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
   }
 }
 

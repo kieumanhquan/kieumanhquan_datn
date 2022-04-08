@@ -5,6 +5,7 @@ import {User} from '../../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 import {JobService} from '../../../../service/job.service';
 import {StatusDto} from '../../../../models/Dto/StatusDto';
+// @ts-ignore
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
