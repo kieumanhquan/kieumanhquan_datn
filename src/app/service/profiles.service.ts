@@ -11,14 +11,20 @@ import {Profiles} from '../models/model/Profiles';
 
 export class ProfilesService{
 
-  private apiServerUrl = environment.apiPublicUrl;
+  private apiServerUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {
   }
 
   public update(profile: Profiles): Observable<any> {
-    return this.http.post(`${this.apiServerUrl}`+'profiles',profile).pipe(
+    return this.http.post(`${this.apiServerUrl}`+'user/profiles',profile).pipe(
       tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
+    );
+  }
+
+  public getProfilesByUserId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiServerUrl}`+'user/profiles/id='+id).pipe(
+      tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
     );
   }
 

@@ -1,16 +1,13 @@
 <div class="d-flex justify-content-lg-start container bg-info p-3 rounded mb-4">
-  <div>
-    <p-avatar
-      image="https://cdn.topcv.vn/80/company_logos/cong-ty-cp-giao-duc-educa-corporation-6d67556358b65494d801a26a77be21fb-5ea7b55a0ca31.jpg"
-      pBadge value="4" severity="danger" size="xlarge"></p-avatar>
-  </div>
-  <div class="ml-5">
+  <img src="file:///C:/Users/hieul/Downloads/avatarTest.png" alt="">
+  <div class="ml-3">
     <div class="d-flex justify-content-lg-between">
       <a (click)="onReadDetail(jobRegister.id)" style="cursor: pointer;" class="display-5 font-weight-bold mr-5">{{jobRegister.user.name}}</a>
       <p class="badge badge-secondary mr-2">{{this.jobRegister.dateRegister| date}}</p>
     </div>
-    <div class="d-flex justify-content-between">
+    <div class="d-flex mt-2 justify-content-between">
       <p class="badge badge-secondary mr-2" style="cursor: pointer;" (click)="onReadJobDetail(jobRegister.job.id)">{{jobRegister.job.name}}</p>
+      <p class="badge badge-secondary mr-2" style="cursor: pointer;" (click)="onReadJobDetail(jobRegister.job.id)">{{jobRegister.job.jobPosition.code}}</p>
       <p class="badge badge-secondary mr-2">{{this.jobRegister.statusJobRegister.code}}</p>
     </div>
     <div>

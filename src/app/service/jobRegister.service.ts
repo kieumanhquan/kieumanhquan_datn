@@ -38,11 +38,7 @@ export class JobRegisterService {
     );
   }
 
-  public getProfilesByUserId(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiPublicUrl}`+'profiles/id='+id).pipe(
-      tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
-    );
-  }
+
 
   public getByJobId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiPublicUrl}`+'job-registers/jobId='+id).pipe(

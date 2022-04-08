@@ -13,7 +13,7 @@ import {Profiles} from '../models/model/Profiles';
 
 export class UserService{
 
-  private apiServerUrl = environment.apiPublicUrl;
+  private apiServerUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {
   }

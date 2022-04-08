@@ -10,6 +10,7 @@ import {StatusRegisterDto} from '../../../../models/Dto/StatusRegisterDto';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ScheduleDto} from '../../../../models/Dto/ScheduleDto';
 import { saveAs } from 'file-saver';
+import {ProfilesService} from '../../../../service/profiles.service';
 
 @Component({
   selector: 'ngx-job-register-detail',
@@ -34,7 +35,8 @@ export class JobRegisterDetailComponent implements OnInit {
   cvFileName: string;
   currentDate = new Date();
 
-  constructor(private readonly route: ActivatedRoute, private jobRegisterService: JobRegisterService,
+  constructor(private readonly route: ActivatedRoute, private jobRegisterService: JobRegisterService
+              ,private profilesService: ProfilesService,
               private userService: UserService,private fb: FormBuilder) {
     this.getUser();
   }
@@ -81,7 +83,7 @@ export class JobRegisterDetailComponent implements OnInit {
 
 
   public getProfilesByUserId(id: number): void {
-    this.jobRegisterService.getProfilesByUserId(id).subscribe(
+    this.profilesService.getProfilesByUserId(id).subscribe(
       (data: Profiles) => {
         this.profiles = data;
       },

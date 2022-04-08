@@ -13,7 +13,7 @@
         <div class="col-md-8 mb-5">
           <h2>Upload</h2>
           <div class="d-flex">
-            <p-fileUpload mode="advanced" chooseLabel="Tải CV" (onSelect)="onSelected($event)" class="mr-2" [showUploadButton]="false" [showCancelButton]="false" ></p-fileUpload>
+            <p-fileUpload mode="advanced" chooseLabel="Tải CV" (onSelect)="onSelected($event)" class="mr-2 upload-cv" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
             <ng-template [ngIf]="!checkedProfile">
               <p-fileUpload mode="advanced" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)" accept="image/*" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
             </ng-template>
@@ -164,7 +164,7 @@
       </div>
     </div>
     <h2>Thông tin chung</h2>
-    <div class="d-flex justify-content-around badge badge-info mr-2 p-5">
+    <div class="d-flex justify-content-around badge badge-success mr-2 p-5">
       <div>
         <div>
           <h2>Mức lương</h2>
@@ -195,19 +195,19 @@
       </div>
     </div>
     <h2>Địa điểm làm việc</h2>
-    <div class="badge badge-info mr-2 p-5 container">
+    <div class="badge badge-success mr-2 p-5 container">
       <div>
         <p>{{job.addressWork}}</p>
       </div>
     </div>
     <h2>Mô tả công việc</h2>
-    <div class="badge badge-info mr-2 p-5 container">
+    <div class="badge badge-success mr-2 p-5 container">
       <div>
         <p>{{job.description}}</p>
       </div>
     </div>
     <h2>Quyền lợi</h2>
-    <div class="badge badge-info mr-2 p-5 container">
+    <div class="badge badge-success mr-2 p-5 container">
       <div>
         <p>{{job.benefits}}</p>
       </div>

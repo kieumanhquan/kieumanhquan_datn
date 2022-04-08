@@ -21,6 +21,12 @@ export class JobService {
     );
   }
 
+  public addView(id: number): Observable<any> {
+    return this.http.get(`${this.apiServerUrl}`+'jobs/views/id='+id).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
   public updateJob(job: JobDto): Observable<any> {
     return this.http.put(`${this.apiServerUrl}`+'jobs',job).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),

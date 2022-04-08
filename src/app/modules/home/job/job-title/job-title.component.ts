@@ -72,17 +72,21 @@ export class JobTitleComponent implements OnInit {
     { title: 'Mô tả', dataKey: 'description' }];
 
   exportPdf() {
-    // eslint-disable-next-line max-len
-    this.jobs = [{name:this.job.name,academicLevel:this.job.academicLevel.code,addressWork:this.job.addressWork,salary: this.job.salaryMax,description:this.job.description}];
+    this.jobs = [{name:this.job.name,academicLevel:this.job.academicLevel.code,addressWork:this.job.addressWork,
+      salary: this.job.salaryMax,description:this.job.description}];
     const doc = new jsPDF('p','px');
-    doc.setFont('PTSans');
     doc.setFontSize(20);
+    // eslint-disable-next-line max-len
+    doc.addFileToVFS('Roboto-regular','77u/aW1wb3J0IHsganNQREYgfSBmcm9tICJqc3BkZiIKdmFyIGZvbnQgPSAndW5kZWZpbmVkJzsKdmFyIGNhbGxBZGRGb250ID0gZnVuY3Rpb24gKCkgewp0aGlzLmFkZEZpbGVUb1ZGUygnUm9ib3RvLXJlZ3VsYXItbm9ybWFsLnR0ZicsIGZvbnQpOwp0aGlzLmFkZEZvbnQoJ1JvYm90by1yZWd1bGFyLW5vcm1hbC50dGYnLCAnUm9ib3RvLXJlZ3VsYXInLCAnbm9ybWFsJyk7Cn07CmpzUERGLkFQSS5ldmVudHMucHVzaChbJ2FkZEZvbnRzJywgY2FsbEFkZEZvbnRdKQo=');
+    doc.addFont('Roboto-Regular', 'Roboto-regular', 'normal');
+    doc.setFont('Roboto-regular', 'normal');
+    console.log('font',doc.getFontList());
 
     autoTable(doc, {
       columns: this.exportColumns,
       body: this.jobs,
       didDrawPage: (dataArg) => {
-        doc.text('  Quây là 1',10,20);
+        doc.text('  Job Jd',10,20);
       },
     });
     doc.save('job.pdf');

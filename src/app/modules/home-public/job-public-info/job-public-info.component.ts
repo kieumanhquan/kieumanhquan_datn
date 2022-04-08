@@ -70,4 +70,8 @@ export class JobPublicInfoComponent implements OnInit {
       },
     );
   }
+
+  onReadAll() {
+    this.router.navigate(['/home-public/list-job']).then(r => console.log(r));
+  }
 }

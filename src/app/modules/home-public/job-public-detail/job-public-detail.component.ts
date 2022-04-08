@@ -46,7 +46,6 @@ export class JobPublicDetailComponent implements OnInit {
   fileCv: File;
   fileAvatar: File;
 
-  // eslint-disable-next-line max-len
   constructor(private readonly route: ActivatedRoute, private jobService: JobService, private userService: UserService
     , private readonly router: Router, private fb: FormBuilder, private uploadService: UploadFileService,
               private jobRegisterService: JobRegisterService,private profilesService: ProfilesService) {
@@ -74,6 +73,16 @@ export class JobPublicDetailComponent implements OnInit {
     });
   }
 
+  public addViews(){
+    this.jobService.addView(this.route.snapshot.params.id).subscribe(
+      (data: any) => {
+        console.log(data);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
   // eslint-disable-next-line @typescript-eslint/member-ordering
   currentDate = new Date();
   getInitData(){
@@ -115,7 +124,7 @@ export class JobPublicDetailComponent implements OnInit {
   }
 
   public getProfilesByUserId(): void {
-    this.jobRegisterService.getProfilesByUserId(this.user.id).subscribe(
+    this.profilesService.getProfilesByUserId(this.user.id).subscribe(
       (data: Profiles) => {
         if(!data){
           this.getInitData();
@@ -168,6 +177,8 @@ export class JobPublicDetailComponent implements OnInit {
     const token = this.userService.getDecodedAccessToken();
     if (token) {
       this.getUserByUserName(token.sub);
+      console.log('Day la id',this.route.snapshot.params.id);
+      this.addViews();
     }
   }
 

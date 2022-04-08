@@ -10,13 +10,18 @@ import {JobPublicTitleComponent} from './job-public-title/job-public-title.compo
 import { JobPublicDetailComponent } from './job-public-detail/job-public-detail.component';
 import { JobPublicInfoComponent } from './job-public-info/job-public-info.component';
 import {DialogModule} from 'primeng/dialog';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {CalendarModule} from 'primeng/calendar';
 import {FileUploadModule} from 'primeng/fileupload';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import {CardModule} from 'primeng/card';
 import {InputTextModule} from 'primeng/inputtext';
+import { JobPublicListComponent } from './job-public-list/job-public-list.component';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import {SliderModule} from 'primeng/slider';
+import {DropdownModule} from 'primeng/dropdown';
+import {PaginatorModule} from 'primeng/paginator';
 
 const routes: Routes = [{
   path: '',
@@ -27,11 +32,16 @@ const routes: Routes = [{
       component: JobPublicInfoComponent,
     },
     {
+      path: 'list-job',
+      component: JobPublicListComponent,
+    },
+    {
       path: 'job-detail/:id',
       component: JobPublicDetailComponent,
     },
     { path: 'user/edit',
-      component: UserEditComponent},
+      component: UserEditComponent,
+    },
   ],
 },
 
@@ -44,6 +54,7 @@ const routes: Routes = [{
     JobPublicDetailComponent,
     JobPublicInfoComponent,
     UserEditComponent,
+    JobPublicListComponent,
   ],
   imports: [
     CommonModule,
@@ -60,7 +71,12 @@ const routes: Routes = [{
     ReactiveFormsModule,
     CalendarModule,
     FileUploadModule,
-  InputTextareaModule,
+    InputTextareaModule,
+    AutoCompleteModule,
+    FormsModule,
+    SliderModule,
+    DropdownModule,
+    PaginatorModule,
   ],
 })
 export class HomePublicModule { }

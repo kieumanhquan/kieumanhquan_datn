@@ -222,13 +222,13 @@ export class JobUpdateComponent implements OnInit {
     }
     this.jobDto = this.rfContact.value;
     this.jobDto.creatorId = this.job.creator.id;
-    this.jobDto.createDate = new Date();
+    this.jobDto.createDate = this.job.createDate;
     this.jobDto.updateUserId = this.user.id;
     this.jobDto.updateDate = new Date();
     this.jobDto.statusJobId = this.job.statusJob.id;
     this.jobDto.skills =skills;
     // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    this.jobDto.views =0;
+    this.jobDto.views =this.job.views;
 
     console.log('UpdateJob',this.jobDto);
     // eslint-disable-next-line max-len

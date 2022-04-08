@@ -1,29 +1,22 @@
-// @ts-ignore
-import {Component, OnInit} from '@angular/core';
-import {Job} from '../../../../models/model/Job';
-import {JobService} from '../../../../service/job.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {StatusJob} from '../../../../models/model/StatusJob';
+import { Component, OnInit } from '@angular/core';
+import {Job} from '../../../models/model/Job';
+import {User} from '../../../models/model/User';
+import {SearchJob} from '../../../models/job/SearchJob';
 import {SelectItem} from 'primeng/api';
+import {JobService} from '../../../service/job.service';
 import {Router} from '@angular/router';
-import {User} from '../../../../models/model/User';
-import {UserService} from '../../../../service/user.service';
-import {SearchJob} from '../../../../models/job/SearchJob';
+import {UserService} from '../../../service/user.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
-  selector: 'ngx-job-list',
-  templateUrl: './job-list.component.html',
-  styleUrls: ['./job-list.component.scss'],
+  selector: 'ngx-job-public-list',
+  templateUrl: './job-public-list.component.html',
+  styleUrls: ['./job-public-list.component.scss'],
 })
-export class JobListComponent implements OnInit {
+export class JobPublicListComponent implements OnInit {
   public jobs: Job[];
   user: User;
   searchJob: SearchJob;
-  statusJobs: any[];
-
-  selectedStatusJobAdvanced: any;
-
-  filteredStatusJobs: any[];
 
   sortOptions: SelectItem[];
 
@@ -41,7 +34,6 @@ export class JobListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getStatusJob();
     this.sortOptions = [
       {label: 'Tên công việc', value: 'name'},
       {label: 'Thời gian nộp hồ sơ', value: 'dueDate'},
@@ -52,23 +44,11 @@ export class JobListComponent implements OnInit {
   }
 
   getInnitData() {
-    this.selectedStatusJobAdvanced = {id: 1, code:'chờ xét duyệt'};
-    this.searchJob = {name:'',statusId:1,salaryMin:0,salaryMax:200,addressWork:'',skills:''};
+    this.searchJob = {addressWork: '', name:'',statusId:2,salaryMin:0,salaryMax:200,skills:''};
     this.page = 0;
-    this.size = 2;
+    this.size = 3;
     this.totalRecords = 5;
     this.sortNumber = 1;
-  }
-
-  public getStatusJob(): void {
-    this.jobService.getStatusJob().subscribe(
-      (data: StatusJob[]) => {
-        this.statusJobs = data;
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      },
-    );
   }
 
   onSortChange(event) {
@@ -84,22 +64,9 @@ export class JobListComponent implements OnInit {
     }
   }
 
-  filterStatusJob(event) {
-    const filtered: any[] = [];
-    const query = event.query;
-    // eslint-disable-next-line @typescript-eslint/prefer-for-of
-    for (let i = 0; i < this.statusJobs.length; i++) {
-      const statusJob = this.statusJobs[i];
-      if (statusJob.code.toLowerCase().indexOf(query.toLowerCase()) === 0) {
-        filtered.push(statusJob);
-      }
-    }
-    this.filteredStatusJobs = filtered;
-  }
 
   public onSearch() {
-    console.log('status',this.selectedStatusJobAdvanced);
-    this.searchJob.statusId = this.selectedStatusJobAdvanced.id;
+    this.searchJob.statusId = 2;
     this.jobService.findJob(this.searchJob, this.page, this.size).subscribe(
       (data: any) => {
         this.jobs = data.list;
@@ -112,7 +79,7 @@ export class JobListComponent implements OnInit {
   }
 
   public onSortByName() {
-    this.searchJob.statusId = this.selectedStatusJobAdvanced.id;
+    this.searchJob.statusId = 2;
     this.jobService.sortByName(this.searchJob, this.page, this.size).subscribe(
       (data: any) => {
         this.jobs = data.list;
@@ -156,7 +123,4 @@ export class JobListComponent implements OnInit {
     this.getUserByUserName(token.sub);
   }
 
-  onAdd() {
-    this.router.navigate(['/home/add-job']).then(r => console.log(r));
-  }
 }

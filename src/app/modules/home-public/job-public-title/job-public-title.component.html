@@ -1,10 +1,5 @@
-<div class="d-flex justify-content-lg-start container bg-info p-3 rounded mb-4" style="width: 400px">
-  <div>
-    <p-avatar
-      image="https://cdn.topcv.vn/80/company_logos/cong-ty-cp-giao-duc-educa-corporation-6d67556358b65494d801a26a77be21fb-5ea7b55a0ca31.jpg"
-      pBadge value="4" severity="danger" size="xlarge"></p-avatar>
-  </div>
-  <div class="ml-5 container">
+<div class="d-flex justify-content-lg-start container bg-success p-3 rounded mb-4" style="width: 400px">
+  <div class="ml-2 container">
     <div class="d-flex justify-content-lg-between">
       <a (click)="onReadDetail(job.id)" style="cursor: pointer;" class="display-5 font-weight-bold" >{{job.name}}</a>
       <p class="badge badge-secondary">{{this.job.dueDate | date}}</p>
@@ -16,6 +11,7 @@
     <div class="d-flex justify-content-between">
       <p class="badge badge-secondary mr-2">{{job.salaryMin}}-{{job.salaryMax}} triệu</p>
       <p class="badge badge-secondary mr-2">{{job.addressWork}}</p>
+      <p class="badge badge-secondary mr-2">{{job.skills}}</p>
       <p class="badge badge-secondary mr-2">{{this.job.createDate | date}}</p>
     </div>
   </div>
