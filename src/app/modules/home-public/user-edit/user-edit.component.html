@@ -1,0 +1,173 @@
+<h1>Thông tin cá nhân</h1>
+<ng-template >
+  <p-card>
+    <form [formGroup]="formUser" (ngSubmit)="onSubmit()" >
+      <div class="row">
+        <img src="assets/images/alan.png" alt="Avatar"
+             style="width:200px; border-radius: 50%;  margin: 0 auto; margin-bottom: 20px;">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label ">Họ và Tên</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="name" [(ngModel)]="user.name" >
+            </div>
+
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('name')?.errors?.required && formUser.get('name')?.touched">
+            Bạn phải nhập họ tên!
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Email</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="email" [(ngModel)]="user.email">
+            </div>
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('email')?.errors?.required && formUser.get('email')?.touched">
+            Bạn phải nhập gmail!
+          </div>
+        </div>
+      </div>
+      <div class="form-row" style="margin-bottom: 20px;">
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Số điện thoại</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="phoneNumber" [(ngModel)]="user.phoneNumber">
+            </div>
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('phoneNumber')?.errors?.required && formUser.get('phoneNumber')?.touched">
+            Bạn phải nhập số điện thoại!
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('phoneNumber')?.errors?.pattern && formUser.get('phoneNumber')?.touched">
+            Bạn phải nhập đúng định dạng số điện thoại!
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Ngày sinh</label>
+            <div class="col-9">
+              <p-calendar [(ngModel)]="user.birthday" [showTime]="true" inputId="time" formControlName="birthDay"></p-calendar>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <div class="form-row">
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Quê quán</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="homeTown" [(ngModel)]="user.homeTown">
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="row">
+            <label class="label col-sm-3 col-form-label">Giới tính</label>
+            <div class="col-sm-9">
+              <select
+                class="custom-select mb-3"
+                formControlName="gender"
+                [(ngModel)]="user.gender"
+              >
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label ">Kĩ năng</label>
+            <div class="col-9">
+              <select
+                class="custom-select mb-3"
+                formControlName="academicLevelId"
+              >
+                <option value="">Chọn trình độ học vấn</option>
+                <option *ngFor="let academicLevel of academicLevels" [ngValue]="profiles.academicLevel">
+                  {{ academicLevel.code }}
+                </option>
+              </select>
+            </div>
+
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('skill')?.errors?.required && formUser.get('skill')?.touched">
+            Bạn phải nhập kĩ năng!
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Mức lương mong muốn</label>
+            <div class="col-9">
+              <input type="number" pInputText class="form-control" formControlName="desiredSalary" [(ngModel)]="profiles.desiredSalary">
+            </div>
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('desiredSalary')?.errors?.required && formUser.get('desiredSalary')?.touched">
+            Bạn phải nhập mức lương mong muốn !
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label ">Địa chỉ làm việc mong muốn</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="desiredWorkingAddress" [(ngModel)]="profiles.desiredWorkingAddress" >
+            </div>
+
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('desiredWorkingAddress')?.errors?.required && formUser.get('desiredWorkingAddress')?.touched">
+            Bạn phải nhập địa chỉa làm việc mong muốn !
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label">Số năm kinh nghiệm</label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="numberYearsExperience" [(ngModel)]="profiles.numberYearsExperience">
+            </div>
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('numberYearsExperience')?.errors?.required && formUser.get('numberYearsExperience')?.touched">
+            Bạn phải nhập số năm kinh nghiệm!
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <div class="row">
+            <label class="label col-3 col-form-label ">Trình độ học vấn </label>
+            <div class="col-9">
+              <input type="text" pInputText class="form-control" formControlName="desiredWorkingAddress" [(ngModel)]="profiles.academicLevel" >
+            </div>
+
+          </div>
+          <div class="col alert alert-danger" role="alert"
+               *ngIf="formUser.get('desiredWorkingAddress')?.errors?.required && formUser.get('desiredWorkingAddress')?.touched">
+            Bạn phải nhập trình độ học vấn!
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" type="submit" style="margin-left: 7vw;" >Áp dụng</button>
+    </form>
+  </p-card>
+
+</ng-template>

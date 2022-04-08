@@ -27,7 +27,7 @@ export class ChangePasswordFinishComponent implements OnInit {
 
     });
   }
-  public sendOtp(){
+  public changePassword(){
     console.log(window.sessionStorage.getItem('email'));
     this.authService.changePassword(this.cpf.value,window.sessionStorage.getItem('email')).subscribe(
       (data: any) => {
@@ -46,6 +46,6 @@ export class ChangePasswordFinishComponent implements OnInit {
     );
   }
   onSubmit() {
-    this.sendOtp();
+    this.changePassword();
   }
 }

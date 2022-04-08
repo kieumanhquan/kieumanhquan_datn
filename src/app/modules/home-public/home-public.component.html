@@ -27,6 +27,7 @@
     </ng-template>
     <ng-template [ngIf]="user">
       <p-avatar [label]="user.avatarName[0]"  styleClass="mr-2" shape="circle" class="mt-2"></p-avatar>
+      <button pButton pRipple type="button" (click)="onEditInfo()" label="Cập nhật thông tin" class=" p-button-success mr-3" ></button>
       <button pButton pRipple type="button" (click)="onLogOut()" label="Thoát" class=" p-button-success mr-3" ></button>
     </ng-template>
   </ul>

@@ -63,6 +63,24 @@ export class UserService{
       ,searchUserRegister).pipe(
       tap(receivedUser => console.log(`receivedJob=${JSON.stringify(receivedUser)}`)),
     );
+
+  }  public updateUserProfile(profiles: Profiles): Observable<any> {
+    return this.http.post(`${this.apiServerUrl}`+'user/profiles',profiles).pipe(
+      tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
+    );
+  }
+
+
+  getUserProfilesByUserName(userName: string): Observable<Profiles>  {
+    return this.http.get<any>(`${this.apiServerUrl}`+'user/profiles/userName='+userName).pipe(
+      tap(user => console.log(`user=${JSON.stringify(user)}`)),
+    );
+  }
+
+  getAllAcademicLevel() {
+    return this.http.get<any>(`${this.apiServerUrl}`+'user/profiles/academicLevels').pipe(
+      tap(user => console.log(`academicLevels=${JSON.stringify(user)}`)),
+    );
   }
 
   public checkProfile(profiles: Profiles){

@@ -4,8 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PrimeNGConfig } from 'primeng/api';
 import { SessionService } from '../../../@core/services/session.service';
 import { UserService } from '../../../service/user.service';
-import { User } from './profile.model';
 import { ProfileService } from './profile.service';
+import {User} from '../../../models/model/User';
 
 @Component({
   selector: 'ngx-profile',
@@ -65,7 +65,7 @@ export class ProfileComponent implements OnInit {
       name:user.name,
       email:user.email,
       phoneNumber:user.phoneNumber,
-      birthDay:user.birthDay,
+      birthDay:user.birthday,
       homeTown:user.homeTown,
       gender: user.gender,
     });

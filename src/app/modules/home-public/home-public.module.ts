@@ -9,11 +9,14 @@ import {RippleModule} from 'primeng/ripple';
 import {JobPublicTitleComponent} from './job-public-title/job-public-title.component';
 import { JobPublicDetailComponent } from './job-public-detail/job-public-detail.component';
 import { JobPublicInfoComponent } from './job-public-info/job-public-info.component';
-import {DialogModule} from "primeng/dialog";
-import {ReactiveFormsModule} from "@angular/forms";
-import {CalendarModule} from "primeng/calendar";
-import {FileUploadModule} from "primeng/fileupload";
-import {InputTextareaModule} from "primeng/inputtextarea";
+import {DialogModule} from 'primeng/dialog';
+import {ReactiveFormsModule} from '@angular/forms';
+import {CalendarModule} from 'primeng/calendar';
+import {FileUploadModule} from 'primeng/fileupload';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import {CardModule} from 'primeng/card';
+import {InputTextModule} from 'primeng/inputtext';
 
 const routes: Routes = [{
   path: '',
@@ -27,8 +30,12 @@ const routes: Routes = [{
       path: 'job-detail/:id',
       component: JobPublicDetailComponent,
     },
+    { path: 'user/edit',
+      component: UserEditComponent},
   ],
-}];
+},
+
+];
 
 @NgModule({
   declarations: [
@@ -36,19 +43,24 @@ const routes: Routes = [{
     JobPublicTitleComponent,
     JobPublicDetailComponent,
     JobPublicInfoComponent,
+    UserEditComponent,
   ],
-    imports: [
-        CommonModule,
-        RouterModule.forChild(routes),
-        AvatarModule,
-        BadgeModule,
-        ButtonModule,
-        RippleModule,
-        DialogModule,
-        ReactiveFormsModule,
-        CalendarModule,
-        FileUploadModule,
-        InputTextareaModule,
-    ],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    AvatarModule,
+    BadgeModule,
+    ButtonModule,
+    RippleModule,
+    ReactiveFormsModule,
+    CalendarModule,
+    CardModule,
+    InputTextModule,
+    DialogModule,
+    ReactiveFormsModule,
+    CalendarModule,
+    FileUploadModule,
+  InputTextareaModule,
+  ],
 })
 export class HomePublicModule { }
