@@ -8,7 +8,7 @@ describe('JobPublicTitleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JobPublicTitleComponent ]
+      declarations: [ JobPublicTitleComponent ],
     })
     .compileComponents();
   });

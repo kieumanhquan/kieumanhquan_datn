@@ -5,6 +5,9 @@ import {User} from '../../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 import {JobService} from '../../../../service/job.service';
 import {StatusDto} from '../../../../models/Dto/StatusDto';
+// @ts-ignore
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'ngx-job-title',
@@ -14,9 +17,10 @@ import {StatusDto} from '../../../../models/Dto/StatusDto';
 export class JobTitleComponent implements OnInit {
   @Input() job: Job;
   @Input() user: User;
+
+  jobs: any[];
   statusDto: StatusDto;
   displayPositionReason: boolean;
-
   currentDate = new Date().getTime();
 
   constructor(private readonly router: Router, private jobService: JobService) {
@@ -59,6 +63,30 @@ export class JobTitleComponent implements OnInit {
     this.statusDto.jobId = this.job.id;
     this.statusDto.statusId = 2;
     this.updateJob(this.statusDto);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  exportColumns = [{ title: 'Name', dataKey: 'name' },
+    { title: 'Trình độ học vấn', dataKey: 'academicLevel' },
+    { title: 'Địa chỉ làm việc', dataKey: 'addressWork' },
+    { title: 'Lương', dataKey: 'salary' },
+    { title: 'Mô tả', dataKey: 'description' }];
+
+  exportPdf() {
+    // eslint-disable-next-line max-len
+    this.jobs = [{name:this.job.name,academicLevel:this.job.academicLevel.code,addressWork:this.job.addressWork,salary: this.job.salaryMax,description:this.job.description}];
+    const doc = new jsPDF('p','px');
+    doc.setFont('PTSans');
+    doc.setFontSize(20);
+
+    autoTable(doc, {
+      columns: this.exportColumns,
+      body: this.jobs,
+      didDrawPage: (dataArg) => {
+        doc.text('  Quây là 1',10,20);
+      },
+    });
+    doc.save('job.pdf');
   }
 }
 

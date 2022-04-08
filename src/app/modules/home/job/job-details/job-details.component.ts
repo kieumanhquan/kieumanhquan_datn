@@ -47,6 +47,11 @@ export class JobDetailsComponent implements OnInit{
     );
   }
 
+  public deleteById(): void {
+    this.jobService.delete(this.route.snapshot.params.id).subscribe(
+    );
+  }
+
   public getUserByUserName(username: string): void {
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
@@ -132,7 +137,8 @@ export class JobDetailsComponent implements OnInit{
     this.getInitStatusDto();
     this.statusDto.jobId = this.job.id;
     this.statusDto.statusId = 5;
-    this.updateStatusJob();
+    this.deleteById();
+    this.router.navigate(['/home/list-job']).then(r => console.log(r));
   }
 
   onRefuse() {

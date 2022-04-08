@@ -39,7 +39,7 @@ export class JobRegisterService {
   }
 
   public getProfilesByUserId(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiPublicUrl}`+'job-registers/profiles/id='+id).pipe(
+    return this.http.get<any>(`${this.apiPublicUrl}`+'profiles/id='+id).pipe(
       tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
     );
   }
@@ -63,8 +63,7 @@ export class JobRegisterService {
   }
   public downloadCv(id: number): Observable<Blob>{
     const url = `${this.apiPublicUrl}` + 'job-registers/download/' + id;
-    return this.http.get(url, {responseType: 'blob'}).pipe(
-      tap(notyfy => alert('Dowload cv thành công')));
+    return this.http.get(url, {responseType: 'blob'});
   }
 
 }

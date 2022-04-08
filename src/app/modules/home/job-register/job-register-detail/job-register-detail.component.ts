@@ -9,6 +9,7 @@ import {Profiles} from '../../../../models/model/Profiles';
 import {StatusRegisterDto} from '../../../../models/Dto/StatusRegisterDto';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ScheduleDto} from '../../../../models/Dto/ScheduleDto';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'ngx-job-register-detail',
@@ -30,6 +31,8 @@ export class JobRegisterDetailComponent implements OnInit {
   displayPosition: boolean;
   position: string;
   displayPositionReason: boolean;
+  cvFileName: string;
+  currentDate = new Date();
 
   constructor(private readonly route: ActivatedRoute, private jobRegisterService: JobRegisterService,
               private userService: UserService,private fb: FormBuilder) {
@@ -63,6 +66,19 @@ export class JobRegisterDetailComponent implements OnInit {
       },
     );
   }
+
+  public updateUser(): void {
+    this.userService.update(this.user).subscribe(
+      (data: User) => {
+        this.user = data;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+
 
   public getProfilesByUserId(id: number): void {
     this.jobRegisterService.getProfilesByUserId(id).subscribe(
@@ -162,4 +178,22 @@ export class JobRegisterDetailComponent implements OnInit {
     this.position = position;
     this.displayPosition = true;
   }
+
+  onDownloadCV(id: any) {
+    this.cvFileName = this.getCvFileName(this.jobRegister.cv);
+    console.log('cvFileName',this.cvFileName);
+    this.jobRegisterService.downloadCv(id).subscribe(
+      blod => saveAs(blod, this.cvFileName),
+    );
+  }
+
+  getCvFileName(cvFilePath: string) {
+    if (!cvFilePath) {
+      console.error('File path is null or undefined');
+    }
+    const cvFilePaths = cvFilePath.split('/');
+    return cvFilePaths[cvFilePaths.length - 1];
+  }
+
+
 }

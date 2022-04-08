@@ -7,21 +7,21 @@
         <div class="d-flex flex-wrap">
           <ngx-job-public-title class="content-detail" *ngFor="let job of jobNews" [job]="job" ></ngx-job-public-title>
         </div>
-        <ng-template [ngIf]="totalPageJobNews>1"><p class="text-success">>> Xem thêm</p></ng-template>
+        <ng-template [ngIf]="totalPageJobNews>20"><p class="text-success">>> Xem thêm</p></ng-template>
       </div>
       <div class="content-group mt-5">
         <h3> <i class="pi pi-star-fill text-success" ></i> Việc làm tuyển gấp</h3>
         <div class="d-flex flex-wrap ">
           <ngx-job-public-title class="content-detail" *ngFor="let job of jobDues" [job]="job" ></ngx-job-public-title>
         </div>
-        <ng-template [ngIf]="totalPageJobDues >1"><p class="text-success">>> Xem thêm</p></ng-template>
+        <ng-template [ngIf]="totalPageJobDues >20"><p class="text-success">>> Xem thêm</p></ng-template>
       </div>
       <div class="content-group mt-5">
         <h3> <i class="pi pi-star-fill text-success" ></i> Việc làm lương cao</h3>
         <div class="d-flex flex-wrap">
           <ngx-job-public-title class="content-detail" *ngFor="let job of jobHighSalaries" [job]="job" ></ngx-job-public-title>
         </div>
-        <ng-template [ngIf]="totalPageJobHighSalary >1"><p class="text-success">>> Xem thêm</p></ng-template>
+        <ng-template [ngIf]="totalPageJobHighSalary >20"><p class="text-success">>> Xem thêm</p></ng-template>
       </div>
     </div>
   </div>

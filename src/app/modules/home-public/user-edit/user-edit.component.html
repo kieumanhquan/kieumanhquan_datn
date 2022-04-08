@@ -7,6 +7,7 @@
              style="width:200px; border-radius: 50%;  margin: 0 auto; margin-bottom: 20px;">
       </div>
       <div class="form-row">
+
         <div class="form-group col-md-6">
           <div class="row">
             <label class="label col-3 col-form-label ">Họ và Tên</label>
@@ -185,7 +186,12 @@
 
         </div>
 
-
+      <div class="col-md-8 mb-5">
+        <h2>Upload</h2>
+        <div class="d-flex">
+            <p-fileUpload mode="advanced" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)" accept="image/*" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
+        </div>
+      </div>
 
       <button class="btn btn-primary" type="submit" style="margin-left: 7vw;" >Áp dụng</button>
     </form>

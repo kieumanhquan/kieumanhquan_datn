@@ -22,7 +22,7 @@ export class JobUpdateComponent implements OnInit {
   workingForms: WorkingForm[];
   academicLevels: AcademicLevel[];
   ranks: Rank[];
-  jes: User[];
+  contacts: User[];
   job: Job;
   jobDto: JobDto;
 
@@ -41,7 +41,10 @@ export class JobUpdateComponent implements OnInit {
   jobRequirement: any;
   salaryMin: any;
   salaryMax: any;
-  contact: any;
+  contact: User;
+  minDate = new Date();
+  placeholderS: string;
+  placeholderD: string;
 
   rfContact: FormGroup;
   user: User;
@@ -72,7 +75,6 @@ export class JobUpdateComponent implements OnInit {
       salaryMax: ['', [Validators.required, Validators.minLength(1)]],
       contactId: ['', [Validators.required]],
       skills: this.fb.array([
-        this.fb.control(''),
       ]),
     });
     this.getUser();
@@ -85,6 +87,7 @@ export class JobUpdateComponent implements OnInit {
   }
 
   public getInitData(){
+    this.contact = this.job.contact;
     this.name = this.job.name;
     this.jobPosition = this.job.jobPosition;
     this.numberExperience = this.job.numberExperience;
@@ -100,7 +103,14 @@ export class JobUpdateComponent implements OnInit {
     this.jobRequirement = this.job.jobRequirement;
     this.salaryMin = this.job.salaryMin;
     this.salaryMax = this.job.salaryMax;
-    this.contact = this.job.contact;
+    const skills = this.job.skills.split(',');
+    for (const skill of skills) {
+      this.skills.push(this.fb.control(skill));
+    }
+    // eslint-disable-next-line max-len
+    this.placeholderS = `${new Date(this.startRequirement).getDate()}/${new Date(this.startRequirement).getMonth()}/${new Date(this.startRequirement).getFullYear()} ${new Date(this.startRequirement).getHours()}:${new Date(this.startRequirement).getMinutes()}`;
+    // eslint-disable-next-line max-len
+    this.placeholderD =  `${new Date(this.dueDate).getDate()}/${new Date(this.dueDate).getMonth()}/${new Date(this.dueDate).getFullYear()} ${new Date(this.dueDate).getHours()}:${new Date(this.dueDate).getMinutes()}`;
   }
 
   public getJobPosition() {
@@ -150,7 +160,7 @@ export class JobUpdateComponent implements OnInit {
   public getJe() {
     this.userService.getJe().subscribe(
       (data: any) => {
-        this.jes = data;
+        this.contacts = data;
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -162,7 +172,6 @@ export class JobUpdateComponent implements OnInit {
     this.jobService.getJobById(this.route.snapshot.params.id).subscribe(
       (data: Job) => {
         this.job = data;
-        console.log('Day la update',this.job);
         this.getInitData();
       },
       (error: HttpErrorResponse) => {

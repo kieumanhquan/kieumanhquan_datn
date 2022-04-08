@@ -8,6 +8,7 @@ import {UserService} from '../../../service/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import { Profiles } from '../../../models/model/Profiles';
 import {AcademicLevel} from '../../../models/model/AcademicLevel';
+import {UploadFileService} from "../../../service/upload.service";
 
 @Component({
   selector: 'ngx-user-edit',
@@ -22,13 +23,17 @@ export class UserEditComponent implements OnInit {
   profiles: Profiles ;
   academicLevels: AcademicLevel[];
   birthday: string;
+  fileCv: File;
+  fileAvatar: File;
 
   constructor(
     private sessionService: SessionService,
     private profileService: ProfileService,
     private fb: FormBuilder,
     private primengConfig: PrimeNGConfig,
-    private userService: UserService) { }
+    private userService: UserService,
+    private  uploadService: UploadFileService) { }
+
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -115,6 +120,7 @@ export class UserEditComponent implements OnInit {
     this.user.homeTown=this.formUser.value.homeTown;
     this.user.gender=this.formUser.value.gender;
     this.user.userName=this.formUser.value.userName;
+
   }
 
   getProfilesValue(){
@@ -144,9 +150,24 @@ export class UserEditComponent implements OnInit {
       },
     );
   }
+  onSelected(event) {
+    this.fileCv = event.currentFiles[0];
+    console.log('day la file', this.fileCv);
+  }
 
-  public updateProfiles(){
+  onSelectedAvatar(event) {
+    this.fileAvatar = event.currentFiles[0];
+  }
 
+  uploadAvatar() {
+    this.uploadService.uploadAvatar(this.fileAvatar, this.user.id).subscribe(
+      (data: any) => {
+        alert(data.message);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
   }
 }
 

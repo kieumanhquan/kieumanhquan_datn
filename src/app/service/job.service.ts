@@ -33,6 +33,10 @@ export class JobService {
     );
   }
 
+  public delete(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiServerUrl}`+'jobs/id='+id);
+  }
+
   public findJob(searchJob,page,size): Observable<any> {
     // eslint-disable-next-line max-len
     return this.http.post<any>(`${this.apiServerUrl}`+'jobs/searches?'+'&page='+page+'&size='+size,searchJob).pipe(

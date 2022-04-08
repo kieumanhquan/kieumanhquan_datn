@@ -1,7 +1,7 @@
 <ng-template [ngIf]="jobRegister">
   <div class="container">
     <div class="mb-5">
-      <p-button label="Tải xuống CV" styleClass="p-button-sm" class="mr-2"></p-button>
+      <p-button label="Tải xuống CV" (click)="onDownloadCV(jobRegister.id)" styleClass="p-button-sm" class="mr-2"></p-button>
       <ng-template
         [ngIf]="jobRegister.statusJobRegister.id === 1 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
         <p-button (click)="onBrowse()" label="Xét duyệt" styleClass="p-button-sm" class="mr-2"></p-button>
@@ -34,7 +34,7 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Ngày hẹn phỏng vấn:</label>
             <div class="col-md-10">
-              <p-calendar [(ngModel)]="dateBook" [showTime]="true" inputId="time"
+              <p-calendar [(ngModel)]="dateBook" [showTime]="true" [showIcon]="true" [minDate]="currentDate" inputId="time"
                           formControlName="dateBook"></p-calendar>
             </div>
           </div>

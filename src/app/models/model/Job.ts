@@ -3,7 +3,7 @@ import {AcademicLevel} from './AcademicLevel';
 import {Rank} from './Rank';
 import {User} from './User';
 import {StatusJob} from './StatusJob';
-import {WorkingForm} from "./WorkingForm";
+import {WorkingForm} from './WorkingForm';
 
 
 export interface Job{
