@@ -13,7 +13,8 @@ import {Profiles} from '../models/model/Profiles';
 
 export class UserService{
 
-  private apiServerUrl = environment.apiPublicUrl;
+  private apiServerUrlPublic = environment.apiPublicUrl;
+  private  apiServerUrlPrivate=environment.apiUrl;
 
   constructor(private http: HttpClient) {
   }
@@ -29,50 +30,50 @@ export class UserService{
   }
 
   public getUserByUserName(userName: string): Observable<User> {
-    return this.http.get<any>(`${this.apiServerUrl}`+'user/username='+userName).pipe(
+    return this.http.get<any>(`${this.apiServerUrlPrivate}`+'user/username='+userName).pipe(
       tap(user => console.log(`user=${JSON.stringify(user)}`)),
     );
   }
   public getUserById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiServerUrl}`+'user/id='+id).pipe(
+    return this.http.get<any>(`${this.apiServerUrlPrivate}`+'user/id='+id).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }
 
   public getJe(): Observable<any[]> {
-    return this.http.get<any>(`${this.apiServerUrl}`+'user/role=ROLE_JE').pipe(
+    return this.http.get<any>(`${this.apiServerUrlPrivate}`+'user/role=ROLE_JE').pipe(
       tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
     );
 
   }
   public updateUser(user: User): Observable<any> {
-    return this.http.post(`${this.apiServerUrl}`+'user',user).pipe(
+    return this.http.post(`${this.apiServerUrlPrivate}`+'user',user).pipe(
       tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
     );
   }
 
   public searchUser(searchUserRegister,page,size): Observable<any> {
     // eslint-disable-next-line max-len
-    return this.http.post<any>(`${this.apiServerUrl}`+'user/searches?'+'page='+page+'&size='+size
+    return this.http.post<any>(`${this.apiServerUrlPrivate}`+'user/searches?'+'page='+page+'&size='+size
       ,searchUserRegister).pipe(
       tap(receivedUser => console.log(`receivedJob=${JSON.stringify(receivedUser)}`)),
     );
 
   }  public updateUserProfile(profiles: Profiles): Observable<any> {
-    return this.http.post(`${this.apiServerUrl}`+'user/profiles',profiles).pipe(
+    return this.http.post(`${this.apiServerUrlPrivate}`+'user/profiles',profiles).pipe(
       tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
     );
   }
 
 
-  getUserProfilesByUserName(userName: string): Observable<Profiles>  {
-    return this.http.get<any>(`${this.apiServerUrl}`+'user/profiles/userName='+userName).pipe(
+  getUserProfilesByUserId(userName: number): Observable<Profiles>  {
+    return this.http.get<any>(`${this.apiServerUrlPrivate}`+'user/profiles='+userName).pipe(
       tap(user => console.log(`user=${JSON.stringify(user)}`)),
     );
   }
 
   getAllAcademicLevel() {
-    return this.http.get<any>(`${this.apiServerUrl}`+'user/profiles/academicLevels').pipe(
+    return this.http.get<any>(`${this.apiServerUrlPrivate}`+'user/profiles/academicLevels').pipe(
       tap(user => console.log(`academicLevels=${JSON.stringify(user)}`)),
     );
   }
