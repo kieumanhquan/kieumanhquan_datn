@@ -49,4 +49,22 @@ export class JobRegisterService {
       tap(receivedJob => console.log(`profile=${JSON.stringify(receivedJob)}`)),
     );
   }
+
+  public updateStatusJob(statusDto): Observable<any> {
+    return this.http.put(`${this.apiPublicUrl}`+'job-registers/status_job',statusDto).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public schedule(schedule): Observable<any> {
+    return this.http.put(`${this.apiPublicUrl}`+'job-registers/schedule',schedule).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+  public downloadCv(id: number): Observable<Blob>{
+    const url = `${this.apiPublicUrl}` + 'job-registers/download/' + id;
+    return this.http.get(url, {responseType: 'blob'}).pipe(
+      tap(notyfy => alert('Dowload cv thành công')));
+  }
+
 }

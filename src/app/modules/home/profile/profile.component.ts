@@ -83,9 +83,9 @@ export class ProfileComponent implements OnInit {
         // eslint-disable-next-line eqeqeq
         console.log(data);
         if (data.obj === true) {
-          alert('Đăng ký thành công');
+          alert('Câp nhập thành công');
         } else {
-          alert('Đăng ký thất bại');
+          alert('Cập nhập thất bại');
         }
       },
       (error: HttpErrorResponse) => {

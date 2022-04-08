@@ -19,4 +19,5 @@ export class JobPublicTitleComponent implements OnInit {
     this.router.navigate(['/home-public/job-detail', id]).then(r => console.log(r));
   }
 
+
 }

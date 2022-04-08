@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {User} from '../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -12,7 +12,8 @@ import {UserService} from '../../service/user.service';
 export class HomePublicComponent implements OnInit {
   user: any;
 
-  constructor(private readonly router: Router,private userService: UserService) { }
+  constructor(private readonly router: Router, private userService: UserService) {
+  }
 
   ngOnInit(): void {
     this.getUser();
@@ -22,7 +23,7 @@ export class HomePublicComponent implements OnInit {
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
         this.user = data;
-        console.log('roles',data.roles);
+        console.log('roles', data.roles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -32,7 +33,7 @@ export class HomePublicComponent implements OnInit {
 
   public getUser(): void {
     const token = this.userService.getDecodedAccessToken();
-    if(token){
+    if (token) {
       this.getUserByUserName(token.sub);
     }
   }
@@ -50,7 +51,12 @@ export class HomePublicComponent implements OnInit {
     this.user = undefined;
   }
 
+
   onEditInfo() {
-    this.router.navigate(['home-public/user/edit']);
+    this.router.navigate(['home-public/user/edit']).then(r => console.log(r));
+  }
+
+  onHome() {
+    this.router.navigate(['/home-public']).then(r => console.log(r));
   }
 }

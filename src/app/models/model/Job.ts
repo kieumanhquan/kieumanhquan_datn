@@ -31,5 +31,6 @@ export interface Job{
   statusJob: StatusJob;
   views: number;
   creator: User;
+  reason: string;
   delete?: boolean;
 }

@@ -1,11 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Job} from '../../../../models/model/Job';
 import {Router} from '@angular/router';
-import {UserService} from '../../../../service/user.service';
 import {User} from '../../../../models/model/User';
-import {JobDto} from '../../../../models/model/JobDto';
 import {HttpErrorResponse} from '@angular/common/http';
 import {JobService} from '../../../../service/job.service';
+import {StatusDto} from '../../../../models/Dto/StatusDto';
 
 @Component({
   selector: 'ngx-job-title',
@@ -15,17 +14,20 @@ import {JobService} from '../../../../service/job.service';
 export class JobTitleComponent implements OnInit {
   @Input() job: Job;
   @Input() user: User;
+  statusDto: StatusDto;
+  displayPositionReason: boolean;
 
   currentDate = new Date().getTime();
 
   constructor(private readonly router: Router, private jobService: JobService) {
   }
 
+
   ngOnInit(): void {
   }
 
-  public updateJob(jobDto: JobDto) {
-    this.jobService.updateJob(jobDto).subscribe(
+  public updateJob(statusDto){
+    this.jobService.updateStatusJob(statusDto).subscribe(
       (data: any) => {
         this.job.statusJob = data.statusJob;
         alert('Update thành công');
@@ -34,6 +36,10 @@ export class JobTitleComponent implements OnInit {
         alert(error.message);
       },
     );
+  }
+
+  getInit(){
+    this.statusDto ={jobId:1,statusId:1};
   }
 
   onReadDetail(id: number) {
@@ -48,5 +54,11 @@ export class JobTitleComponent implements OnInit {
     this.router.navigate(['/home/list-job-register', id]).then(r => console.log(r));
   }
 
+  onUp(){
+    this.getInit();
+    this.statusDto.jobId = this.job.id;
+    this.statusDto.statusId = 2;
+    this.updateJob(this.statusDto);
+  }
 }
 

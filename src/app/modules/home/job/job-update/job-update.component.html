@@ -1,8 +1,8 @@
 <form novalidate (ngSubmit)="onSubmit()" [formGroup]="rfContact" class="row justify-content-md-center container">
   <div class="col-md-8">
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Tên công việc:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Tên công việc:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="name" class="form-control" type="text" formControlName="name">
       </div>
     </div>
@@ -12,8 +12,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Ví trí công việc:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Ví trí công việc:</label>
+      <div class="col-md-8">
         <select
           class="custom-select mb-3"
           formControlName="jobPositionId"
@@ -32,8 +32,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Kinh nghiệm:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Kinh nghiệm:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="numberExperience" class="form-control" type="number" min="0" id="example-text-input" formControlName="numberExperience">
       </div>
     </div>
@@ -42,8 +42,8 @@
       NumberExperience is required!
     </div>
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Hình thức làm việc:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Hình thức làm việc:</label>
+      <div class="col-md-8">
         <select
           class="custom-select mb-3"
           formControlName="workingFormId"
@@ -62,8 +62,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Địa chỉ công việc:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Địa chỉ công việc:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="addressWork" class="form-control" type="text" formControlName="addressWork">
       </div>
     </div>
@@ -72,8 +72,8 @@
       AddressWork is required!
     </div>
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Trình độ học vấn:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Trình độ học vấn:</label>
+      <div class="col-md-8">
         <select
           class="custom-select mb-3"
           formControlName="academicLevelId"
@@ -92,8 +92,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Level:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Level:</label>
+      <div class="col-md-8">
         <select
           class="custom-select mb-3"
           formControlName="rankId"
@@ -112,8 +112,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Số lượng cần tuyển:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Số lượng cần tuyển:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="qtyPerson" class="form-control" type="number" min="0" formControlName="qtyPerson">
       </div>
     </div>
@@ -122,8 +122,8 @@
       QtyPerson is required!
     </div>
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Ngày bắt đâu tuyển:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Ngày bắt đâu tuyển:</label>
+      <div class="col-md-8">
         <p-calendar [(ngModel)]="startRequirement" [showTime]="true" inputId="time" formControlName="startRecruitmentDate"></p-calendar>
       </div>
     </div>
@@ -133,8 +133,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Hạn nộp hồ sơ:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Hạn nộp hồ sơ:</label>
+      <div class="col-md-8">
         <p-calendar [(ngModel)]="dueDate" [showTime]="true" inputId="time" formControlName="dueDate"></p-calendar>
       </div>
     </div>
@@ -144,8 +144,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Mô tả công việc:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Mô tả công việc:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="description" class="form-control" type="text" formControlName="description">
       </div>
     </div>
@@ -155,8 +155,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Quyền lợi được hưởng:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Quyền lợi được hưởng:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="benefits" class="form-control" type="text" formControlName="benefits">
       </div>
     </div>
@@ -166,8 +166,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Yêu cầu công việc:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Yêu cầu công việc:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="jobRequirement" class="form-control" type="text" formControlName="jobRequirement">
       </div>
     </div>
@@ -177,8 +177,8 @@
     </div>
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">salaryMin:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">salaryMin:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="salaryMin" class="form-control" type="text"  formControlName="salaryMin">
       </div>
     </div>
@@ -189,8 +189,8 @@
 
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">salaryMax:</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">salaryMax:</label>
+      <div class="col-md-8">
         <input [(ngModel)]="salaryMax" class="form-control" type="text"  formControlName="salaryMax">
       </div>
     </div>
@@ -201,8 +201,8 @@
 
 
     <div class="form-group row">
-      <label for="example-text-input" class="col-md-2 col-form-label">Người liên hệ</label>
-      <div class="col-md-10">
+      <label for="example-text-input" class="col-md-4 col-form-label">Người liên hệ</label>
+      <div class="col-md-8">
         <select
           class="custom-select mb-3"
           formControlName="contactId"
@@ -222,8 +222,8 @@
 
     <div formArrayName="skills" *ngIf="skills.controls.length">
       <div class="form-group row" *ngFor="let c of skills.controls; index as i">
-        <label class="col-md-2 col-form-label">Skills:</label>
-        <div class="col-md-10">
+        <label class="col-md-4 col-form-label">Skills:</label>
+        <div class="col-md-8">
           <input class="form-control" type="tel"  [formControlName]="i">
           <div class="text-right">
             <button type="button" class="btn btn-info" (click)="addSkill()">+</button>

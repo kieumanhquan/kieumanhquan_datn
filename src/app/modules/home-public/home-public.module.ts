@@ -13,7 +13,9 @@ import { UserEditComponent } from './user-edit/user-edit.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {CalendarModule} from 'primeng/calendar';
 import {CardModule} from 'primeng/card';
-import {InputTextModule} from "primeng/inputtext";
+import {InputTextModule} from 'primeng/inputtext';
+import {DialogModule} from 'primeng/dialog';
+import {FileUploadModule} from 'primeng/fileupload';
 
 const routes: Routes = [{
   path: '',
@@ -53,6 +55,10 @@ const routes: Routes = [{
     CalendarModule,
     CardModule,
     InputTextModule,
+    DialogModule,
+    ReactiveFormsModule,
+    CalendarModule,
+    FileUploadModule,
   ],
 })
 export class HomePublicModule { }
