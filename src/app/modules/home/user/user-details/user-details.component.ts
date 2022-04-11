@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../../models/model/User';
 import {HttpErrorResponse} from '@angular/common/http';
 import {UserService} from '../../../../service/user.service';
+import {Profiles} from '../../../../models/model/Profiles';
 
 
 
@@ -13,9 +14,9 @@ import {UserService} from '../../../../service/user.service';
   styleUrls: ['./user-details.component.scss'],
 })
 export class UserDetailsComponent implements OnInit {
-
    user: User;
   userId: number;
+  profiles: Profiles;
 
   // eslint-disable-next-line max-len
   constructor(private readonly route: ActivatedRoute, private userService: UserService) {
@@ -32,6 +33,7 @@ export class UserDetailsComponent implements OnInit {
     this.userService.getUserById(this.route.snapshot.params.id).subscribe(
       (data: User) => {
         this.user = data;
+        this.getUserByUserName(this.user.userName);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -42,6 +44,7 @@ export class UserDetailsComponent implements OnInit {
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
         this.user = data;
+        this.getProfiles();
         console.log('roles',data.roles);
       },
       (error: HttpErrorResponse) => {
@@ -49,6 +52,18 @@ export class UserDetailsComponent implements OnInit {
       },
     );
   }
-
-
+  public getProfiles(): void {
+    this.getProfilesByUserId(this.user.id);
+  }
+  public getProfilesByUserId(userId: number): void {
+    this.userService.getUserProfilesByUserId(userId).subscribe(
+      (data: Profiles) => {
+        this.profiles = data;
+        console.log('data pass admin page: ',this.profiles);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
 }

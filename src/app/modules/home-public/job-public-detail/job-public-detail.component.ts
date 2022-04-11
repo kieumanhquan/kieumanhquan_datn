@@ -10,7 +10,6 @@ import {AcademicLevel} from '../../../models/model/AcademicLevel';
 import {WorkingForm} from '../../../models/model/WorkingForm';
 import {UploadFileService} from '../../../service/upload.service';
 import {Profiles} from '../../../models/model/Profiles';
-import {JobRegisterService} from '../../../service/jobRegister.service';
 import {ProfilesService} from '../../../service/profiles.service';
 import {Stomp} from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
@@ -19,6 +18,8 @@ import {Type} from '../../../models/model/Type';
 import {JobRegister} from '../../../models/model/JobRegister';
 import {debounceTime} from 'rxjs/operators';
 import {ReasonDto} from '../../../models/Dto/ReasonDto';
+import {JobRegisterService} from '../../../service/jobRegister.service';
+
 
 @Component({
   selector: 'ngx-job-public-detail',
@@ -143,14 +144,18 @@ export class JobPublicDetailComponent implements OnInit {
   }
 
   checkApply(): boolean{
-    if (!this.checkedProfile) {
-      if(this.info.valid){
+    if (!this.userService.checkProfile(this.profile)) {
+      if(!this.info.valid){
+        return false;
+      }
+      if(!this.fileAvatar){
         return false;
       }
     }
     if(!this.fileCv){
       return false;
     }
+
     return true;
   }
 
@@ -287,6 +292,7 @@ export class JobPublicDetailComponent implements OnInit {
 
   onSelectedAvatar(event) {
     this.fileAvatar = event.currentFiles[0];
+    console.log('day la file', this.fileAvatar);
   }
 
   uploadCv() {

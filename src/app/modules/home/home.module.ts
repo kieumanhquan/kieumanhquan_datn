@@ -26,6 +26,7 @@ import {UserListComponent} from './user/user-list/user-list.component';
 import {UserDetailsComponent} from './user/user-details/user-details.component';
 import {UserTitleComponent} from './user/user-title/user-title.component';
 import {UserAddComponent} from './user/user-add/user-add.component';
+import {AuthJeGuard} from '../../@core/guards/authJe.guard';
 
 
 const routes: Routes = [{
@@ -71,6 +72,7 @@ const routes: Routes = [{
 
     {
       path: 'user/list',
+      canActivate: [AuthJeGuard],
       component: UserListComponent,
     },
     {

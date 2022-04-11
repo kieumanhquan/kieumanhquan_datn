@@ -62,6 +62,12 @@ export class UserService{
     );
   }
 
+
+  public deactivateUser(userId: number): Observable<any> {
+    return this.http.put(`${this.apiServerUrlPrivate}`+'user/deactivate',userId).pipe(
+      tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
+    );
+  }
   public searchUser(searchUserRegister,page,size): Observable<any> {
     // eslint-disable-next-line max-len
     return this.http.post<any>(`${this.apiServerUrlPrivate}`+'user/searches?'+'page='+page+'&size='+size

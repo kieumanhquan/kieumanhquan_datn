@@ -27,7 +27,7 @@ export class UserAddComponent implements OnInit {
   }
   public addUser(){
 
-    this.authService.addUser(this.regiJe.value).subscribe(
+    this.authService.addJeUser(this.regiJe.value).subscribe(
       (data: any) => {
         // eslint-disable-next-line eqeqeq
         if (data == false) {

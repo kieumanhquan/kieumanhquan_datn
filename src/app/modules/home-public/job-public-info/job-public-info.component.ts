@@ -60,7 +60,7 @@ export class JobPublicInfoComponent implements OnInit {
     );
   }
   public getJobDue() {
-    this.jobService.getJobDue(3, this.page, this.size).subscribe(
+    this.jobService.getJobDue(5, this.page, this.size).subscribe(
       (data: any) => {
         this.jobDues = data.list;
         this.totalPageJobDues = data.totalPage;

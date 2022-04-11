@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 @Component({
   selector: 'ngx-auth',
   templateUrl: './auth.component.html',
@@ -11,15 +11,4 @@ export class AuthComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  getChildData($event) {
-
-    this.email= $event;
-    console.log('test'+this.email);
-  }
-
-
-
-
-
-
 }

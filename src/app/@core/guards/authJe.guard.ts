@@ -8,7 +8,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class AuthJeGuard implements CanActivate {
 
   role: string;
 
@@ -25,8 +25,8 @@ export class AuthGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean |
-      UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(this.role === 'ROLE_USER'){
+    UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if(this.role === 'ROLE_JE'){
       return false;
     }
     if (localStorage.getItem('auth-token')) {
@@ -34,8 +34,8 @@ export class AuthGuard implements CanActivate {
       return true;
     }
     // not logged in so redirect to login page with the return url
-    this.router.navigate(['/auth/'], {queryParams: {returnUrl: state.url}}).then(r =>console.log(r));
-     return true;
+    this.router.navigate(['/home/'], {queryParams: {returnUrl: state.url}}).then(r =>console.log(r));
+    return true;
   }
 
 }

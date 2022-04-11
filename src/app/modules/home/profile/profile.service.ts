@@ -15,4 +15,6 @@ export class ProfileService {
   getProfile(username: any): Observable<any>{
     return this.http.get<any>(this.profileAPI + username);
   }
+
+
 }

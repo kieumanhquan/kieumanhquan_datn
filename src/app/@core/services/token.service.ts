@@ -24,7 +24,7 @@ export class TokenService {
   }
 
   removeToken() {
-    this.cookie.delete(TOKEN_KEY);
+    window.localStorage.removeItem(TOKEN_KEY);
   }
 
   public saveUser(user: any): void {

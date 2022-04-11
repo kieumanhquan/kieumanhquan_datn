@@ -14,4 +14,5 @@ export interface User{
   roles: Role[];
   active: boolean;
   delete: boolean;
+  firstTimeLogin: boolean;
 }

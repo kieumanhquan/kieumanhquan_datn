@@ -221,6 +221,7 @@ export class JobUpdateComponent implements OnInit {
       }
     }
     this.jobDto = this.rfContact.value;
+    this.jobDto.id = this.route.snapshot.params.id;
     this.jobDto.creatorId = this.job.creator.id;
     this.jobDto.createDate = this.job.createDate;
     this.jobDto.updateUserId = this.user.id;

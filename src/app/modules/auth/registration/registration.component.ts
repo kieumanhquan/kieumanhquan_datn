@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../service/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'ngx-registration',
@@ -12,7 +13,8 @@ export class RegistrationComponent implements OnInit {
 
   regi: FormGroup;
   constructor(private fb: FormBuilder,
-              private authService: AuthService) { }
+              private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
     this.regi = this.fb.group({
@@ -45,5 +47,6 @@ export class RegistrationComponent implements OnInit {
 
   onSubmit() {
     this.addUser();
+    this.router.navigate(['/auth']).then(r => console.log(r));
   }
 }
