@@ -5,7 +5,6 @@ import {SelectItem} from 'primeng/api';
 import {HttpErrorResponse} from '@angular/common/http';
 import {User} from '../../../../models/model/User';
 import {UserService} from '../../../../service/user.service';
-import { SearchJob } from '../../../../models/job/SearchJob';
 import { SearchUser } from '../../../../models/model/SearchUser';
 import { Router } from '@angular/router';
 
@@ -83,7 +82,7 @@ export class UserListComponent implements OnInit {
 
 
   public onAddJe() {
-    this.router.navigate(['home/user/add']);
+    this.router.navigate(['home/user/add']).then(r => console.log(r));
   }
   paginate(event: any) {
     this.page = event.page;

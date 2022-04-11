@@ -32,13 +32,26 @@ export class JobRegisterService {
     );
   }
 
+  public save(jobRegister): Observable<any> {
+    // eslint-disable-next-line max-len
+    return this.http.put<any>(`${this.apiPublicUrl}`+'job-registers',jobRegister).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
+  public findByUserAndJob(userId,jobId): Observable<any> {
+    // eslint-disable-next-line max-len
+    return this.http.get<any>(`${this.apiPublicUrl}`+'job-registers/find-by-user-and-job?'+'&user_id='+userId+'&job_id='+jobId,
+      ).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
+  }
+
   public getJobRegisterById(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiPublicUrl}`+'job-registers/id='+id).pipe(
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }
-
-
 
   public getByJobId(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiPublicUrl}`+'job-registers/jobId='+id).pipe(
@@ -60,6 +73,12 @@ export class JobRegisterService {
   public downloadCv(id: number): Observable<Blob>{
     const url = `${this.apiPublicUrl}` + 'job-registers/download/' + id;
     return this.http.get(url, {responseType: 'blob'});
+  }
+
+  public updateReason(reasonDto): Observable<any> {
+    return this.http.put(`${this.apiPublicUrl}`+'job-registers/reason',reasonDto).pipe(
+      tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
+    );
   }
 
 }

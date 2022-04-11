@@ -1,8 +1,15 @@
 <ng-template [ngIf]="job" class="mt-5">
   <div class="container mt-5">
-    <p-button (click)="onBeforeApply('top')" label="Ứng tuyển ngay" styleClass="p-button-sm"
-              class="mr-2">
-    </p-button>
+    <ng-template [ngIf]="!jobRegister">
+      <p-button (click)="onBeforeApply('top')" label="Ứng tuyển ngay" styleClass="p-button-sm"
+                class="mr-2">
+      </p-button>
+    </ng-template>
+    <ng-template [ngIf]="jobRegister">
+      <p-button (click)="displayPositionInput = true" label="Cancel" styleClass="p-button-sm"
+                class="mr-2">
+      </p-button>
+    </ng-template>
 
     <p-dialog header="Ứng tuyển" [(visible)]="displayPosition" [position]="position" [modal]="true"
               [style]="{width: '50vw'}" [baseZIndex]="10000"
@@ -11,11 +18,20 @@
       <form novalidate (ngSubmit)="onApply()" [formGroup]="info"
             class="row justify-content-md-center container popup">
         <div class="col-md-8 mb-5">
-          <h2>Upload</h2>
           <div class="d-flex">
-            <p-fileUpload mode="advanced" chooseLabel="Tải CV" (onSelect)="onSelected($event)" class="mr-2 upload-cv" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
+            <label class="col-md-4 col-form-label">Tải cv:</label>
+            <div class="col-md-8">
+              <p-fileUpload mode="advanced" chooseLabel="Tải CV" (onSelect)="onSelected($event)" class="mr-2 upload-cv"
+                            [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
+            </div>
+          </div>
+          <div class="d-flex">
             <ng-template [ngIf]="!checkedProfile">
-              <p-fileUpload mode="advanced" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)" accept="image/*" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
+              <label class="col-md-4 col-form-label">Tải avatar:</label>
+              <div class="col-md-8">
+                <p-fileUpload mode="advanced" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)"
+                              accept="image/*" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
+              </div>
             </ng-template>
           </div>
         </div>
@@ -24,7 +40,8 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Mô tả về bản thân:</label>
             <div class="col-md-8">
-              <textarea pInputTextarea formControlName="description" [rows]="4" [cols]="43" autoResize="autoResize" [maxLength]="50"></textarea>
+              <textarea pInputTextarea formControlName="description" [rows]="4" [cols]="43" autoResize="autoResize"
+                        [maxLength]="50"></textarea>
             </div>
           </div>
           <ng-template [ngIf]="!checkedProfile">
@@ -60,7 +77,8 @@
             <div class="form-group row">
               <label class="col-md-4 col-form-label">Ngày tháng năm sinh:</label>
               <div class="col-md-8">
-                <p-calendar [showIcon]="true" [maxDate]="currentDate" inputId="icon" formControlName="birthDay"></p-calendar>
+                <p-calendar [showIcon]="true" [maxDate]="currentDate" inputId="icon"
+                            formControlName="birthDay"></p-calendar>
               </div>
             </div>
             <div class="col alert alert-danger" role="alert"
@@ -152,7 +170,8 @@
         </div>
       </form>
       <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="onApply()" label="Yes" class="p-button-text"></p-button>
+        <p-button icon="pi pi-check" (click)="onApply()" label="Yes" class="p-button-text"
+                  [disabled]="!checkApply()"></p-button>
         <p-button icon="pi pi-times" (click)="displayPosition=false" label="No" class="ml-2"></p-button>
       </ng-template>
     </p-dialog>
@@ -214,3 +233,15 @@
     </div>
   </div>
 </ng-template>
+
+<p-dialog header="Nhập lý do" [(visible)]="displayPositionInput" [position]="'top'" [modal]="true"
+          [style]="{width: '50vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <div class="container text-center">
+    <textarea [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="reasonDto.reason"></textarea>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" type="submit" (click)="onCancel()" label="Yes" class="p-button-text"></p-button>
+    <p-button icon="pi pi-times" (click)="displayPositionInput = false" label="No" class="ml-2"></p-button>
+  </ng-template>
+</p-dialog>

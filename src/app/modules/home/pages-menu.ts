@@ -17,26 +17,21 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/home/user/list',
   },
   {
-    title: 'Product',
-    icon: 'globe-2-outline',
-    link: '/home/product',
-  },
-  {
-    title: 'Job',
+    title: 'JOB',
     group: true,
   },
   {
     title: 'Job',
-    icon: 'person-outline',
+    icon: 'browser-outline',
     link: '/home/list-job',
   },
   {
-    title: 'JobRegister',
+    title: 'JOB-REGISTER',
     group: true,
   },
   {
     title: 'Register-Job',
-    icon: 'person-outline',
+    icon: 'compass-outline',
     link: '/home/list-job-register',
   },
   // {

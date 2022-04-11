@@ -47,7 +47,7 @@ export class HomePublicComponent implements OnInit {
   }
 
   onLogOut() {
-    window.sessionStorage.removeItem('auth-token');
+    window.localStorage.removeItem('auth-token');
     this.user = undefined;
   }
 

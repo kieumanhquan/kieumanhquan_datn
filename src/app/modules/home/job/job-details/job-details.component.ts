@@ -21,7 +21,6 @@ export class JobDetailsComponent implements OnInit{
   displayPosition: boolean;
   position: string;
   displayPositionReason: boolean;
-  positionReason: string;
   reason: string;
 
   // eslint-disable-next-line max-len

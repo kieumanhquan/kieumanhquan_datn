@@ -11,6 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ScheduleDto} from '../../../../models/Dto/ScheduleDto';
 import { saveAs } from 'file-saver';
 import {ProfilesService} from '../../../../service/profiles.service';
+import {ReasonDto} from '../../../../models/Dto/ReasonDto';
 
 @Component({
   selector: 'ngx-job-register-detail',
@@ -29,11 +30,14 @@ export class JobRegisterDetailComponent implements OnInit {
   dateBook: Date;
   methods: any[];
   addressInterviews: any[];
-  displayPosition: boolean;
+  displayPosition= false;
   position: string;
-  displayPositionReason: boolean;
+  displayPositionReason = false;
   cvFileName: string;
   currentDate = new Date();
+  reasonDto: ReasonDto;
+  displayPositionInput = false;
+  avatar: string;
 
   constructor(private readonly route: ActivatedRoute, private jobRegisterService: JobRegisterService
               ,private profilesService: ProfilesService,
@@ -53,14 +57,15 @@ export class JobRegisterDetailComponent implements OnInit {
   getInitData(){
     this.methods = ['online','offline'];
     this.addressInterviews = ['Skype','Zoom','Zalo'];
+    this.reasonDto= {jobId: 0, reason: '', statusId: 0};
   }
-
 
 
   public getJobById(): void {
     this.jobRegisterService.getJobRegisterById(this.route.snapshot.params.id).subscribe(
       (data: JobRegister) => {
         this.jobRegister = data;
+        this.avatar = 'http://localhost:9090/api/public/files/'+data.user.avatarName;
         this.getProfilesByUserId(data.user.id);
       },
       (error: HttpErrorResponse) => {
@@ -80,8 +85,6 @@ export class JobRegisterDetailComponent implements OnInit {
     );
   }
 
-
-
   public getProfilesByUserId(id: number): void {
     this.profilesService.getProfilesByUserId(id).subscribe(
       (data: Profiles) => {
@@ -97,7 +100,6 @@ export class JobRegisterDetailComponent implements OnInit {
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
         this.user = data;
-        console.log('roles',data.roles);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -138,6 +140,18 @@ export class JobRegisterDetailComponent implements OnInit {
     this.statusRegisterDto = {jobRegisterId:1,statusRegisterId:1};
   }
 
+  public updateReason(){
+    this.jobRegisterService.updateReason(this.reasonDto).subscribe(
+      (data: any) => {
+        this.jobRegister.statusJobRegister =data.statusJobRegister;
+        alert('Update thành công');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
   onBrowse() {
     this.getInitStatusRegisterDto();
     this.statusRegisterDto.jobRegisterId = this.jobRegister.id;
@@ -146,10 +160,10 @@ export class JobRegisterDetailComponent implements OnInit {
   }
 
   onRefuse() {
-    this.getInitStatusRegisterDto();
-    this.statusRegisterDto.jobRegisterId = this.jobRegister.id;
-    this.statusRegisterDto.statusRegisterId = 5;
-    this.updateStatusJob();
+    this.reasonDto.jobId = this.jobRegister.id;
+    this.reasonDto.statusId = 5;
+    this.updateReason();
+    this.displayPositionInput = false;
   }
 
   onBook() {

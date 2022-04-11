@@ -1,18 +1,22 @@
 <ng-template [ngIf]="jobRegister">
   <div class="container">
     <div class="mb-5">
-      <p-button label="Tải xuống CV" (click)="onDownloadCV(jobRegister.id)" styleClass="p-button-sm" class="mr-2"></p-button>
+      <p-button label="Tải xuống CV" (click)="onDownloadCV(jobRegister.id)" styleClass="p-button-sm"
+                class="mr-2"></p-button>
       <ng-template
         [ngIf]="jobRegister.statusJobRegister.id === 1 && ( user.roles[0].id === 1 || user.roles[0].id === 2 )">
         <p-button (click)="onBrowse()" label="Xét duyệt" styleClass="p-button-sm" class="mr-2"></p-button>
       </ng-template>
       <ng-template
-        [ngIf]="jobRegister.statusJobRegister.id !== 5 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
-        <p-button label="Từ chối ứng viên" (click)="onRefuse()" styleClass="p-button-sm" class="mr-2"></p-button>
+        [ngIf]="jobRegister.statusJobRegister.id !== 5 && jobRegister.statusJobRegister.id !== 6
+        && (user.roles[0].id === 1 || user.roles[0].id === 2)">
+        <p-button label="Từ chối ứng viên" (click)="displayPositionInput=true" styleClass="p-button-sm"
+                  class="mr-2"></p-button>
       </ng-template>
       <ng-template
         [ngIf]="jobRegister.statusJobRegister.id === 5 || jobRegister.statusJobRegister.id === 6">
-        <p-button label="Xem lý do" (click)="displayPositionReason = true" styleClass="p-button-sm" class="mr-2"></p-button>
+        <p-button label="Xem lý do" (click)="displayPositionReason = true" styleClass="p-button-sm"
+                  class="mr-2"></p-button>
       </ng-template>
       <ng-template
         [ngIf]="jobRegister.statusJobRegister.id === 2 && (user.roles[0].id === 1 || user.roles[0].id === 2)">
@@ -34,7 +38,8 @@
           <div class="form-group row">
             <label class="col-md-4 col-form-label">Ngày hẹn phỏng vấn:</label>
             <div class="col-md-10">
-              <p-calendar [(ngModel)]="dateBook" [showTime]="true" [showIcon]="true" [minDate]="currentDate" inputId="time"
+              <p-calendar [(ngModel)]="dateBook" [showTime]="true" [showIcon]="true" [minDate]="currentDate"
+                          inputId="time"
                           formControlName="dateBook"></p-calendar>
             </div>
           </div>
@@ -86,19 +91,15 @@
           </div>
         </div>
       </form>
-      <ng-template pTemplate="footer">
-
-      </ng-template>
     </p-dialog>
-
-
     <div class="d-flex">
       <div>
         <p-avatar
-          [image]="jobRegister.user.avatarName"
-          pBadge value="4" severity="danger" size="xlarge"></p-avatar>
+          [image]="this.avatar"
+          size="xlarge">
+        </p-avatar>
       </div>
-      <div class="ml-5">
+      <div class="ml-5 mb-5">
         <h2 href="#" class="display-5 font-weight-bold">{{jobRegister.user.name}}</h2>
         <p class="mt-3">Đăng kí hồ sơ: {{this.jobRegister.dateRegister | date}}</p>
       </div>
@@ -146,10 +147,13 @@
             <h2>Hình thức làm việc</h2>
             <p>{{profiles.desiredWorkingForm}}</p>
           </div>
-          <div>
-            <h2>Trình độ học vấn</h2>
-            <p>{{profiles.academicLevel.code}}</p>
-          </div>
+          <ng-template [ngIf]="profiles.academicLevel">
+            <div>
+              <h2>Trình độ học vấn</h2>
+              <p>{{profiles.academicLevel.code}}</p>
+            </div>
+          </ng-template>
+
         </div>
         <div class="ml-5">
           <div>
@@ -164,7 +168,20 @@
       </div>
     </ng-template>
   </div>
+  <ngx-popup-reason [displayPosition]="displayPositionReason" (checkedChange)="displayPositionReason = $event"
+                    [content]="this.jobRegister.reason"></ngx-popup-reason>
 </ng-template>
-<ngx-popup-reason [displayPosition]="displayPositionReason" (checkedChange)="displayPositionReason = $event"
-                  [content]="this.jobRegister.reason"></ngx-popup-reason>
+
+
+<p-dialog header="Nhập lý do" [(visible)]="displayPositionInput" [position]="'top'" [modal]="true"
+          [style]="{width: '50vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <div class="container text-center">
+    <textarea [rows]="5" [cols]="30" pInputTextarea autoResize="autoResize" [(ngModel)]="reasonDto.reason"></textarea>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" type="submit" (click)="onRefuse()" label="Yes" class="p-button-text"></p-button>
+    <p-button icon="pi pi-times" (click)="displayPositionInput = false" label="No" class="ml-2"></p-button>
+  </ng-template>
+</p-dialog>
 

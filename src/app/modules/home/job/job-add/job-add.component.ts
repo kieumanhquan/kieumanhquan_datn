@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {JobService} from '../../../../service/job.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -10,6 +10,11 @@ import {Rank} from '../../../../models/model/Rank';
 import {UserService} from '../../../../service/user.service';
 import {User} from '../../../../models/model/User';
 import {Router} from '@angular/router';
+import {Stomp} from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
+import {Notifications} from '../../../../models/model/Notifications';
+import {Type} from '../../../../models/model/Type';
+import {Job} from '../../../../models/model/Job';
 
 @Component({
   selector: 'ngx-job-add',
@@ -26,9 +31,15 @@ export class JobAddComponent implements OnInit {
   academicLevels: AcademicLevel[];
   ranks: Rank[];
   jes: User[];
+  admin: User;
 
   rfContact: FormGroup;
   user: User;
+
+  stompClient= null;
+  notifications: Notifications;
+  type: Type;
+
   constructor(private fb: FormBuilder,
               private jobService: JobService,
               private userService: UserService,
@@ -61,7 +72,9 @@ export class JobAddComponent implements OnInit {
     this.getWorkingForm();
     this.getRank();
     this.getJe();
+    this.getAdmin();
     this.getUser();
+    this.connect();
   }
   public addJob(){
     console.log('skills',this.rfContact.value.skills);
@@ -85,7 +98,9 @@ export class JobAddComponent implements OnInit {
     this.jobDto.views =0;
     // eslint-disable-next-line max-len
     this.jobService.addJob(this.jobDto).subscribe(
-      (data: any) => {
+      (data: Job) => {
+        this.sendApply(data);
+        this.disconnect();
         alert('Add thành công');
       },
       (error: HttpErrorResponse) => {
@@ -146,6 +161,17 @@ export class JobAddComponent implements OnInit {
       },
     );
   }
+
+  public getAdmin(){
+    this.userService.getAdmin().subscribe(
+      (data: any) => {
+        this.admin = data[0];
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
   // eslint-disable-next-line @typescript-eslint/member-ordering
   get skills(): FormArray {
     return this.rfContact.get('skills') as FormArray;
@@ -185,5 +211,36 @@ export class JobAddComponent implements OnInit {
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   minDate = new Date();
+
+  connect() {
+    const socket = new SockJS('http://localhost:9090/gkz-stomp-endpoint');
+    this.stompClient = Stomp.over(socket);
+    const _this = this;
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    this.stompClient.connect({}, function(frame) {
+      console.log('Connected: ' + frame);
+
+      // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+      _this.stompClient.subscribe('/topic/apply', function(notify) {
+        console.log((JSON.parse(notify.body)));
+        // _this.showGreeting(JSON.parse(hello.body).greeting);
+      });
+    });
+  }
+
+  disconnect() {
+    if (this.stompClient != null) {
+      this.stompClient.disconnect();
+    }
+  }
+
+  sendApply(jobA) {
+    this.type = {code: 'job add', delete: false, description: 'job add', id: 3};
+    // eslint-disable-next-line max-len
+    this.notifications = {
+      receiver: this.admin,
+      job: jobA, content: '', createDate: new Date(), delete: false, id: null, sender: this.user, type: this.type};
+    this.stompClient.send('/gkz/job-register', {}, JSON.stringify(this.notifications));
+  }
 
 }

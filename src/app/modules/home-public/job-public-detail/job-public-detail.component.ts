@@ -12,6 +12,13 @@ import {UploadFileService} from '../../../service/upload.service';
 import {Profiles} from '../../../models/model/Profiles';
 import {JobRegisterService} from '../../../service/jobRegister.service';
 import {ProfilesService} from '../../../service/profiles.service';
+import {Stomp} from '@stomp/stompjs';
+import * as SockJS from 'sockjs-client';
+import {Notifications} from '../../../models/model/Notifications';
+import {Type} from '../../../models/model/Type';
+import {JobRegister} from '../../../models/model/JobRegister';
+import {debounceTime} from 'rxjs/operators';
+import {ReasonDto} from '../../../models/Dto/ReasonDto';
 
 @Component({
   selector: 'ngx-job-public-detail',
@@ -46,6 +53,16 @@ export class JobPublicDetailComponent implements OnInit {
   fileCv: File;
   fileAvatar: File;
 
+  stompClient = null;
+  notifications: Notifications;
+  type: Type;
+
+  jobRegister: JobRegister;
+
+  displayPositionInput= false;
+  reasonDto: ReasonDto;
+
+
   constructor(private readonly route: ActivatedRoute, private jobService: JobService, private userService: UserService
     , private readonly router: Router, private fb: FormBuilder, private uploadService: UploadFileService,
               private jobRegisterService: JobRegisterService,private profilesService: ProfilesService) {
@@ -53,10 +70,11 @@ export class JobPublicDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.getJobById();
-    this.getUser();
     this.genders = ['name', 'nữ', 'giới tính thứ 3'];
     this.getAcademicLevel();
     this.getWorkingForm();
+    this.getUser();
+    this.reasonDto= {jobId: 0, reason: '', statusId: 0};
     this.info = this.fb.group({
       description: [''],
       homeTown: ['', [Validators.required]],
@@ -71,6 +89,7 @@ export class JobPublicDetailComponent implements OnInit {
       desiredWorkingAddress: ['', [Validators.required]],
       workingForm: ['', [Validators.required]],
     });
+    this.connect();
   }
 
   public addViews(){
@@ -123,6 +142,18 @@ export class JobPublicDetailComponent implements OnInit {
     );
   }
 
+  checkApply(): boolean{
+    if (!this.checkedProfile) {
+      if(this.info.valid){
+        return false;
+      }
+    }
+    if(!this.fileCv){
+      return false;
+    }
+    return true;
+  }
+
   public getProfilesByUserId(): void {
     this.profilesService.getProfilesByUserId(this.user.id).subscribe(
       (data: Profiles) => {
@@ -162,11 +193,13 @@ export class JobPublicDetailComponent implements OnInit {
   }
 
   public getUserByUserName(username: string): void {
+    debounceTime(1000);
     this.userService.getUserByUserName(username).subscribe(
       (data: User) => {
         this.user = data;
         this.getProfilesByUserId();
-      },
+        this.getJobRegister();
+      } ,
       (error: HttpErrorResponse) => {
         alert(error.message);
       },
@@ -204,6 +237,17 @@ export class JobPublicDetailComponent implements OnInit {
     );
   }
 
+  public updateJobRegister(): void {
+    this.jobRegisterService.save(this.jobRegister).subscribe(
+      (data: JobRegister) => {
+        this.jobRegister = data;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
   onApply() {
     if (!this.checkedProfile) {
       let skills = '';
@@ -231,6 +275,8 @@ export class JobPublicDetailComponent implements OnInit {
     this.profile.description = this.info.value.description;
     this.uploadCv();
     this.updateProfiles();
+    this.sendApply();
+    this.disconnect();
     this.router.navigate(['/home-public']).then(r => console.log(r));
   }
 
@@ -274,5 +320,87 @@ export class JobPublicDetailComponent implements OnInit {
       alert('Vui lòng đăng nhập trước');
       this.router.navigate(['/auth']).then(r => console.log(r));
     }
+  }
+
+  onCancel() {
+    // eslint-disable-next-line max-len
+    this.jobRegister.statusJobRegister = {code: 'Ứng viên đã hủy ứng tuyển', delete: false, description: 'Ứng vine đã hủy ứng tuyển', id: 6};
+    this.updateJobRegister();
+    this.sendRefuse();
+    this.onRefuse();
+    this.router.navigate(['home-public']).then(r => console.log(r));
+  }
+
+  connect() {
+    const socket = new SockJS('http://localhost:9090/gkz-stomp-endpoint');
+    this.stompClient = Stomp.over(socket);
+    const _this = this;
+    // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+    this.stompClient.connect({}, function(frame) {
+      console.log('Connected: ' + frame);
+
+      // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+      _this.stompClient.subscribe('/topic/apply', function(notify) {
+        console.log((JSON.parse(notify.body)));
+        // _this.showGreeting(JSON.parse(hello.body).greeting);
+      });
+    });
+  }
+
+  disconnect() {
+    if (this.stompClient != null) {
+      this.stompClient.disconnect();
+    }
+  }
+
+  sendApply() {
+    this.type = {code: 'ứng tuyển', delete: false, description: 'ứng tuyển', id: 1};
+    // eslint-disable-next-line max-len
+    this.notifications = {
+      receiver: this.job.creator,
+      job: this.job, content: '', createDate: new Date(), delete: false, id: null, sender: this.user, type: this.type};
+    this.stompClient.send('/gkz/job-register', {}, JSON.stringify(this.notifications));
+  }
+
+  sendRefuse() {
+    this.type = {code: 'ứng tuyển', delete: false, description: 'ứng tuyển', id: 2};
+    // eslint-disable-next-line max-len
+    this.notifications = {
+      receiver: this.job.creator,
+      job: this.job, content: '', createDate: new Date(), delete: false, id: null, sender: this.user, type: this.type};
+    this.stompClient.send('/gkz/job-register', {}, JSON.stringify(this.notifications));
+  }
+
+  public getJobRegister(): void {
+    this.jobRegisterService.findByUserAndJob(this.user.id,this.job.id).subscribe(
+      (data: JobRegister) => {
+        if(data.statusJobRegister.id === 6){
+          this.jobRegister = null;
+        }else {
+          this.jobRegister = data;
+        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public updateReason(){
+    this.jobRegisterService.updateReason(this.reasonDto).subscribe(
+      (data: any) => {
+        this.jobRegister.statusJobRegister =data.statusJobRegister;
+        alert('Update thành công');
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+  onRefuse() {
+    this.reasonDto.jobId = this.jobRegister.id;
+    this.reasonDto.statusId = 6;
+    this.updateReason();
+    this.displayPositionInput = false;
   }
 }

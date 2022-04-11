@@ -1,6 +1,9 @@
 <div class="d-flex justify-content-lg-start container bg-info p-3 rounded mb-4">
-  <img src="file:///C:/Users/hieul/Downloads/avatarTest.png" alt="">
-  <div class="ml-3">
+  <p-avatar class="ml-2"
+    [image]="this.avatar"
+    size="xlarge">
+  </p-avatar>
+  <div class="ml-4">
     <div class="d-flex justify-content-lg-between">
       <a (click)="onReadDetail(jobRegister.id)" style="cursor: pointer;" class="display-5 font-weight-bold mr-5">{{jobRegister.user.name}}</a>
       <p class="badge badge-secondary mr-2">{{this.jobRegister.dateRegister| date}}</p>

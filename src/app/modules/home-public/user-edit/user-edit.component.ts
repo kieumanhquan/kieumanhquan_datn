@@ -8,7 +8,7 @@ import {UserService} from '../../../service/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import { Profiles } from '../../../models/model/Profiles';
 import {AcademicLevel} from '../../../models/model/AcademicLevel';
-import {UploadFileService} from "../../../service/upload.service";
+import {UploadFileService} from '../../../service/upload.service';
 
 @Component({
   selector: 'ngx-user-edit',

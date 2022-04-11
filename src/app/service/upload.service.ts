@@ -39,6 +39,7 @@ export class UploadFileService {
       tap(receivedJob => console.log(`receivedJob=${JSON.stringify(receivedJob)}`)),
     );
   }
+
   resetForm() {
     this.formData = new FormData();
   }

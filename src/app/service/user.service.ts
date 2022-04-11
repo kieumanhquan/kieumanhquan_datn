@@ -12,17 +12,13 @@ import {Profiles} from '../models/model/Profiles';
 })
 
 export class UserService{
-
-  private apiServerUrl = environment.apiUrl;
-  private apiServerUrlPublic = environment.apiPublicUrl;
   private  apiServerUrlPrivate=environment.apiUrl;
-
 
   constructor(private http: HttpClient) {
   }
 
   getDecodedAccessToken(): any {
-    const token = sessionStorage.getItem('auth-token');
+    const token = localStorage.getItem('auth-token');
     try {
       console.log(jwt_decode(token));
       return jwt_decode(token);
@@ -48,6 +44,12 @@ export class UserService{
     );
 
   }
+  public getAdmin(): Observable<any[]> {
+    return this.http.get<any>(`${this.apiServerUrlPrivate}`+'user/role=ROLE_ADMIN').pipe(
+      tap(jobPositions => console.log(`academicLevels=${JSON.stringify(jobPositions)}`)),
+    );
+
+  }
   public updateUser(user: User): Observable<any> {
     return this.http.post(`${this.apiServerUrlPrivate}`+'user',user).pipe(
       tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
@@ -67,7 +69,8 @@ export class UserService{
       tap(receivedUser => console.log(`receivedJob=${JSON.stringify(receivedUser)}`)),
     );
 
-  }  public updateUserProfile(profiles: Profiles): Observable<any> {
+  }
+  public updateUserProfile(profiles: Profiles): Observable<any> {
     return this.http.post(`${this.apiServerUrlPrivate}`+'user/profiles',profiles).pipe(
       tap(updateUser => console.log(`receivedJob=${JSON.stringify(updateUser)}`)),
     );

@@ -29,6 +29,8 @@ export class JobRegisterTitleComponent implements OnInit {
   addressInterviews: any[];
 
   // eslint-disable-next-line max-len
+  avatar: string;
+  // eslint-disable-next-line max-len
   constructor(private readonly router: Router,private jobRegisterService: JobRegisterService,private fb: FormBuilder ) { }
 
   ngOnInit(): void {
@@ -43,6 +45,7 @@ export class JobRegisterTitleComponent implements OnInit {
   getInitData(){
     this.methods = ['online','offline'];
     this.addressInterviews = ['Skype','Zoom','Zalo'];
+    this.avatar= 'http://localhost:9090/api/public/files/'+this.jobRegister.user.avatarName;
   }
 
   onReadDetail(id: number) {
