@@ -13,5 +13,12 @@
       <p class="badge badge-secondary mr-2" style="cursor: pointer;" (click)="onReadUserDetail(this.user.id)">{{user.name}}</p>
       <p class="badge badge-secondary mr-2">{{this.user.gender}}</p>
     </div>
+<ng-template [ngIf]="user.active===false"  >
+  <p-button class="mr-2" label="Tái kích hoạt" icon="pi pi-check" iconPos="right" [loading]="" (onClick)="onDeactivate(this.user.id)"></p-button>
+</ng-template>
+
+    <ng-template [ngIf]="user.active===true"  >
+      <p-button class="mr-2" label="Hủy kích hoạt" icon="pi pi-times" iconPos="right" [loading]="" (onClick)="onDeactivate(this.user.id)"></p-button>
+    </ng-template>
   </div>
 </div>

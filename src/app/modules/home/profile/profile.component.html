@@ -2,10 +2,12 @@
 <ng-template [ngIf]="user">
   <p-card>
     <form [formGroup]="formProfile" (ngSubmit)="onSubmit()" >
-      <div class="row">
-        <img src="assets/images/alan.png" alt="Avatar"
-             style="width:200px; border-radius: 50%;  margin: 0 auto; margin-bottom: 20px;">
-      </div>
+      <ng-template [ngIf]="user.avatarName" >
+        <div class="row">
+          <img src="{{this.avatarUrl}}" alt="Avatar"
+               style="width:200px; border-radius: 50%;  margin: 0 auto; margin-bottom: 20px;">
+        </div>
+      </ng-template>
       <div class="form-row">
         <div class="form-group col-md-6">
           <div class="row">
@@ -54,10 +56,9 @@
           <div class="row">
             <label class="label col-3 col-form-label">Ngày sinh</label>
             <div class="col-9">
-              <p-calendar [(ngModel)]="user.birthday" [showTime]="true" inputId="time" formControlName="birthDay"></p-calendar>
+              <p-calendar [(ngModel)]="user.birthday" [showTime]="true" inputId="time" formControlName="birthDay" [placeholder]="birthday"></p-calendar>
             </div>
           </div>
-
         </div>
 
       </div>
@@ -84,6 +85,13 @@
                 <option value="Nữ">Nữ</option>
               </select>
             </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 ">
+          <h2>Upload</h2>
+          <div class="d-flex">
+            <p-fileUpload mode="advanced" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)" accept="image/*" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
           </div>
         </div>
         <button class="btn btn-primary" type="submit" style="margin-left: 7vw;" >Áp dụng</button>

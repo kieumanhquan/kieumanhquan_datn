@@ -10,8 +10,9 @@ import {AcademicLevel} from '../../../models/model/AcademicLevel';
 import {WorkingForm} from '../../../models/model/WorkingForm';
 import {UploadFileService} from '../../../service/upload.service';
 import {Profiles} from '../../../models/model/Profiles';
-import {JobRegisterService} from '../../../service/jobRegister.service';
 import {ProfilesService} from '../../../service/profiles.service';
+import {JobRegisterService} from '../../../service/jobRegister.service';
+
 
 @Component({
   selector: 'ngx-job-public-detail',
@@ -241,6 +242,7 @@ export class JobPublicDetailComponent implements OnInit {
 
   onSelectedAvatar(event) {
     this.fileAvatar = event.currentFiles[0];
+    console.log('day la file', this.fileAvatar);
   }
 
   uploadCv() {

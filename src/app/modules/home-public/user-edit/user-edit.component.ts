@@ -8,7 +8,10 @@ import {UserService} from '../../../service/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
 import { Profiles } from '../../../models/model/Profiles';
 import {AcademicLevel} from '../../../models/model/AcademicLevel';
-import {UploadFileService} from "../../../service/upload.service";
+import {UploadFileService} from '../../../service/upload.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import { DownloadFileService } from '../../../service/download.service';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'ngx-user-edit',
@@ -16,15 +19,15 @@ import {UploadFileService} from "../../../service/upload.service";
   styleUrls: ['./user-edit.component.scss'],
 })
 export class UserEditComponent implements OnInit {
-  [x: string]: any;
+  avatarUrl: string;
   formUser: FormGroup;
   user: User;
   username: string;
   profiles: Profiles ;
   academicLevels: AcademicLevel[];
   birthday: string;
-  fileCv: File;
   fileAvatar: File;
+  avatar: any;
 
   constructor(
     private sessionService: SessionService,
@@ -32,8 +35,9 @@ export class UserEditComponent implements OnInit {
     private fb: FormBuilder,
     private primengConfig: PrimeNGConfig,
     private userService: UserService,
-    private  uploadService: UploadFileService) { }
-
+    private  uploadService: UploadFileService,
+    private sanitizer: DomSanitizer,
+    private  downloadService: DownloadFileService) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -58,7 +62,7 @@ export class UserEditComponent implements OnInit {
       skill:['',Validators.required],
       desiredSalary:['',Validators.required],
       desiredWorkingAddress:['',Validators.required],
-      numberYearsExperience:['',Validators.required],
+      numberYearsExperience:['',Validators.required,Validators.pattern('([0-9][0-9])|([1-9]\\d{3}\\d*)')],
       desiredWorkingForm:['',Validators.required],
       academicLevel:['',Validators.required],
     });
@@ -69,6 +73,7 @@ export class UserEditComponent implements OnInit {
       (data: User) => {
         console.log('data: ',data);
         this.user = data;
+        this.avatarUrl=environment.apiImageUrl+this.user.avatarName;
         this.getProfiles();
         console.log('data pass: ',this.user);
       },
@@ -78,10 +83,25 @@ export class UserEditComponent implements OnInit {
     );
   }
 
+  showAvatar(){
+    this.downloadService.getAvatar(this.user.avatarName).subscribe(
+      (data: any ) => {
+        console.log('data image avatar: ',data);
+        this.avatar = data;
+        const objectURL = 'data:image/jpg;base64,' + data.image;
+        this.avatar = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        console.log('data pass image: ',this.avatar);
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
   public getProfilesByUserId(username: number): void {
     this.userService.getUserProfilesByUserId(username).subscribe(
       (data: Profiles) => {
         this.profiles = data;
+        this.showAvatar();
         this.initForm();
         console.log('data pass: ',this.profiles);
       },
@@ -110,7 +130,8 @@ export class UserEditComponent implements OnInit {
   }
   onSubmit() {
     this.updateUser();
-    window.location.reload();
+    console.log('User id: ', this.user.id);
+    this.uploadAvatar();
   }
 
   getUserValue(): void {
@@ -150,13 +171,9 @@ export class UserEditComponent implements OnInit {
       },
     );
   }
-  onSelected(event) {
-    this.fileCv = event.currentFiles[0];
-    console.log('day la file', this.fileCv);
-  }
-
   onSelectedAvatar(event) {
     this.fileAvatar = event.currentFiles[0];
+    console.log('day la file', this.fileAvatar);
   }
 
   uploadAvatar() {
@@ -169,6 +186,9 @@ export class UserEditComponent implements OnInit {
       },
     );
   }
+
+
+
 }
 
 

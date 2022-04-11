@@ -38,3 +38,39 @@
   </div>
 </ng-template>
 
+
+<ng-template [ngIf]="profiles" >
+  <div class="container">
+    <h2>Thông tin chi tiết </h2>
+    <div class="d-flex justify-content-around badge badge-info mr-2 p-5">
+      <div>
+        <div>
+          <h2>desiredWorkingForm: </h2>
+          <p>{{this.profiles.desiredWorkingForm}}}</p>
+        </div>
+        <div>
+          <h2>Năm kinh nghiệm: </h2>
+          <p>{{this.profiles.numberYearsExperience}}</p>
+        </div>
+        <div>
+          <h2>Địa chỉ làm việc mong muốn</h2>
+          <p>{{this.profiles.desiredWorkingAddress}}</p>
+        </div>
+      </div>
+      <div class="ml-5">
+        <div>
+          <h2>Mức lương mong muốn</h2>
+          <p>{{this.profiles.desiredSalary}}</p>
+        </div>
+        <div>
+          <h2>Trình độ học vấn: </h2>
+          <p>{{this.profiles.academicLevel.code}} </p>
+        </div>
+        <div>
+          <h2>Kĩ năng: </h2>
+          <p>{{this.profiles.skill}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
