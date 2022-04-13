@@ -2,7 +2,7 @@
 <ng-template [ngIf]="user">
   <p-card>
     <form [formGroup]="formProfile" (ngSubmit)="onSubmit()" >
-      <ng-template [ngIf]="user.avatarName" >
+      <ng-template [ngIf]="user">
         <div class="row">
           <img src="{{this.avatarUrl}}" alt="Avatar"
                style="width:200px; border-radius: 100%;  margin: 0 auto 20px;">

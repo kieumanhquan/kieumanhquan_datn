@@ -35,11 +35,10 @@ export class ChangePasswordFinishComponent implements OnInit {
     this.authService.changePassword(this.cpf.value, window.sessionStorage.getItem('email')).subscribe(
       (data: any) => {
         if (data.obj) {
-          this.router.navigate(['/auth/change-password-finish']).then(r => console.log(r));
+          this.router.navigate(['/auth']).then(r => console.log(r));
           sessionStorage.removeItem('email');
         } else {
-          this.router.navigate(['/auth/login']).then(r => console.log(r));
-          sessionStorage.removeItem('email');
+          this.router.navigate(['/auth/change-password-init']).then(r => console.log(r));
         }
         alert(data.message);
       },

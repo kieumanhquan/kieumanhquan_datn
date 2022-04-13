@@ -12,6 +12,7 @@ import {UploadFileService} from '../../../service/upload.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import { DownloadFileService } from '../../../service/download.service';
 import {environment} from '../../../../environments/environment';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -28,7 +29,7 @@ export class UserEditComponent implements OnInit {
   academicLevels: AcademicLevel[];
   birthday: string;
   fileAvatar: File;
-  avatar: any;
+  avatar: string;
 
   constructor(
     private sessionService: SessionService,
@@ -38,7 +39,8 @@ export class UserEditComponent implements OnInit {
     private userService: UserService,
     private  uploadService: UploadFileService,
     private sanitizer: DomSanitizer,
-    private  downloadService: DownloadFileService) { }
+    private  downloadService: DownloadFileService,
+    private  router: Router) { }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
@@ -83,20 +85,6 @@ export class UserEditComponent implements OnInit {
     );
   }
 
-  showAvatar(){
-    this.downloadService.getAvatar(this.user.avatarName).subscribe(
-      (data: any ) => {
-        console.log('data image avatar: ',data);
-        this.avatar = data;
-        const objectURL = 'data:image/jpg;base64,' + data.image;
-        this.avatar = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-        console.log('data pass image: ',this.avatar);
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      },
-    );
-  }
   public getProfilesByUserId(id: number): void {
     this.userService.getUserProfilesByUserId(id).subscribe(
       (data: Profiles) => {
@@ -116,7 +104,7 @@ export class UserEditComponent implements OnInit {
             user: undefined,
           };
         }
-        this.showAvatar();
+        this.avatar = 'http://localhost:9090/api/public/files/'+this.user.avatarName;
         this.initForm();
       },
       (error: HttpErrorResponse) => {
@@ -144,10 +132,12 @@ export class UserEditComponent implements OnInit {
   }
   onSubmit() {
     this.updateUser();
+    this.updateProfile();
     console.log('User id: ', this.user.id);
     if(this.fileAvatar){
       this.uploadAvatar();
     }
+    this.router.navigate(['/home-public']).then(r => console.log(r));
   }
 
   getUserValue(): void {
@@ -156,8 +146,8 @@ export class UserEditComponent implements OnInit {
     this.user.birthday=this.formUser.value.birthDay;
     this.user.homeTown=this.formUser.value.homeTown;
     this.user.gender=this.formUser.value.gender;
-    this.user.userName=this.formUser.value.userName;
-
+    const token = this.userService.getDecodedAccessToken();
+    this.user.userName=token.sub;
   }
 
   getProfilesValue(){
@@ -169,12 +159,8 @@ export class UserEditComponent implements OnInit {
     this.profiles.desiredWorkingForm=this.formUser.value.desiredWorkingForm;
   }
 
-  public updateUser(){
-     this.getUserValue();
+  public updateProfile(){
      this.getProfilesValue();
-    const token = this.userService.getDecodedAccessToken();
-    this.user.userName=token.sub;
-    console.log('pp',this.profiles);
     this.userService.updateUserProfile(this.profiles).subscribe(
       (data: any) => {
        if(!data){
@@ -182,6 +168,18 @@ export class UserEditComponent implements OnInit {
        }else {
          alert('up ok ');
        }
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      },
+    );
+  }
+
+  public updateUser(){
+    this.getUserValue();
+    this.userService.updateUser(this.user).subscribe(
+      (data: any) => {
+        console.log(data);
       },
       (error: HttpErrorResponse) => {
         alert(error.message);

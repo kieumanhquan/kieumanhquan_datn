@@ -5,7 +5,7 @@
         <img [src]="avatarUrl" alt="Avatar"
              style="width:200px; border-radius: 50%;  margin: 0 auto 20px;">
       </div>
-      <div class="row mb-4" style="margin-left: 46%;">
+      <div class="row mb-4" style="margin-left: 45%;">
         <p-fileUpload mode="basic" chooseLabel="Ảnh đại diện" (onSelect)="onSelectedAvatar($event)"
                       accept="image/*" [showUploadButton]="false" [showCancelButton]="false"></p-fileUpload>
       </div>
@@ -115,13 +115,11 @@
                 formControlName="academicLevel"
                 [(ngModel)]="profiles.academicLevel.code"
               >
-                <option value="profiles.academicLevel">{{profiles.academicLevel.code}}</option>
                 <option *ngFor="let academicLevel of academicLevels" [ngValue]="academicLevel">
                   {{ academicLevel.code }}
                 </option>
               </select>
             </div>
-
           </div>
           <div class="col alert alert-danger" role="alert"
                *ngIf="formUser.get('academicLevel')?.errors?.required && formUser.get('academicLevel')?.touched">
@@ -132,7 +130,7 @@
           <div class="row">
             <label class="label col-3 col-form-label">Mức lương mong muốn</label>
             <div class="col-9">
-              <input type="number" pInputText class="form-control" formControlName="desiredSalary"
+              <input type="number" pInputText class="form-control" formControlName="desiredSalary" min="0"
                      [(ngModel)]="profiles.desiredSalary">
             </div>
           </div>
@@ -160,7 +158,7 @@
           <div class="row">
             <label class="label col-3 col-form-label">Số năm kinh nghiệm</label>
             <div class="col-9">
-              <input type="number" pInputText class="form-control" formControlName="numberYearsExperience"
+              <input type="number" pInputText class="form-control" formControlName="numberYearsExperience" min="0"
                      [(ngModel)]="profiles.numberYearsExperience">
             </div>
           </div>
@@ -200,8 +198,8 @@
                 formControlName="gender"
                 [(ngModel)]="profiles.desiredWorkingForm"
               >
-                <option value="Toàn thời gian">Toàn thời gian</option>
-                <option value="Bán thời gian">Bán thời gian</option>
+                <option value="Fulltime">Fulltime</option>
+                <option value="Parttime">Parttime</option>
               </select>
             </div>
 
