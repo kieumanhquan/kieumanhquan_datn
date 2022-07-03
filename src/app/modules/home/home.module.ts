@@ -27,6 +27,10 @@ import {UserDetailsComponent} from './user/user-details/user-details.component';
 import {UserTitleComponent} from './user/user-title/user-title.component';
 import {UserAddComponent} from './user/user-add/user-add.component';
 import {AuthJeGuard} from '../../@core/guards/authJe.guard';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import {ChartModule} from "primeng/chart";
+import { TagInfoComponent } from './dashboard/tag-info/tag-info.component';
+
 
 
 const routes: Routes = [{
@@ -35,7 +39,7 @@ const routes: Routes = [{
   children: [
     {
       path: 'dashboard',
-      // loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+      component : DashboardComponent,
     },
     {
       path: 'profile',
@@ -105,6 +109,8 @@ const routes: Routes = [{
     UserDetailsComponent,
     UserTitleComponent,
     UserAddComponent,
+    DashboardComponent,
+    TagInfoComponent,
   ],
   imports: [
     CommonModule,
@@ -119,6 +125,8 @@ const routes: Routes = [{
     PaginatorModule,
     DialogModule,
     InputTextareaModule,
+    PrimengModule,
+    ChartModule,
   ],
   exports: [],
 })
