@@ -11,6 +11,7 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
+// @ts-ignore
 import { TokenService } from '../services/token.service';
 
 @Injectable()
@@ -25,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
       request = request.clone({
         headers: new HttpHeaders({
           // eslint-disable-next-line @typescript-eslint/naming-convention
-          Authorization: token;
+          Authorization: token,
         }),
       });
     }
