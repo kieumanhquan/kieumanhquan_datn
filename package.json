@@ -52,6 +52,7 @@
     "@stomp/stompjs": "^6.1.2",
     "@swimlane/ngx-charts": "^14.0.0",
     "@swimlane/ngx-datatable": "^20.0.0",
+    "@types/chart.js": "^2.9.37",
     "angular2-chartjs": "0.4.1",
     "boostrap": "^2.0.0",
     "bootstrap": "4.3.1",
