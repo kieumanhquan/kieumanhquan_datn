@@ -204,7 +204,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // Notification
 
   connect() {
-    const socket = new SockJS('http://localhost:9090/gkz-stomp-endpoint');
+    const socket = new SockJS('https://kieumanhquan1821050227.herokuapp.com/gkz-stomp-endpoint');
     this.stompClient = Stomp.over(socket);
     const _this = this;
     // eslint-disable-next-line prefer-arrow/prefer-arrow-functions

@@ -10,7 +10,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:9090/api/',
-  apiPublicUrl:'http://localhost:9090/api/public/',
-  apiImageUrl: 'http://localhost:9090/api/public/files/',
+  apiUrl: 'https://kieumanhquan1821050227.herokuapp.com/api/',
+  apiPublicUrl:'https://kieumanhquan1821050227.herokuapp.com//api/public/',
+  apiImageUrl: 'https://kieumanhquan1821050227.herokuapp.com//api/public/files/',
 };
