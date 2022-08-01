@@ -28,10 +28,8 @@ import {UserTitleComponent} from './user/user-title/user-title.component';
 import {UserAddComponent} from './user/user-add/user-add.component';
 import {AuthJeGuard} from '../../@core/guards/authJe.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {ChartModule} from "primeng/chart";
+import {ChartModule} from 'primeng/chart';
 import { TagInfoComponent } from './dashboard/tag-info/tag-info.component';
-
-
 
 const routes: Routes = [{
   path: '',

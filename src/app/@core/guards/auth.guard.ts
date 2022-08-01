@@ -13,7 +13,9 @@ export class AuthGuard implements CanActivate {
   role: string;
 
   constructor(private router: Router,private userService: UserService) {
-    this.getUser();
+    if(this.userService.getDecodedAccessToken() != null){
+      this.getUser();
+    }
   }
 
   public getUser(): void {

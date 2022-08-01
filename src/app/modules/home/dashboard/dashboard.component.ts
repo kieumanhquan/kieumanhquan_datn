@@ -12,10 +12,8 @@ export class DashboardComponent implements OnInit {
   basicOptions: any;
   sDate: Date = new Date('01/01/2000');
   eDate: Date = new Date('01/01/3000');
-
   data: any;
   chartOptions: any;
-
   registerSuccess: number;
   registerFall: number;
   registerPv: number;
@@ -24,7 +22,6 @@ export class DashboardComponent implements OnInit {
   totalViews: number;
   totalJobDueDate; number;
   totalRegister: number;
-
   dataByMonthRegisterSuccess: number[] = [];
   dataByMonthRegisterFall: number[] = [];
 
@@ -100,14 +97,14 @@ export class DashboardComponent implements OnInit {
       labels: ['1', '2', '3', '4', '5', '6', '7','8', '9', '10', '11', '12'],
       datasets: [
         {
-          label: 'Ứng viên ứng tuyển thành công',
+          label: 'Ứng viên ứng tuyển thành công !',
           data: this.dataByMonthRegisterSuccess,
           fill: false,
           borderColor: '#42A5F5',
           tension: .4,
         },
         {
-          label: 'Ứng viên ứng tuyển thất bại',
+          label: 'Ứng viên ứng tuyển thất bại !',
           data: this.dataByMonthRegisterFall,
           fill: false,
           borderColor: '#FFA726',
@@ -116,7 +113,7 @@ export class DashboardComponent implements OnInit {
       ],
     };
     this.data = {
-      labels: ['Ứng viên ứng tuyển thành công', 'Ứng viên ứng tuyển thất bại'],
+      labels: ['Ứng viên ứng tuyển thành công !', 'Ứng viên ứng tuyển thất bại !'],
       datasets: [
         {
           data: [this.registerSuccess, this.registerFall],
@@ -226,5 +223,4 @@ export class DashboardComponent implements OnInit {
       error => console.log(error),
     );
   }
-
 }
