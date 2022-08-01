@@ -10,7 +10,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://kieumanhquan1821050227.herokuapp.com/api/',
-  apiPublicUrl:'https://kieumanhquan1821050227.herokuapp.com//api/public/',
-  apiImageUrl: 'https://kieumanhquan1821050227.herokuapp.com//api/public/files/',
+  apiUrl: 'https://kieumanhquan1821050227fe.herokuapp.com/api/',
+  apiPublicUrl:'https://kieumanhquan1821050227fe.herokuapp.com//api/public/',
+  apiImageUrl: 'https://kieumanhquan1821050227fe.herokuapp.com//api/public/files/',
 };
